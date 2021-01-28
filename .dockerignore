@@ -1,0 +1,10 @@
+.vscode
+node_modules
+.editorconfig
+.gitignore
+.git
+docker-compose.yml
+Dockerfile
+nodemon.json
+docs/documentation
+coverage

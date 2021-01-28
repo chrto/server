@@ -1,0 +1,228 @@
+# global endpoints
+/global/status:
+  get:
+    summary: Returns server status.
+    security: []
+    description: >
+      This endpoint returns the current server status.
+    tags: [Global]
+    responses:
+      200:
+        $ref: "#/components/responses/StatusResponse"
+      500:
+        $ref: "#/components/responses/500_InternalServerError"
+
+# authenticationModule endpoints
+/auth/token:
+  get:
+    summary: Exchange the Authorization Code for an tokens
+    security: []
+    description: >-
+      You can exchange the Authorization Code for an Access Token that will
+      allow you to call the API.
+    tags: [Auth]
+    parameters:
+      - $ref: "#/components/parameters/auth_code"
+    responses:
+      200:
+        $ref: "#/components/responses/TokenSetResponse"
+      400:
+        $ref: "#/components/responses/40x_BadRequest"
+      500:
+        $ref: "#/components/responses/500_InternalServerError"
+
+/auth/token/refresh:
+  get:
+    summary: Exchange the Refresh Token for an new tokens.
+    security: []
+    description: >-
+      You can exchange the Refresh Token for an new Access Token that will
+      allow you to call the API. Usually, a user will need a new Access Token
+      only after the previous one expires, or when gaining access to a new
+      resource for the first time.
+    tags: [Auth]
+    parameters:
+      - $ref: "#/components/parameters/refresh_token"
+    responses:
+      200:
+        $ref: "#/components/responses/TokenSetResponse"
+      400:
+        $ref: "#/components/responses/40x_BadRequest"
+      500:
+        $ref: "#/components/responses/500_InternalServerError"
+
+# Portal endpoints
+/portal/user/basic-info:
+  get:
+    summary: Logged in user basic information.
+    security:
+      - bearerAuth: []
+    description: ""
+    tags: [Portal]
+    responses:
+      200:
+        $ref: "#/components/responses/UserResponse"
+      401:
+        $ref: "#/components/responses/40x_UnauthenticatedErrorBearer"
+      403:
+        $ref: "#/components/responses/40x_Unauthorized"
+      404:
+        $ref: "#/components/responses/40x_NotFound"
+      500:
+        $ref: "#/components/responses/500_InternalServerError"
+
+/portal/users:
+  get:
+    summary: Collection of portal users
+    security:
+      - bearerAuth: []
+    # parameters:
+    #   - $ref: "#/components/parameters/sort"
+    #   - $ref: "#/components/parameters/fields"
+    #   - $ref: "#/components/parameters/filter"
+    description: ""
+    tags: [Portal]
+    responses:
+      200:
+        $ref: "#/components/responses/UserListResponse"
+      401:
+        $ref: "#/components/responses/40x_UnauthenticatedErrorBearer"
+      403:
+        $ref: "#/components/responses/40x_Unauthorized"
+      500:
+        $ref: "#/components/responses/500_InternalServerError"
+
+  post:
+    summary: Create new portal user
+    security:
+      - bearerAuth: []
+    description: ""
+    operationId: createUser
+    tags: [Portal]
+    requestBody:
+      description: ""
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                $ref: "#/components/schemas/User/properties/email"
+                required: true
+              role:
+                $ref: "#/components/schemas/User/properties/role"
+                required: false
+              active:
+                $ref: "#/components/schemas/User/properties/active"
+                required: false
+            example:
+              email: Jane.Doe@starfleet.com
+              role: User
+              active: true
+    responses:
+      201:
+        $ref: "#/components/responses/UserResponse"
+      400:
+        $ref: "#/components/responses/40x_BadRequest"
+      401:
+        $ref: "#/components/responses/40x_UnauthenticatedErrorBearer"
+      403:
+        $ref: "#/components/responses/40x_Unauthorized"
+      409:
+        $ref: "#/components/responses/40x_Conflict"
+      500:
+        $ref: "#/components/responses/500_InternalServerError"
+
+/portal/users/{id}:
+  get:
+    summary: List detailed portal user resource
+    security:
+      - bearerAuth: []
+    description: |
+      This endpoint list the user in full detail
+    tags: [Portal]
+    parameters:
+      - $ref: "#/components/parameters/uuid"
+    responses:
+      200:
+        $ref: "#/components/responses/UserResponse"
+      401:
+        $ref: "#/components/responses/40x_UnauthenticatedErrorBearer"
+      403:
+        $ref: "#/components/responses/40x_Unauthorized"
+      404:
+        $ref: "#/components/responses/40x_NotFound"
+      500:
+        $ref: "#/components/responses/500_InternalServerError"
+
+  delete:
+    summary: Remove user.
+    security:
+      - bearerAuth: []
+    description: ""
+    tags: [Portal]
+    parameters:
+      - $ref: "#/components/parameters/uuid"
+    responses:
+      200:
+        description: Removed
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                removedUserId:
+                  allOf:
+                    - $ref: "#/components/schemas/UUID"
+                    - example: 5
+      401:
+        $ref: "#/components/responses/40x_UnauthenticatedErrorBearer"
+      403:
+        $ref: "#/components/responses/40x_Unauthorized"
+      404:
+        $ref: "#/components/responses/40x_NotFound"
+      409:
+        $ref: "#/components/responses/40x_Conflict"
+      500:
+        $ref: "#/components/responses/500_InternalServerError"
+
+  patch:
+    summary: Update the portal user resource.
+    security:
+      - bearerAuth: []
+    description: ""
+    operationId: updateUser
+    tags: [Portal]
+    parameters:
+      - $ref: "#/components/parameters/uuid"
+    requestBody:
+      description: ""
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              role:
+                $ref: "#/components/schemas/User/properties/role"
+              active:
+                $ref: "#/components/schemas/User/properties/active"
+            example:
+              role: User
+              active: true
+    responses:
+      200:
+        $ref: "#/components/responses/UserResponse"
+      400:
+        $ref: "#/components/responses/40x_BadRequest"
+      401:
+        $ref: "#/components/responses/40x_UnauthenticatedErrorBearer"
+      403:
+        $ref: "#/components/responses/40x_Unauthorized"
+      404:
+        $ref: "#/components/responses/40x_NotFound"
+      409:
+        $ref: "#/components/responses/40x_Conflict"
+      500:
+        $ref: "#/components/responses/500_InternalServerError"

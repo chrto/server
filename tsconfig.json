@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "lib": [ "es6", "dom" ],
+    "sourceMap": true,
+    "baseUrl": ".",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowUnusedLabels": false,
+    "noImplicitReturns": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "pretty": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "common/*": ["src/common/*"],
+      "config/*": ["src/config/*"],
+      "model/*": ["src/model/*"],
+      "service/*": ["src/service/*"],
+      "storage/*": ["src/storage/*"],
+      "utils/*": ["src/utils/*"],
+      "web/*": ["src/web/*"]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "compileOnSave": false,
+  "buildOnSave": false
+}

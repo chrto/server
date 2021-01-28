@@ -1,0 +1,246 @@
+#Golbal
+StatusResponse:
+  description: Server status inforamation.
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: "#/components/schemas/Status"
+          - example:
+              buildNumber: 'Unknown BuildNumber'
+              version: '0.0.1-12'
+              host: "app-server"
+              db: 'Up'
+              services:
+                azureAD: true
+                mdm: true
+                msGraph: true
+              allSystemsWorking: true
+
+#Token
+TokenSetResponse:
+  description: >-
+    The response contains the access_token, refresh_token, id_token, and
+    token_type values.
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: "#/components/schemas/TokenSet"
+          - example:
+              token_type: bearer
+              expires_in: 3598
+              id_token: >-
+                eyJraWQiOiIyM2I3ZTVlMTk2ODViYmE5IiwiYWxnIjoiUlMyNTYifQ.eyJhdF9oYXNoIjoiamhucGxnTUZxM253YkNQbXJmNU94ZyIsInN1YiI6IjRkYWQ1YjA0LTAxNDktNDA0ZS1iMjEyLWY3NDJkNDQ3NTM5ZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvaWRlbnRpdHktc2FuZGJveC52d2dyb3VwLmlvIiwianR0IjoiaWRfdG9rZW4iLCJub25jZSI6IjEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyIiwibGVlIjpbIlNLT0RBIl0sImF1ZCI6ImVlOWFmYTAxLWQzODktNDdkNC1iNDUxLWQ1YTdmMmE1NDI4ZkBhcHBzX3Z3LWRpbGFiX2NvbSIsImFjciI6Imh0dHBzOlwvXC9pZGVudGl0eS1zYW5kYm94LnZ3Z3JvdXAuaW9cL2Fzc3VyYW5jZVwvbG9hLTIiLCJ1cGRhdGVkX2F0IjoxNTQ4NjczNTUxMzY0LCJhYXQiOiJpZGVudGl0eWtpdCIsImV4cCI6MTU0ODY3NzUzOSwiaWF0IjoxNTQ4NjczOTM5LCJqdGkiOiJmNDFhOWUyNS0yMTlmLTQ4NGUtODQwMy0wMDM3OTg2NDlkYWUiLCJlbWFpbCI6Imphbi5jaHJ0aWFuc2t5QGVtYW4uY3oifQ.OPBUffpCJG1pOqbhuk0SnZXzoG0lafzOgpWhCs6SuNbs78B72qVRp-PzsZptkN6GU_uc7TfN8OxpeweDGM9peuCzMzpCmg-FDciUnYSQgN2Oi4Ttfdgri2ISs72R8bEBlUw8XL76HyWNERKMAcU9HLESrOrTf1BIta8YvfHJv5TeFUhLCYsKuplFK1M1-lP2maNqCW_t_B6711scWPsGv_VS9WoQsmB6CQ1DupZbb9a0BHvXiDyeNevxEWYORdI2iUVzUPu8A5EVNM-IuL9NIoKcmron60gJvHJRlEyE4--2CgnljY95REr9gG31txtb_2NKssCJyp4N8HUg22aYRPkffBCXNw5tWHoSKPkIOvPFSLLzuVgxsKf46ZwHDbrlv1UBrjEAWNCb45bveOR8-VREczMI1pyF8l5mih2c42zQggm27lHMm7qQwkILTPP9jlMT0OgVNYVRuNzXkvzuDWuKV5rkgqyMQeAjx1r393hV82Ea0rTSO1g_dfZqiiPEG-UfJp52EyBEVF0pY-6kVG5EZmivM2NWCaBJWgYe9_ztQia5Tl4vgOmR7iPAPhU2GcRAvfDjEgKAgFEU9pZgQ433GBpfJnDaJrO5eFs7BRKRzgpNPvjtY28EJDW0jUCyCBLXSE__4NB7JOvMGVXAQf-cEro8upnd8TovFEnGJkg
+              access_token: >-
+                eyJraWQiOiIyM2I3ZTVlMTk2ODViYmE5IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiI0ZGFkNWIwNC0wMTQ5LTQwNGUtYjIxMi1mNzQyZDQ0NzUzOWUiLCJhdWQiOiJlZTlhZmEwMS1kMzg5LTQ3ZDQtYjQ1MS1kNWE3ZjJhNTQyOGZAYXBwc192dy1kaWxhYl9jb20iLCJzY3AiOiJvcGVuaWQiLCJhYXQiOiJpZGVudGl0eWtpdCIsImlzcyI6Imh0dHBzOlwvXC9pZGVudGl0eS1zYW5kYm94LnZ3Z3JvdXAuaW8iLCJqdHQiOiJhY2Nlc3NfdG9rZW4iLCJleHAiOjE1NDg2Nzc1MzksImlhdCI6MTU0ODY3MzkzOSwianRpIjoiNDU4ZmExNDgtYTc3OS00NDc1LWJiMzQtNzExZmFiZjkzODM3In0.UJKh275zYDQ1PSodCuu8S1Eik1tWoEFkD97eafs-hSLDwMPG1r784J2usufESD_J_YZEXzoUStcjs9QspaXkkHY_YRLtfgodih2wZu9BgBE5VEBRP9ec-Jj0ll_tTU9SblxuB2wnYieQfVMw1KeILAQ9iDPQhV4YDK6rsLtISsZBCzaJiIZwGJqmM7SHzrTmBZmoLWSZ-LkSySlqSJa5gykbSCN7wOBpvhgk3wy8IVGQzA4JU7W_OyNT4ge8eldqumlhcyFsYY8r7YER-_3y44ThNh3RtdXNWcArQqz_wXd5hTyIkhDP3lzjFLuwGTGvh8jVNWpob6yfkAmFeJ-4YSoh20z_LJsaFlOJNvgzrh0V-_eOuPUmr-824jNM3joACc5CBzvc-8cgH8VMtCrTCJ-sZa12h7kog0Fu5YNPhCffY_noyiZgDs2S_TYTIzvneM-wlnSd7AJiXrcC03e3_GU2rqRybGUVmf9NMI0tUAIFLHdijMTILvuXWpUmdBJOlcXZl7VqlLRvXIo1aT6exZdcvrNsKJdPAgR4DVvDvbBZpfqQfDeLqG6H9NeBkFyOMxavsRY_aVKUAUDBK3o16F6M4WPlsmK15MkbT7eKt4lBQqXSLEz2WVXDoDKn3chmV0PzaORfrNpdb8wOEpBLo6p1uOU6nwbtspSUVVnKFvc
+              refresh_token: >-
+                eyJraWQiOiIyM2I3ZTVlMTk2ODViYmE5IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiI0ZGFkNWIwNC0wMTQ5LTQwNGUtYjIxMi1mNzQyZDQ0NzUzOWUiLCJhdWQiOiJlZTlhZmEwMS1kMzg5LTQ3ZDQtYjQ1MS1kNWE3ZjJhNTQyOGZAYXBwc192dy1kaWxhYl9jb20iLCJhY3IiOiJodHRwczpcL1wvaWRlbnRpdHktc2FuZGJveC52d2dyb3VwLmlvXC9hc3N1cmFuY2VcL2xvYS0yIiwic2NwIjoib3BlbmlkIiwiYWF0IjoiaWRlbnRpdHlraXQiLCJpc3MiOiJodHRwczpcL1wvaWRlbnRpdHktc2FuZGJveC52d2dyb3VwLmlvIiwianR0IjoicmVmcmVzaF90b2tlbiIsImV4cCI6MTU4MDIwOTkzOSwiaWF0IjoxNTQ4NjczOTQwLCJqdGkiOiIzMGEzYjdhMi02NmM0LTRhN2MtOGE4ZS05NTA0MTVmZDZkNmYifQ.fPeqrgbwoznaQm2ZvULkMiKeabWSJ0KXU3aUoi20CysxyMjD4VvJX1mitVJuGAHzPvmkvFB9ll6vHL7vY4_i9ZRZrYL-8NcQTQL4r8ln-ZB9mRTMOVgW-fQUnzPJi4X_bgOf0QCWLhM1pTvHh7vrxox3Z0hdPgyxxTkt51lA7E7yLppGUncGjJF8I-lw_9qq_ZwKv6khQ1HUkIKCsAhDaEIToszFrt-1nTMfbtU7XghvzVwMuzS2_CWUGQneTPc1zc8S7K7I5nazfDE5BUX2hUovNJ4q5tsESAFHqQZuqv3EJF3A6S8jpuqP6RIFg9ld0uA_e3ZJzxnQo_ZfE52LVUwldtoQF1simaABAul8sfNL8i2ohwfgQ8IHitYuMR0Ll1UlB-UN7wHhxnVkOuFco3cPo1LVris3jFxiLhOgp1YP4vFiB_6PFJ0PwsSMGVCvN7eNw5rsAxsVSkpUFttPVhMSeqm_ccfYkgGfWXGuhw785x1krL8jUDcIbfpURMlW53I-JrCZpsJ14H3oa-qL67hH_jUkKjcsxjpBXr1uyfyGs5TvyNyafmaYZPrj1i3RjQlLhan6sCkKWkwJ4i_JDOxMXRYx9ZhwQoL7l6fye3NdNJDwnpieYwEtTupOmjeY3TXuuFcdGkbtqwbgxBemN7Ln1z_BxMmBOKbFaqk9K30
+
+# Portal
+UserResponse:
+  description: Portal User resource detail
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: '#/components/schemas/User'
+          - example:
+              id: ed3b3493-697f-4915-9906-fc29f8d33521
+              firstName: Jane
+              lastName: Doe
+              email: Jane.Doe@system4u.com
+              active: true
+              role: User
+              createdAt: '2019-06-04T10:17:08.706Z'
+              updatedAt: '2019-06-04T10:17:08.707Z'
+UserListResponse:
+  description: A list of Portal User
+  content:
+    application/json:
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/User'
+        example:
+          - id: ed3b3493-697f-4915-9906-fc29f8d33521
+            firstName: Jane
+            lastName: Doe
+            email: Jane.Doe@system4u.com
+            active: true
+            role: User
+            createdAt: '2019-06-04T10:17:08.706Z'
+            updatedAt: '2019-06-04T10:17:08.707Z'
+          - id: 3d5fff4d-1724-4220-aa8e-c5c19abff139
+            firstName: Deve
+            lastName: Adminowitch
+            email: adminowitch@system4u.com
+            active: true
+            role: Admin
+            createdAt: '2019-06-04T10:17:08.706Z'
+            updatedAt: '2019-06-04T10:17:08.707Z'
+
+UserInfoResponse:
+  description: Current user inforamation.
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: '#/components/schemas/User'
+          - example:
+              id: 1
+              firstName: Jane
+              lastName: Doe
+              email: Jane.Doe@system4u.com
+              active: true
+              role: User
+              createdAt: '2019-06-04T10:17:08.706Z'
+              updatedAt: '2019-06-04T10:17:08.707Z'
+
+# Errors 40x
+40x_UnauthenticatedErrorBearer:
+  description: Access token is missing or invalid
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Error message
+          details:
+            type: string
+            description: Error description
+        example:
+          message: not.authenticated
+          details: Error details..
+
+40x_UnauthenticatedErrorApiKey:
+  description: API key is missing or invalid
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Error message
+          details:
+            type: string
+            description: Error description
+        example:
+          message: not.authenticated
+          details: Error details..
+
+40x_Unauthorized:
+  description: Not Authorized
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Error message
+          details:
+            type: string
+            description: Error description
+        example:
+          message: not.authorized
+          details: Error details..
+
+40x_BadRequest:
+  description: Bad Request.
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+          details:
+            type: string
+        example:
+          message: bad.request
+          details: Error details..
+
+40x_Conflict:
+  description: Conflict.
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+          details:
+            type: string
+        example:
+          message: conflict
+          details: Error details..
+
+40x_NotFound:
+  description: Not Found.
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+          details:
+            type: string
+        example:
+          message: not.found
+          details: Error details..
+
+40x_UnauthenticatedErrorBasic:
+  description: Authentication information is missing or invalid
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          status:
+            type: integer
+            format: int32
+            description: Status code
+          message:
+            type: string
+            description: Status message
+        example:
+          status: 401
+          message: Unauthorized
+
+40x_UnauthenticatedTokenApi:
+  description: User not found in DB
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Error message
+          details:
+            type: string
+            description: Error description
+        example:
+          message: not.authenticated
+          details: User not Found
+
+# Errors 50x
+500_InternalServerError:
+  description: Internal Server Error.
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+          details:
+            type: string
+        example:
+          message: error
+          details: Internal Server Error

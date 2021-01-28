@@ -1,0 +1,20 @@
+import logOutUnbound from './logOut';
+import axios from 'axios';
+import { _do } from 'utils/either';
+import * as sniff from 'supersniff';
+import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
+
+require('dotenv').config();
+
+const ID_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJIWGVGRHB6azRHbXduMzdUZ2djRWh5VDhVYmk3ZUZBVExjNklfampfcWJNIn0.eyJleHAiOjE2MTA0Nzc4NzUsImlhdCI6MTYxMDQ3NzU3NSwiYXV0aF90aW1lIjoxNjEwNDc3NDM2LCJqdGkiOiIxMTg1YTA4ZC1lMjQxLTQ1YzYtODEyZi01Y2E3OTAzYTAwY2QiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgxMDEvYXV0aC9yZWFsbXMvZGVtbyIsImF1ZCI6InNlcnZlciIsInN1YiI6ImQwYmMwOGM3LWYyYmYtNGVjMi1iZjJlLTBiMmM0MDljNmM1MyIsInR5cCI6IklEIiwiYXpwIjoic2VydmVyIiwibm9uY2UiOiIxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMiIsInNlc3Npb25fc3RhdGUiOiJjNzdhZjlkMC05ODAzLTQ5NDgtOGUyZS1hMTA4MjA1NDViZTkiLCJhY3IiOiIxIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJKw6FuIENocnRpYW5za8O9IiwicHJlZmVycmVkX3VzZXJuYW1lIjoiamFuLmNocnRpYW5za3lAZ21haWwuY29tIiwiZ2l2ZW5fbmFtZSI6IkrDoW4iLCJmYW1pbHlfbmFtZSI6IkNocnRpYW5za8O9IiwiZW1haWwiOiJqYW4uY2hydGlhbnNreUBnbWFpbC5jb20ifQ.ZwbCZN8LuomDln4qBHu0mkOoEIp2_pQRJeXEbUqUCAH-luXFeOoblxYw1OioSsQ3Xicz61MSiRbf3WQD95jGhqvReUhSVbq5uBNI4GQJwAuhWaNyGt6d_7qVy7tj1RDXr2HCaXj7JClUjdEz0igKYibJr7iJwtBOStYP1sRTMpUhkkpEmSCTuN3Pfg0BXBy4Whm-WSFLRMjtfNM7rpCHwmIy81OrMa5mMsY7Os-sXTUC4qW0rYECg_y7Omj96d4O7gr4K48IRs80WN5szX3CO-16v3KG0k-g2kRQV8hGc_3wPfDruXiMPCIj0VC5Z0qVBEi0ATWbZotTc8KkHmQHMg';
+const config: ISSOConfig = {
+  ssoEndSessionEndpoint: process.env.SSO_END_SESSION_ENDPOINT,
+} as ISSOConfig;
+
+logOutUnbound
+  .apply(null, [axios.create(), config])
+  .apply(null, [ID_TOKEN])
+  .then(_do({
+    right: sniff,
+    left: sniff
+  }));

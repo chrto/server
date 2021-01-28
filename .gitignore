@@ -1,0 +1,14 @@
+node_modules
+coverage
+dist
+.env
+.vscode
+.editorconfig
+
+logs
+
+# SQLite storage
+storage/**
+
+# Support for macOS
+.DS_STORE

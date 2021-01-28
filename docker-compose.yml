@@ -1,0 +1,44 @@
+version: "3"
+services:
+  server:
+    image: demo/server
+    container_name: server
+    build:
+      context: ./
+    networks:
+      - demo-network
+    volumes:
+      - ./storage:/home/node/app/storage
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+
+  swagger-ui:
+    image: shotat/swagger-ui-watcher
+    container_name: swagger-ui
+    networks:
+      - demo-network
+    ports:
+      - "8103:8000"
+    volumes:
+      - ./docs:/docs
+    command: ["/docs/api/index.yaml"]
+
+  keycloak:
+    image: jboss/keycloak
+    container_name: keycloak
+    networks:
+      - demo-network
+    ports:
+      - "8101:8080"
+    environment:
+      - KEYCLOAK_USER
+      - KEYCLOAK_PASSWORD
+      - KEYCLOAK_IMPORT=/tmp/realm-demo.json
+    volumes:
+       - ./dockers/sso/realm-demo.json:/tmp/realm-demo.json
+networks:
+  demo-network:
+    driver: bridge

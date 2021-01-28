@@ -1,0 +1,158 @@
+openapi: 3.0.0
+servers:
+  - url: "http://{server}:{port}/api/v1"
+    description: Development local server
+    variables:
+      server:
+        default: localhost
+      port:
+        default: "8000"
+
+info:
+  version: 1.0.0
+  title:  Demo API server
+  description: |
+    API Interface to Demo.
+  contact:
+    name: Ján Chrtianský
+    email: jan.chrtiansky@gmail.com
+    url: ""
+paths:
+  $ref: ./paths.yaml
+components:
+  parameters:
+    auth_code:
+      in: query
+      name: auth_code
+      description: >-
+        The Authorization Code received from the initial authorize call.
+        Authorization Code is used to get Access Tokens, Refresh Tokens and
+        ID Tokens. The auth-code expires after a very short time
+      required: true
+      schema:
+        type: string
+
+    refresh_token:
+      in: query
+      name: refresh_token
+      description: >-
+        The Authorization Code received from the initial authorize call.
+        Authorization Code is used to get Access Tokens, Refresh Tokens and
+        ID Tokens. The auth-code expires after a very short time
+      required: true
+      schema:
+        type: string
+
+    uuid:
+      name: id
+      in: path
+      schema:
+        type: string
+        format: uuid
+        example: '11111111-1111-1111-1111-111111111111'
+      required: true
+      description: Resource ID in UUID format
+
+  schemas:
+    UUID:
+      type: string
+      format: uuid
+    URI:
+      type: string
+      format: uri
+    EMAIL:
+      type: string
+      format: email
+    DATE:
+      type: string
+      format: date-time
+    CREDS:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    # Global
+    Status:
+      type: object
+      properties:
+        buildNumber:
+          type: string
+        version:
+          type: string
+        host:
+          type: string
+        db:
+          type: string
+          enum: [up, down]
+        services:
+          type: object
+          properties:
+            azureAD:
+              type: boolean
+            mdm:
+              type: boolean
+            msGraph:
+              type: boolean
+        allSystemsWorking:
+          type: boolean
+    # Token
+    TokenSet:
+      type: object
+      properties:
+        token_type:
+          type: string
+          description: >-
+            The access token type provides the client with the information
+            required to successfully utilize the access token to make a
+            protected resource request.
+        expires_in:
+          type: string
+          description: The lifetime in seconds of the access token.
+        id_token:
+          type: string
+          description: An id_token gives information about the authenticated user.
+        access_token:
+          type: string
+          description: An access_token gives access to protected resources and services.
+        refresh_token:
+          type: string
+          description: >-
+            An refresh_tokens can be used to get a new set of id_token and
+            access_token. This is useful because id_token and access_token
+            expire after a short time.
+
+    User:
+      type: object
+      properties:
+        id:
+          allOf:
+            - $ref: '#/components/schemas/UUID'
+            - description: 'Unique identification of the portal user.'
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          $ref: '#/components/schemas/EMAIL'
+        active:
+          type: boolean
+        role:
+          type: string
+          enum: [User, Admin]
+        createdAt:
+          $ref: '#/components/schemas/DATE'
+        updatedAt:
+          $ref: '#/components/schemas/DATE'
+
+  responses:
+    $ref: ./responses.yaml
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
