@@ -3,7 +3,7 @@ import { Either } from 'tsmonad';
 import { NotFound } from 'common/httpErrors';
 import { User } from 'model/sequelize/user/user';
 import { AppError } from 'common/error';
-import { UserItems, UserRequired } from 'model/sequelize/user/user.types';
+import { UserRequired } from 'model/sequelize/user/user.types';
 import { TransactionContext } from 'model/sequelize/modelFactory/modelFactory.types';
 
 import { create, destroy, findAll, findByPk, findOne, sanitizeEntity, update } from './common/modelHelper';
@@ -13,7 +13,7 @@ export interface UserService {
   getUserByEmail: (context?: TransactionContext) => (email: string) => Promise<Either<AppError, User>>;
   getUsers: (context?: TransactionContext) => (where?: WhereOptions, order?: Order) => Promise<Either<AppError, User[]>>;
   createUser: (context?: TransactionContext) => (userReq: UserRequired) => Promise<Either<AppError, User>>;
-  updateUser: (context?: TransactionContext) => (user: UserItems) => Promise<Either<AppError, User>>;
+  updateUser: (context?: TransactionContext) => (user: User) => Promise<Either<AppError, User>>;
   deleteUser: (context?: TransactionContext) => (user: User) => Promise<Either<AppError, number>>;
 }
 
