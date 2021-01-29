@@ -13,7 +13,7 @@ it('TODO', () => undefined);
 // import { UserRole } from 'model/sequelize/user/user.types';
 // import { TransactionContext } from 'model/sequelize/modelFactory/pluginSdkModel.types';
 
-// const EMAIL_REGISTERED = 'name.surname@system4u.com';
+// const EMAIL_REGISTERED = 'name.surname@company.com';
 // const EMAIL_NOT_REGISTERED = 'name.surname@company.com';
 
 // const loggedInAdmin: PortalUser = {

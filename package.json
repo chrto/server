@@ -1,14 +1,14 @@
 {
-  "name": "intune-device-onboarding-tool-api",
-  "author": "System4u a.s., Jan Chrtiansky <jan.chrtiansky@system4u.com>",
+  "name": "demo-server",
+  "author": "Jan Chrtiansky <jan.chrtiansky@gmail.com>",
   "license": "UNLICENSED",
-  "homepage": "www.system4u.com",
-  "version": "0.0.2-alpha.0",
+  "homepage": "",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "git@github.com:System4uDev/IDOT_API.git"
+    "url": "git@github.com:chrto/server.git"
   },
-  "description": "Intune Device Onboarding Tool API server",
+  "description": "Demo API Server",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -21,9 +21,9 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "copy:web.config": "shx cp web.config ./dist",
-    "docker:build": "npm run build && docker build -f ./deployment/server/Dockerfile -t system4u/idot-api .",
-    "docker:start:api": "npm run docker:build && docker run --rm -it -v $PWD/etc:/home/node/app/etc -v $PWD/storage:/home/node/app/storage -p 8180:8000 -p 8181:8001 --name \"idot-api\" -d system4u/idot-api",
-    "docker:stop:api": "(docker stop idot-api || echo .) && (docker rm idot-api || echo .) && docker rmi system4u/idot-api",
+    "docker:build": "npm run build && docker build -f ./deployment/server/Dockerfile -t demo/server .",
+    "docker:start:api": "npm run docker:build && docker run --rm -it -v $PWD/etc:/home/node/app/etc -v $PWD/storage:/home/node/app/storage -p 8180:8000 -p 8181:8001 --name \"server\" -d demo/server",
+    "docker:stop:api": "(docker stop server || echo .) && (docker rm server || echo .) && docker rmi demo/server",
     "docker:compose:up:dev": "docker-compose up --detach swagger-ui keycloak",
     "docker:compose:down": "docker-compose down",
     "prune": "ts-prune",
