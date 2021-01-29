@@ -6,7 +6,7 @@ import { AppError } from 'common/error';
 import { UserRole } from 'model/sequelize/user/user.types';
 
 const body: UserBodyPOST = {
-  email: 'jon.doe@system4u.com',
+  email: 'jon.doe@company.com',
   role: UserRole.Admin,
   active: true
 } as UserBodyPOST;
