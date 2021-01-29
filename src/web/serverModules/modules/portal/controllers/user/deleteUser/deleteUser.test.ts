@@ -13,8 +13,6 @@ import { NotAuthorized } from 'common/httpErrors';
 
 import logger from 'utils/logger';
 
-
-
 const USER_REQUIRED: UserItems = {
   id: '3a2cffc9-1fc5-4a05-87d8-8411cd4f920c',
   firstName: 'Joe',
@@ -46,7 +44,7 @@ describe('Web Server', () => {
             let result: Either<AppError, DeletedUser>;
 
             beforeAll(async () => {
-              logger.error = (_) => logger // disable logger
+              logger.error = (_) => logger; // disable logger
 
               sequelize = new Sequelize(null, null, null, { dialect: DEFAULT_DB_DIALECT });
               initUserModel(sequelize);

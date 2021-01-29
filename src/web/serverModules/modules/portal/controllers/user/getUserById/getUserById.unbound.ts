@@ -10,6 +10,6 @@ import { RequestImplicits } from '../../../paramHandlers/paramHandlers.types';
 
 export default (
   sanitizeEntity: Fcn<[Model<PortalUser>], any>
-) => async (ctx: PortalContext, _req: AppRequest<unknown, unknown, unknown, RequestImplicits>, _res: Response): Promise<Either<AppError, PortalUser>> =>
+) => async (ctx: PortalContext, _req: AppRequest<unknown, unknown, PortalUser, RequestImplicits>, _res: Response): Promise<Either<AppError, PortalUser>> =>
     Either.right<AppError, PortalUser>(ctx.implicits.user)
       .lift(sanitizeEntity);

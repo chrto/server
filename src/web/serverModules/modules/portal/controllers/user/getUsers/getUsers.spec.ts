@@ -14,7 +14,6 @@ const USER_REQUIRED: UserRequired = {
   email: 'joe.doe@company.com'
 };
 
-
 describe('Web Server', () => {
   describe('Modules', () => {
     describe('Portal', () => {

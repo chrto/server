@@ -28,7 +28,7 @@ describe('utils', () => {
               expectChai(obj)
                 .to.be.deep.equal(obj),
             left: (error) => fail(`Left side has not been expected: ${error.message}`)
-          })
+          });
       });
 
       it(`Should return Either with exact error in left side, if validation has not been passed`, () => {
@@ -41,9 +41,9 @@ describe('utils', () => {
               expectChai(error)
                 .to.be.instanceOf(NotAuthorized);
               expectChai(error.message)
-                .to.be.equal('following required properties are missing in request: b')
+                .to.be.equal('following required properties are missing in request: b');
             }
-          })
+          });
       });
 
       it(`Should return Either with default error in left side, if validation has not been passed and error has not been specified`, () => {
@@ -56,9 +56,9 @@ describe('utils', () => {
               expectChai(error)
                 .to.be.instanceOf(InvalidInput);
               expectChai(error.message)
-                .to.be.equal('following required properties are missing in request: b')
+                .to.be.equal('following required properties are missing in request: b');
             }
-          })
+          });
       });
     });
   });

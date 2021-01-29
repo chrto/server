@@ -1,4 +1,4 @@
-it('', ()=> {});
+it('', () => { });
 // import moduleDefinitionUnbound from './moduleDefinition.unbound';
 // import { expect as expectChai } from 'chai';
 // import { PluginSdkService } from 'service/serviceFactory/serviceFactory.types';
