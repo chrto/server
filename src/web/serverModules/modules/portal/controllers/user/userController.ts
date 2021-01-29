@@ -4,8 +4,9 @@ import deleteUser from './deleteUser/deleteUser';
 import updateUser from './updateUser/updateUser';
 import getUsers from './getUsers/getUsers';
 import createUser from './createUser/createUser';
+import { UserController } from './userController.types';
 
-export default ({ userService }: PluginSdkService) =>
+export default ({ userService }: PluginSdkService): UserController =>
 ({
   getUserById,
   deleteUser,
