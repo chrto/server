@@ -5,7 +5,7 @@ import { Fcn } from 'common/types';
 import { NextFunction, RequestHandler } from 'express';
 import { TransactionContext } from 'model/sequelize/modelFactory/modelFactory.types';
 import { User as UserModel } from 'model/sequelize/user/user';
-import { UserService } from 'service/sequelize/userService';
+import { UserService } from 'service/sequelize/userService/userService';
 import { Either } from 'tsmonad';
 import { AppRequest } from 'web/serverModules/types';
 import { PluginSdkService } from 'service/serviceFactory/serviceFactory.types';

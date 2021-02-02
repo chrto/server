@@ -8,7 +8,7 @@ import { Either } from 'tsmonad';
 import { AppError } from 'common/error';
 import { DeletedUser } from './deleteUser.types';
 import differentEntity from 'web/serverModules/common/authorization/validators/differentEntity/differentEntity';
-import userService from 'service/sequelize/userService';
+import userService from 'service/sequelize/userService/userService';
 import { NotAuthorized } from 'common/httpErrors';
 
 import logger from 'utils/logger';

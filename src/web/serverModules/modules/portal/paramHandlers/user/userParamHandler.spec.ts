@@ -2,7 +2,7 @@ import userParamHandlerUnbound from './userParamHandler.unbound';
 import { AppError } from 'common/error';
 import { NextFunction, Response } from 'express';
 import { User } from 'model/sequelize/user/user';
-import { UserService } from 'service/sequelize/userService';
+import { UserService } from 'service/sequelize/userService/userService';
 import { Either } from 'tsmonad';
 import { AppRequest } from 'web/serverModules/types';
 import { RequestImplicits } from '../paramHandlers.types';

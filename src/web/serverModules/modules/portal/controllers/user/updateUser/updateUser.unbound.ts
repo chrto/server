@@ -1,5 +1,5 @@
 import { asyncBind, bind, eitherify, lift } from 'utils/either';
-import { UserService } from 'service/sequelize/userService';
+import { UserService } from 'service/sequelize/userService/userService';
 import { Response } from 'express';
 import { Either } from 'tsmonad';
 import { User as PortalUser } from 'model/sequelize/user/user';

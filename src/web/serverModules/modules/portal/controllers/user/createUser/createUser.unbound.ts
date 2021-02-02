@@ -2,7 +2,7 @@ import { asyncBind, bind, lift } from 'utils/either';
 
 import { Either } from 'tsmonad';
 import { Response } from 'express';
-import { UserService } from 'service/sequelize/userService';
+import { UserService } from 'service/sequelize/userService/userService';
 import { AppRequest } from 'web/serverModules/types';
 import { Context as PortalContext } from './../../../context/context.types';
 import { UserBody } from './createUser.types';

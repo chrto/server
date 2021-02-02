@@ -6,7 +6,7 @@ import { AppError } from 'common/error';
 import { UserRequired } from 'model/sequelize/user/user.types';
 import { TransactionContext } from 'model/sequelize/modelFactory/modelFactory.types';
 
-import { create, destroy, findAll, findByPk, findOne, sanitizeEntity, update } from './common/modelHelper';
+import { create, destroy, findAll, findByPk, findOne, sanitizeEntity, update } from '../common/modelHelper';
 
 export interface UserService {
   getUserById: (context?: TransactionContext) => (id: string) => Promise<Either<AppError, User>>;

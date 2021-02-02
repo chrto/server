@@ -10,7 +10,7 @@ import { AppError } from 'common/error';
 import { Either } from 'tsmonad';
 import { AppRequest } from 'web/serverModules/types';
 import { RequestImplicits } from '../../../paramHandlers/paramHandlers.types';
-import { UserService } from 'service/sequelize/userService';
+import { UserService } from 'service/sequelize/userService/userService';
 import { Fcn } from 'common/types';
 import { NotFound } from 'common/httpErrors';
 
