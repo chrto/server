@@ -9,7 +9,7 @@ import { UserController } from './userController.types';
 export default ({ userService }: PluginSdkService): UserController =>
 ({
   getUserById,
-  deleteUser,
+  deleteUser: deleteUser(userService),
   updateUser: updateUser(userService),
   getUsers: getUsers(userService),
   createUser: createUser(userService)
