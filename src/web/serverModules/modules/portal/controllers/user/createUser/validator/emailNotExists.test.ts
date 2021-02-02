@@ -3,10 +3,10 @@ import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { User } from 'model/sequelize/user/user';
 import { Either } from 'tsmonad';
-import { UserService } from 'service/sequelize/userService/userService';
 import { UserBody } from '../createUser.types';
 import { _do } from 'utils/either';
 import { Conflict, NotFound } from 'common/httpErrors';
+import { UserService } from 'service/sequelize/userService/userService.types';
 
 const USER: User = {
   email: 'joe.doe@company.com'

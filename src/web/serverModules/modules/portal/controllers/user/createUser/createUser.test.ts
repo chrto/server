@@ -9,7 +9,7 @@ import { AppError } from 'common/error';
 import { Either } from 'tsmonad';
 import { AppRequest } from 'web/serverModules/types';
 import { RequestImplicits } from '../../../paramHandlers/paramHandlers.types';
-import { UserService } from 'service/sequelize/userService/userService';
+import { UserService } from 'service/sequelize/userService/userService.types';
 import { Conflict, InvalidInput, NotFound } from 'common/httpErrors';
 import bodyValidator from './validator/bodyValidator';
 import emailNotExists from './validator/emailNotExists';

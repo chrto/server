@@ -5,7 +5,7 @@ import { Fcn } from 'common/types';
 
 import sdkStartStopFactory from './sdkStartStop/sdkStartStop';
 import sdkTransactionFactory from './sdkTransaction/sdkTransaction';
-import { UserService } from '../sequelize/userService/userService';
+import { UserService } from '../sequelize/userService/userService.types';
 import { PluginSdkService } from './serviceFactory.types';
 import { AuthenticationService } from '../http/authentication/types';
 

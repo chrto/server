@@ -8,7 +8,7 @@ import { Context as PortalContext } from './../../../context/context.types';
 import { asyncBind, bind, lift, makeSure } from 'utils/either';
 import { NotAuthorized } from 'common/httpErrors';
 import { Fcn } from 'common/types';
-import { UserService } from 'service/sequelize/userService/userService';
+import { UserService } from 'service/sequelize/userService/userService.types';
 
 export default (isDifferentUser: Fcn<[PortalUser, PortalUser], boolean>) =>
   ({ deleteUser }: UserService) =>

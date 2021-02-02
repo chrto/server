@@ -4,7 +4,7 @@ import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types'
 
 import pluginSdkServiceUnbound from './serviceFactory.unbound';
 import { AuthenticationService } from '../http/authentication/types';
-import { UserService } from '../sequelize/userService/userService';
+import { UserService } from '../sequelize/userService/userService.types';
 import { PluginSdkService } from './serviceFactory.types';
 
 describe(`service`, () => {

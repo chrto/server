@@ -7,15 +7,8 @@ import { UserRequired } from 'model/sequelize/user/user.types';
 import { TransactionContext } from 'model/sequelize/modelFactory/modelFactory.types';
 
 import { create, destroy, findAll, findByPk, findOne, sanitizeEntity, update } from '../common/modelHelper';
+import { SequelizeIncludes } from '../types';
 
-export interface UserService {
-  getUserById: (context?: TransactionContext) => (id: string) => Promise<Either<AppError, User>>;
-  getUserByEmail: (context?: TransactionContext) => (email: string) => Promise<Either<AppError, User>>;
-  getUsers: (context?: TransactionContext) => (where?: WhereOptions, order?: Order) => Promise<Either<AppError, User[]>>;
-  createUser: (context?: TransactionContext) => (userReq: UserRequired) => Promise<Either<AppError, User>>;
-  updateUser: (context?: TransactionContext) => (user: User) => Promise<Either<AppError, User>>;
-  deleteUser: (context?: TransactionContext) => (user: User) => Promise<Either<AppError, number>>;
-}
 
 export default () => {
   const includes = {
@@ -23,14 +16,7 @@ export default () => {
   };
 
   return {
-    getUserById: (context?: TransactionContext) =>
-      async (id: string): Promise<Either<AppError, User>> =>
-        findByPk<User>(
-          User,
-          id,
-          { ...includes, ...context },
-          new NotFound(`Cannot find user identified by id = '${id}'`)
-        ),
+    getUserById: getUserById(includes),
     getUserByEmail: (context?: TransactionContext) =>
       async (email: string): Promise<Either<AppError, User>> =>
         findOne<User>(

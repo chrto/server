@@ -1,4 +1,4 @@
-import { UserService } from 'service/sequelize/userService/userService';
+import { UserService } from 'service/sequelize/userService/userService.types';
 import { Response } from 'express';
 import { AppRequest } from 'web/serverModules/types';
 import { Context as PortalContext } from './../../../context/context.types';
