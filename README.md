@@ -28,12 +28,12 @@ Project can be customized using ENV variables:
 | SSO_TOKEN_ENDPOINT          | http://localhost:8101/auth/realms/demo/protocol/openid-connect/token      |                                                 |
 | SSO_END_SESSION_ENDPOINT    | http://localhost:8101/auth/realms/demo/protocol/openid-connect/logout     |                                                 |
 | SSO_CLIENT_ID               | server                                                                    |                                                 |
-| SSO_CLIENT_SECRET           |                                                                           |                                                 |
+| SSO_CLIENT_SECRET           | 155bca8c-5c95-4f40-a084-8f0025b0456b                                      |                                                 |
 | SSO_REDIRECT_URI            | http://localhost:8080/callback                                            |                                                 |
 | SSO_HASH_ALG                | RS256                                                                     |                                                 |
 |                             |                                                                           |                                                 |
-| KEYCLOAK_USER               |                                                                           | Keycloak admin user                             |
-| KEYCLOAK_PASSWORD           |                                                                           | Keycloak admin passwd                           |
+| KEYCLOAK_USER               | admin                                                                     | Keycloak admin user                             |
+| KEYCLOAK_PASSWORD           | Admin-123                                                                 | Keycloak admin passwd                           |
 
 ## Run server in development mode
 ```
@@ -77,6 +77,10 @@ We use several backend services for development
 | [localhost:8103](localhost:8103) | Swagger UI     | Swagger editor                           |
 | [localhost:8101](localhost:8101) | Keycloak       | Keycloak SSO Issuer                      |
 
+Keycloak is used as identity manager for development purpose. There is configured default client whit id `server` and secret `155bca8c-5c95-4f40-a084-8f0025b0456b`. You can login to administration console with account `admin/Admin-123`. You can change this settings in `.env` file, which is in project root derectory. 
+There are registered two default users in Keycloak. You can change them in `./dockers/sso/realm-demo.json` file, or in administration console.
+ - admin.adminovic@company.com/Adminovic-123 (as Admin)
+ - joe.doe@company.com/Doe-123 (as User)
 ## Documentation
 
 Documetation is in OpenAPI 3.0 format and it resides in [index.yaml](./docs/api/index.yaml). You can use provided swagger-ui running on [localhost:8103](http://localhost:8103).
