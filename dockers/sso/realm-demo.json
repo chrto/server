@@ -6,10 +6,10 @@
   "notBefore" : 0,
   "revokeRefreshToken" : false,
   "refreshTokenMaxReuse" : 0,
-  "accessTokenLifespan" : 300,
+  "accessTokenLifespan" : 7200,
   "accessTokenLifespanForImplicitFlow" : 900,
-  "ssoSessionIdleTimeout" : 1800,
-  "ssoSessionMaxLifespan" : 36000,
+  "ssoSessionIdleTimeout" : 86400,
+  "ssoSessionMaxLifespan" : 100000,
   "ssoSessionIdleTimeoutRememberMe" : 0,
   "ssoSessionMaxLifespanRememberMe" : 0,
   "offlineSessionIdleTimeout" : 2592000,
@@ -336,22 +336,18 @@
   "users" : [ {
     "id" : "d0bc08c7-f2bf-4ec2-bf2e-0b2c409c6c53",
     "createdTimestamp" : 1603967905281,
-    "username" : "jan.chrtiansky@gmail.com",
+    "username" : "admin.adminovic@company.com",
     "enabled" : true,
     "totp" : false,
     "emailVerified" : true,
-    "firstName" : "Ján",
-    "lastName" : "Chrtianský",
-    "email" : "jan.chrtiansky@gmail.com",
-    "credentials" : [ {
-      "id" : "f01f0e0a-0a6a-45a2-ac7e-1d791e69e652",
-      "type" : "password",
-      "createdDate" : 1603967929191,
-      "secretData" : "{\"value\":\"kzPyneq9a14BjLC5RU+rEDIT70dfwwh5Pm5f+iAu3ygYs3gQ23mm9l+z7Q2k4JfxBKWMTe2idwhA+/5ab491xg==\",\"salt\":\"luzAbtCr++tAB1RoBXcWHw==\"}",
-      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
-    } ],
+    "firstName" : "Admin",
+    "lastName" : "Adminovic",
+    "email" : "admin.adminovic@company.com",
+    "credentials" : [
+      { "type" : "password",
+        "value" : "Adminovic-123" }
+  ],
     "disableableCredentialTypes" : [ ],
-    "requiredActions" : [ "UPDATE_PASSWORD" ],
     "realmRoles" : [ "offline_access", "uma_authorization" ],
     "clientRoles" : {
       "account" : [ "view-profile", "manage-account" ]
@@ -361,22 +357,18 @@
   }, {
     "id" : "762e92c8-76f7-4c47-b6e7-5f203ee7cae6",
     "createdTimestamp" : 1603968234807,
-    "username" : "joe.doe@gmail.com",
+    "username" : "joe.doe@company.com",
     "enabled" : true,
     "totp" : false,
     "emailVerified" : false,
     "firstName" : "Joe",
     "lastName" : "Doe",
-    "email" : "joe.doe@gmail.com",
-    "credentials" : [ {
-      "id" : "15bdf345-4773-4f22-b4da-1b40fdfc71d5",
-      "type" : "password",
-      "createdDate" : 1603968255834,
-      "secretData" : "{\"value\":\"0mUuLFGnDjTCGRHeJFl/IHqUHSOVFr1YCDQGGfrKfaMBGI+fkaIBHtdJ2Dz4WJ9P8NpoxsJMv5/IE2n3QzJyzw==\",\"salt\":\"H2FYthwiTqAKix/ANALHgQ==\"}",
-      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
-    } ],
+    "email" : "joe.doe@company.com",
+    "credentials" : [
+      { "type" : "password",
+        "value" : "Doe-123" }
+  ],
     "disableableCredentialTypes" : [ ],
-    "requiredActions" : [ "UPDATE_PASSWORD" ],
     "realmRoles" : [ "offline_access", "uma_authorization" ],
     "clientRoles" : {
       "account" : [ "view-profile", "manage-account" ]
@@ -597,7 +589,7 @@
     "enabled" : true,
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
-    "secret" : "**********",
+    "secret" : "155bca8c-5c95-4f40-a084-8f0025b0456b",
     "redirectUris" : [ "http://localhost:8080/callback" ],
     "webOrigins" : [ ],
     "notBefore" : 0,

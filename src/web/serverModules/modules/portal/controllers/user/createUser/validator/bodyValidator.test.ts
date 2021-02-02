@@ -9,7 +9,7 @@ import { InvalidInput } from 'common/httpErrors';
 const BODY: UserBody = {
   firstName: 'Joe',
   lastName: 'Doe',
-  email: 'jon.doe@system4u.com',
+  email: 'joe.doe@company.com',
   role: UserRole.Admin,
   active: true
 };
