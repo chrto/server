@@ -589,7 +589,7 @@
     "enabled" : true,
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
-    "secret" : "**********",
+    "secret" : "155bca8c-5c95-4f40-a084-8f0025b0456b",
     "redirectUris" : [ "http://localhost:8080/callback" ],
     "webOrigins" : [ ],
     "notBefore" : 0,
