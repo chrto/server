@@ -2,7 +2,7 @@ import loadUserJWTUnbound from './loadUserJWT.unbound';
 import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { Fcn } from 'common/types';
-import { NextFunction } from 'express';
+import { NextFunction, RequestHandler } from 'express';
 import { TransactionContext } from 'model/sequelize/modelFactory/modelFactory.types';
 import { User as UserModel } from 'model/sequelize/user/user';
 import { UserService } from 'service/sequelize/userService';
@@ -10,6 +10,7 @@ import { Either } from 'tsmonad';
 import { AppRequest } from 'web/serverModules/types';
 import { PluginSdkService } from 'service/serviceFactory/serviceFactory.types';
 import { InternalServerError, NotAuthorized, NotFound } from 'common/httpErrors';
+import { MiddlewareFactory } from '../middlewares.types';
 
 const USERNAME: string = 'joe.doe@company.com';
 
@@ -22,10 +23,10 @@ describe(`Test 'web' module`, () => {
         let userService: UserService = {} as UserService;
         let getUserByEmail: Fcn<[string], Promise<Either<AppError, UserModel>>>;
         let nextFcn: NextFunction;
-        let loadUserJWT: Fcn<[PluginSdkService], (req: AppRequest<unknown, unknown, UserModel>, _res: Response, next: NextFunction) => Promise<void>>;
+        let loadUserJWT: MiddlewareFactory<PluginSdkService, RequestHandler>;
 
         beforeAll(() => {
-          logger = jest.fn().mockImplementation(<E>(e: E): E => e);
+          logger = jest.fn().mockImplementation(<E> (e: E): E => e);
           logError = jest.fn().mockImplementation((_message: string) => logger);
           nextFcn = jest.fn().mockReturnValue(null);
           loadUserJWT = loadUserJWTUnbound.apply(null, [logError]);

@@ -1,0 +1,163 @@
+import updateUserUnbound from './updateUser.unbound';
+import bodyValidator from './validator/bodyValidator';
+import authorizationValidator from './validator/authorizationValidator';
+import { sanitizeEntity } from 'service/sequelize/common/modelHelper';
+import userFactory from 'model/sequelize/user/factory/userFactory';
+import initUserModel, { User } from 'model/sequelize/user/user';
+import { UserRequired, UserRole } from 'model/sequelize/user/user.types';
+import { Sequelize } from 'sequelize';
+import { DEFAULT_DB_DIALECT } from 'src/defaults';
+import { Context } from '../../../context/context.types';
+import { UserBody } from './updateUser.types';
+import { AppError } from 'common/error';
+import { Either } from 'tsmonad';
+import { AppRequest } from 'web/serverModules/types';
+import { RequestImplicits } from '../../../paramHandlers/paramHandlers.types';
+import { expect as expectChai } from 'chai';
+import { InvalidInput, NotAuthorized } from 'common/httpErrors';
+
+type AppReq = AppRequest<unknown, UserBody, User, RequestImplicits>;
+
+const USER_REQUIRED: UserRequired = {
+  firstName: 'Joe',
+  lastName: 'Doe',
+  email: 'joe.doe@company.com'
+};
+
+const ADMIN_REQUIRED: UserRequired = {
+  firstName: 'Admin',
+  lastName: 'Adminovic',
+  email: 'admin.adminovic@company.com',
+  role: UserRole.Admin
+};
+
+const buildUser = (items: UserRequired) => userFactory(items)
+  .lift(userReq => User.build(userReq))
+  .caseOf({ right: (user) => user });
+
+describe('Web Server', () => {
+  describe('Modules', () => {
+    describe('Portal', () => {
+      describe('controller', () => {
+        describe('user controller', () => {
+          describe('update user by id', () => {
+            let sequelize: Sequelize;
+            let user: User;
+            let currentUser: User;
+            let context: Context;
+            let req: AppReq;
+            let body: UserBody;
+
+            let userService;
+            let updateUserExecutor: jest.Mock<Promise<Either<AppError, User>>, [User]>;
+            let result: Either<AppError, User>;
+
+            beforeAll(() => {
+              sequelize = new Sequelize(null, null, null, { dialect: DEFAULT_DB_DIALECT });
+              initUserModel(sequelize);
+              user = buildUser(USER_REQUIRED);
+              updateUserExecutor = jest.fn().mockResolvedValue(Either.right(user));
+
+              userService = {
+                updateUser: jest.fn().mockImplementation(() => updateUserExecutor)
+              };
+            });
+
+            describe(`Happy path`, () => {
+              beforeAll(async () => {
+                currentUser = buildUser(ADMIN_REQUIRED);
+                body = {
+                  firstName: 'Jon',
+                  lastName: 'Black',
+                  active: false
+                };
+
+                req = { implicits: { user }, currentUser, body } as AppReq;
+                context = { implicits: req.implicits, loggedInUser: req.currentUser };
+
+                result = await updateUserUnbound
+                  .apply(null, [bodyValidator, authorizationValidator, sanitizeEntity])
+                  .apply(null, [userService])
+                  .apply(null, [context, req, null]);
+              });
+
+              it(`Should resolve with exact Either right side`, () => {
+                result.do({
+                  right: (user: User) =>
+                    expectChai(user)
+                      .to.be.an({}.constructor.name)
+                      .which.is.deep.equal({ ...user, ...body }),
+                  left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
+                });
+              });
+            });
+
+            describe(`Body validator`, () => {
+              beforeAll(async () => {
+                currentUser = buildUser(ADMIN_REQUIRED);
+                body = {
+                  firstName: 'Jon',
+                  lastName: 'Black',
+                  role: 'role' as UserRole
+                };
+
+                req = { implicits: { user }, currentUser, body } as AppReq;
+                context = { implicits: req.implicits, loggedInUser: req.currentUser };
+
+                result = await updateUserUnbound
+                  .apply(null, [bodyValidator, authorizationValidator, sanitizeEntity])
+                  .apply(null, [userService])
+                  .apply(null, [context, req, null]);
+              });
+
+              it(`Should resolve with exact Either right side`, () => {
+                const ERROR_MESSAGE: string = 'Validation failed: ["Invalid user role"]';
+                result.do({
+                  right: (): void => fail(`Right side has not been expected`),
+                  left: (error: AppError) => {
+                    expect(error)
+                      .toBeInstanceOf(InvalidInput);
+                    expect(error.message)
+                      .toEqual(ERROR_MESSAGE);
+                  }
+                });
+              });
+            });
+
+            describe(`Authorization validator`, () => {
+              beforeAll(async () => {
+                currentUser = user;
+                body = {
+                  firstName: 'Jon',
+                  lastName: 'Black',
+                  role: UserRole.Admin
+                };
+
+                req = { implicits: { user }, currentUser, body } as AppReq;
+                context = { implicits: req.implicits, loggedInUser: req.currentUser };
+
+                result = await updateUserUnbound
+                  .apply(null, [bodyValidator, authorizationValidator, sanitizeEntity])
+                  .apply(null, [userService])
+                  .apply(null, [context, req, null]);
+              });
+
+              it(`Should resolve with exact Either right side`, () => {
+                const ERROR_MESSAGE: string = 'Validation failed: ["User cannot change his role"]';
+                result.do({
+                  right: (): void => fail(`Right side has not been expected`),
+                  left: (error: AppError) => {
+                    expect(error)
+                      .toBeInstanceOf(NotAuthorized);
+                    expect(error.message)
+                      .toEqual(ERROR_MESSAGE);
+                  }
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+});

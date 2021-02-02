@@ -34,7 +34,7 @@ describe('utils', () => {
       beforeAll(() => {
         properties = propertiesUnbound
           .apply(null, [isMissing]);
-      })
+      });
 
       it(`Should return Either with validated object in right side, if validation has been passed`, () => {
         properties
@@ -59,7 +59,7 @@ describe('utils', () => {
               expectChai(error)
                 .to.be.instanceOf(NotAuthorized);
               expectChai(error.message)
-                .to.be.equal(`Validation failed: ["bla is not valid value","must be an number","must be equal 5","is not from Enum"]`)
+                .to.be.equal(`Validation failed: ["bla is not valid value","must be an number","must be equal 5","is not from Enum"]`);
             }
           });
       });

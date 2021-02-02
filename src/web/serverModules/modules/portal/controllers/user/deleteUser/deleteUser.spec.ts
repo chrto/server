@@ -8,7 +8,7 @@ import { NotAuthorized } from 'common/httpErrors';
 
 type DeleteUserExecutor = jest.Mock<Promise<Either<AppError, number>>, [User]>;
 const USER_MODEL: User = { id: '3a2cffc9-1fc5-4a05-87d8-8411cd4f920c' } as User;
-const CURRENT_USER_MODEL: User = { id: 'f72fa53a-411c-44ed-a1b2-7d82845cc955', } as User;
+const CURRENT_USER_MODEL: User = { id: 'f72fa53a-411c-44ed-a1b2-7d82845cc955' } as User;
 
 describe('Web Server', () => {
   describe('Modules', () => {

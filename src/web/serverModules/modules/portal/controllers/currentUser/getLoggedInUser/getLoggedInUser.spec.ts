@@ -1,10 +1,10 @@
 import getLoggedInUserUnbound from './getLoggedInUser.unbound';
-import userFactory from "model/sequelize/user/factory/userFactory";
-import initUserModel, { User } from "model/sequelize/user/user";
-import { UserRequired } from "model/sequelize/user/user.types";
-import { Model, Sequelize } from "sequelize";
-import { DEFAULT_DB_DIALECT } from "src/defaults";
-import { Context } from "../../../context/context.types";
+import userFactory from 'model/sequelize/user/factory/userFactory';
+import initUserModel, { User } from 'model/sequelize/user/user';
+import { UserRequired } from 'model/sequelize/user/user.types';
+import { Model, Sequelize } from 'sequelize';
+import { DEFAULT_DB_DIALECT } from 'src/defaults';
+import { Context } from '../../../context/context.types';
 
 const USER_REQUIRED: UserRequired = {
   firstName: 'Joe',

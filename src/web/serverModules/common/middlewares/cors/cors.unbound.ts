@@ -1,4 +1,4 @@
-import { Fcn } from 'common/types';
 import { RequestHandler } from 'express';
+import { MiddlewareFactory } from '../middlewares.types';
 
-export default (cors: Fcn<[], RequestHandler>): RequestHandler => cors();
+export default (cors: MiddlewareFactory<void, RequestHandler>): RequestHandler => cors();
