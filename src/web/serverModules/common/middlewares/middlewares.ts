@@ -1,4 +1,4 @@
-import Middlewares from './middlewares.types';
+import MiddlewaresCollection from './middlewares.types';
 import authenticationErrorHandler from './authenticationErrorHandler/authenticationErrorHandler';
 import errorHandler from './errorHandler/errorHandler';
 import jwtAuthentication from './jwtAuthentication/jwtAuthentication';
@@ -7,5 +7,5 @@ import logger from './logger/logger';
 import cors from './cors/cors';
 import bodyParser from './bodyParser/bodyParser';
 
-const middlewares: Middlewares = { authenticationErrorHandler, errorHandler, jwtAuthentication, loadUserJWT, logger, cors, bodyParser };
+const middlewares: MiddlewaresCollection = { authenticationErrorHandler, errorHandler, jwtAuthentication, loadUserJWT, logger, cors, bodyParser };
 export default middlewares;

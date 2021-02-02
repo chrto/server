@@ -1,8 +1,7 @@
 import middlewareUnbounded from './errorHandler.unbound';
 import { AppError } from 'common/error';
-import { Fcn } from 'common/types';
 import { Logger } from 'winston';
-import { NextFunction, Request, Response } from 'express';
+import { ErrorRequestHandler, Response } from 'express';
 import { Conflict, InvalidInput, NotAuthenticated, NotAuthorized, NotFound } from 'common/httpErrors';
 
 describe(`Test 'web' module`, () => {
@@ -11,7 +10,7 @@ describe(`Test 'web' module`, () => {
       describe(`error handler`, () => {
         let logger: Logger = {} as Logger;
         let response: Response<any> = {} as Response<any>;
-        let middleware: Fcn<[any, Request, Response, NextFunction], void>;
+        let middleware: ErrorRequestHandler;
 
         beforeAll(() => {
           logger.error = jest.fn().mockImplementation((_message: string): Logger => logger);

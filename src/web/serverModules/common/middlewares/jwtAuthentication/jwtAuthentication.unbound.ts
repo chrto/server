@@ -1,10 +1,11 @@
 import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
 import { ExpressJwtOptions } from 'jwks-rsa';
-import { RequestHandler as JwtRequestHandler, SecretCallbackLong } from 'express-jwt';
+import { RequestHandler as JwtRequestHandler, SecretCallbackLong, Options } from 'express-jwt';
 import { Fcn } from 'common/types';
+import { MiddlewareFactory } from '../middlewares.types';
 
 export default (
-  jwt: Fcn<[any], JwtRequestHandler>,
+  jwt: MiddlewareFactory<Options, JwtRequestHandler>,
   expressJwtSecret: Fcn<[ExpressJwtOptions], SecretCallbackLong>
 ) =>
   (ssoConfig: ISSOConfig): JwtRequestHandler =>

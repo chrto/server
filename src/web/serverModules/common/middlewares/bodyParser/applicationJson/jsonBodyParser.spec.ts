@@ -3,6 +3,7 @@ import { NextFunction, RequestHandler, Response } from 'express';
 import { OptionsJson } from 'body-parser';
 import { AppRequest } from 'web/serverModules/types';
 import { expect as expectChai } from 'chai';
+import { MiddlewareFactory } from '../../middlewares.types';
 
 const REQUEST_HANDLER: RequestHandler = (_req: AppRequest, _res: Response, _next: NextFunction) => null;
 const OPTIONS_JSON: OptionsJson = { limit: 1024 };
@@ -12,7 +13,7 @@ describe(`Test 'web' module`, () => {
     describe(`middlewares`, () => {
       describe(`request body parer`, () => {
         describe(`json`, () => {
-          let jsonBodyParser: jest.Mock<RequestHandler, [OptionsJson]>;
+          let jsonBodyParser: jest.Mock<MiddlewareFactory<OptionsJson, RequestHandler>>;
           let result: RequestHandler;
 
           beforeAll(() => {

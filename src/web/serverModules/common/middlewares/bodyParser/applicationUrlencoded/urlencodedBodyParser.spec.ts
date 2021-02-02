@@ -3,6 +3,7 @@ import { NextFunction, RequestHandler, Response } from 'express';
 import { OptionsUrlencoded } from 'body-parser';
 import { AppRequest } from 'web/serverModules/types';
 import { expect as expectChai } from 'chai';
+import { MiddlewareFactory } from '../../middlewares.types';
 
 const REQUEST_HANDLER: RequestHandler = (_req: AppRequest, _res: Response, _next: NextFunction) => null;
 const OPTIONS_URLENCODED: OptionsUrlencoded = { limit: 1024 };
@@ -12,7 +13,7 @@ describe(`Test 'web' module`, () => {
     describe(`middlewares`, () => {
       describe(`request body parer`, () => {
         describe(`urlencoded`, () => {
-          let urlencodedBodyParser: jest.Mock<RequestHandler, [OptionsUrlencoded]>;
+          let urlencodedBodyParser: jest.Mock<MiddlewareFactory<OptionsUrlencoded, RequestHandler>>;
           let result: RequestHandler;
 
           beforeAll(() => {
