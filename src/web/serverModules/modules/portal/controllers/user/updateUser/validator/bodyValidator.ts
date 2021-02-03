@@ -1,5 +1,5 @@
 import { AppError } from 'common/error';
-import { UserRole } from 'model/sequelize/user/user.types';
+import { UserRole } from 'model/sequelize/model/user/user.types';
 import { Either } from 'tsmonad';
 import { isBoolean, isMissing } from 'utils/validation';
 import bodyValidator, { check } from 'utils/object/validator/properties/properties';

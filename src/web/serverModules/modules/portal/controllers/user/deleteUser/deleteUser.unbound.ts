@@ -1,4 +1,4 @@
-import { User as PortalUser } from 'model/sequelize/user/user';
+import { User as PortalUser } from 'model/sequelize/model/user/user';
 import { Either } from 'tsmonad';
 import { AppError } from 'common/error';
 import { DeletedUser } from './deleteUser.types';

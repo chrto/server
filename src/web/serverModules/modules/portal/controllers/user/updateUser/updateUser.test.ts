@@ -1,10 +1,9 @@
 import updateUserUnbound from './updateUser.unbound';
 import bodyValidator from './validator/bodyValidator';
 import authorizationValidator from './validator/authorizationValidator';
-import { sanitizeEntity } from 'service/sequelize/common/modelHelper';
-import userFactory from 'model/sequelize/user/factory/userFactory';
-import initUserModel, { User } from 'model/sequelize/user/user';
-import { UserRequired, UserRole } from 'model/sequelize/user/user.types';
+import userFactory from 'model/sequelize/model/user/factory/userFactory';
+import initUserModel, { User } from 'model/sequelize/model/user/user';
+import { UserRequired, UserRole } from 'model/sequelize/model/user/user.types';
 import { Sequelize } from 'sequelize';
 import { DEFAULT_DB_DIALECT } from 'src/defaults';
 import { Context } from '../../../context/context.types';
@@ -15,6 +14,7 @@ import { AppRequest } from 'web/serverModules/types';
 import { RequestImplicits } from '../../../paramHandlers/paramHandlers.types';
 import { expect as expectChai } from 'chai';
 import { InvalidInput, NotAuthorized } from 'common/httpErrors';
+import sanitizeModel from 'model/sequelize/sanitizeModel/sanitizeModel';
 
 type AppReq = AppRequest<unknown, UserBody, User, RequestImplicits>;
 
@@ -76,7 +76,7 @@ describe('Web Server', () => {
                 context = { implicits: req.implicits, loggedInUser: req.currentUser };
 
                 result = await updateUserUnbound
-                  .apply(null, [bodyValidator, authorizationValidator, sanitizeEntity])
+                  .apply(null, [bodyValidator, authorizationValidator, sanitizeModel])
                   .apply(null, [userService])
                   .apply(null, [context, req, null]);
               });
@@ -105,7 +105,7 @@ describe('Web Server', () => {
                 context = { implicits: req.implicits, loggedInUser: req.currentUser };
 
                 result = await updateUserUnbound
-                  .apply(null, [bodyValidator, authorizationValidator, sanitizeEntity])
+                  .apply(null, [bodyValidator, authorizationValidator, sanitizeModel])
                   .apply(null, [userService])
                   .apply(null, [context, req, null]);
               });
@@ -137,7 +137,7 @@ describe('Web Server', () => {
                 context = { implicits: req.implicits, loggedInUser: req.currentUser };
 
                 result = await updateUserUnbound
-                  .apply(null, [bodyValidator, authorizationValidator, sanitizeEntity])
+                  .apply(null, [bodyValidator, authorizationValidator, sanitizeModel])
                   .apply(null, [userService])
                   .apply(null, [context, req, null]);
               });

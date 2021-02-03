@@ -1,4 +1,4 @@
-import { User } from 'model/sequelize/user/user';
+import { User } from 'model/sequelize/model/user/user';
 import { NotFound } from 'common/httpErrors';
 import { AppError } from 'common/error';
 import { Either } from 'tsmonad';

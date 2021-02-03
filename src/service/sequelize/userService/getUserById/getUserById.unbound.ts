@@ -1,7 +1,7 @@
 import { AppError } from 'common/error';
 import { NotFound } from 'common/httpErrors';
 import { TransactionContext } from 'model/sequelize/modelFactory/modelFactory.types';
-import { User } from 'model/sequelize/user/user';
+import { User } from 'model/sequelize/model/user/user';
 import { SequelizeIncludes } from 'service/sequelize/types';
 import { SequelizeStorage } from 'storage/sequelize/sequelizeStorage.types';
 import { Either } from 'tsmonad';

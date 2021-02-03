@@ -4,7 +4,7 @@ import { AppError } from 'common/error';
 import { Fcn } from 'common/types';
 import { NextFunction, RequestHandler } from 'express';
 import { TransactionContext } from 'model/sequelize/modelFactory/modelFactory.types';
-import { User as UserModel } from 'model/sequelize/user/user';
+import { User as UserModel } from 'model/sequelize/model/user/user';
 import { UserService } from 'service/sequelize/userService/userService.types';
 import { Either } from 'tsmonad';
 import { AppRequest } from 'web/serverModules/types';

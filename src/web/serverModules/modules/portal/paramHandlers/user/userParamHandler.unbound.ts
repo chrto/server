@@ -7,7 +7,7 @@ import { PluginSdkService } from 'service/serviceFactory/serviceFactory.types';
 import { AppRequest } from 'web/serverModules/types';
 import { RequestImplicits } from '../paramHandlers.types';
 import { Fcn } from 'common/types';
-import { User as PortalUser } from 'model/sequelize/user/user';
+import { User as PortalUser } from 'model/sequelize/model/user/user';
 
 export default (
   addEntityInToRequestImplicits: Fcn<[AppRequest<unknown, unknown, unknown, RequestImplicits>, Response, NextFunction, string], Fcn<[PortalUser], void>>,

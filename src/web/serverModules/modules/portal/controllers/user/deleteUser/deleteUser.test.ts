@@ -1,6 +1,6 @@
 import deleteUserUnbound from './deleteUser.unbound';
-import initUserModel, { User } from 'model/sequelize/user/user';
-import { UserItems, UserRole } from 'model/sequelize/user/user.types';
+import initUserModel, { User } from 'model/sequelize/model/user/user';
+import { UserItems, UserRole } from 'model/sequelize/model/user/user.types';
 import { Sequelize } from 'sequelize';
 import { DEFAULT_DB_DIALECT } from 'src/defaults';
 import { Context } from '../../../context/context.types';

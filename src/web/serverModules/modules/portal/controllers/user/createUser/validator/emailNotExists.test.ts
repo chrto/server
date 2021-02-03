@@ -1,7 +1,7 @@
 import emailNotExists from './emailNotExists';
 import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
-import { User } from 'model/sequelize/user/user';
+import { User } from 'model/sequelize/model/user/user';
 import { Either } from 'tsmonad';
 import { UserBody } from '../createUser.types';
 import { _do } from 'utils/either';

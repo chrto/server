@@ -1,7 +1,7 @@
 import createUserUnbound from './createUser.unbound';
-import initUserModel, { User } from 'model/sequelize/user/user';
+import initUserModel, { User } from 'model/sequelize/model/user/user';
 import { Response } from 'express';
-import { UserItems, UserRequired, UserRole } from 'model/sequelize/user/user.types';
+import { UserItems, UserRequired, UserRole } from 'model/sequelize/model/user/user.types';
 import { Sequelize } from 'sequelize';
 import { DEFAULT_DB_DIALECT } from 'src/defaults';
 import { UserBody } from './createUser.types';
@@ -13,10 +13,10 @@ import { UserService } from 'service/sequelize/userService/userService.types';
 import { Conflict, InvalidInput, NotFound } from 'common/httpErrors';
 import bodyValidator from './validator/bodyValidator';
 import emailNotExists from './validator/emailNotExists';
-import userFactory from 'model/sequelize/user/factory/userFactory';
-import { sanitizeEntity } from 'service/sequelize/common/modelHelper';
+import userFactory from 'model/sequelize/model/user/factory/userFactory';
 import { _do } from 'utils/either';
 import { expect as expectChai } from 'chai';
+import sanitizeModel from 'model/sequelize/sanitizeModel/sanitizeModel';
 
 type AppReq = AppRequest<unknown, UserBody, User, RequestImplicits>;
 const UUID: string = '92b814ed-1aff-46c1-b669-0c9fd2ea81a3';
@@ -62,7 +62,7 @@ describe('Web Server', () => {
               userService.getUserByEmail = jest.fn().mockImplementation(() => getUserExecutor);
               userService.createUser = jest.fn().mockImplementation(() => createUserExecutor);
               createUser = createUserUnbound
-                .apply(null, [bodyValidator, emailNotExists, userFactory, sanitizeEntity])
+                .apply(null, [bodyValidator, emailNotExists, userFactory, sanitizeModel])
                 .apply(null, [userService]);
             });
 

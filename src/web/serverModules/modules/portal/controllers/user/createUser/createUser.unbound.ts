@@ -6,10 +6,10 @@ import { UserService } from 'service/sequelize/userService/userService.types';
 import { AppRequest } from 'web/serverModules/types';
 import { Context as PortalContext } from './../../../context/context.types';
 import { UserBody } from './createUser.types';
-import { User as PortalUser } from 'model/sequelize/user/user';
+import { User as PortalUser } from 'model/sequelize/model/user/user';
 import { AppError } from 'common/error';
 import { Fcn } from 'common/types';
-import { UserItems, UserRequired } from 'model/sequelize/user/user.types';
+import { UserItems, UserRequired } from 'model/sequelize/model/user/user.types';
 import { RequestImplicits } from '../../../paramHandlers/paramHandlers.types';
 
 export default (

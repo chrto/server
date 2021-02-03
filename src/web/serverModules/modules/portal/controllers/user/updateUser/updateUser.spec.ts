@@ -1,7 +1,7 @@
 import updateUserUnbound from './updateUser.unbound';
-import userFactory from 'model/sequelize/user/factory/userFactory';
-import initUserModel, { User } from 'model/sequelize/user/user';
-import { UserRequired } from 'model/sequelize/user/user.types';
+import userFactory from 'model/sequelize/model/user/factory/userFactory';
+import initUserModel, { User } from 'model/sequelize/model/user/user';
+import { UserRequired } from 'model/sequelize/model/user/user.types';
 import { Sequelize } from 'sequelize';
 import { DEFAULT_DB_DIALECT } from 'src/defaults';
 import { Context } from '../../../context/context.types';

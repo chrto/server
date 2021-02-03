@@ -1,8 +1,8 @@
 import createUserUnbound from './createUser.unbound';
 import * as EmailValidator from './validator/emailNotExists';
-import initUserModel, { User } from 'model/sequelize/user/user';
+import initUserModel, { User } from 'model/sequelize/model/user/user';
 import { Response } from 'express';
-import { UserItems, UserRequired, UserRole } from 'model/sequelize/user/user.types';
+import { UserItems, UserRequired, UserRole } from 'model/sequelize/model/user/user.types';
 import { Sequelize } from 'sequelize';
 import { DEFAULT_DB_DIALECT } from 'src/defaults';
 import { UserBody } from './createUser.types';

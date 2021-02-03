@@ -1,4 +1,4 @@
-import { User } from 'model/sequelize/user/user';
+import { User } from 'model/sequelize/model/user/user';
 import { Either } from 'tsmonad';
 import { AppError } from 'common/error';
 import { TransactionContext } from 'model/sequelize/modelFactory/modelFactory.types';

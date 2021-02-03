@@ -1,7 +1,7 @@
 import { AppError } from 'common/error';
-import { User } from 'model/sequelize/user/user';
+import { User } from 'model/sequelize/model/user/user';
 import { Either } from 'tsmonad';
-import { UserRequired } from 'model/sequelize/user/user.types';
+import { UserRequired } from 'model/sequelize/model/user/user.types';
 import { TransactionContext } from 'model/sequelize/modelFactory/modelFactory.types';
 import { SequelizeStorage } from 'storage/sequelize/sequelizeStorage.types';
 

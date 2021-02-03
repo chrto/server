@@ -1,5 +1,5 @@
-import { sanitizeEntities } from 'service/sequelize/common/modelHelper';
+import sanitizeModels from 'model/sequelize/sanitizeModel/sanitizeModels';
 import getUsersUnbound from './getUsers.unbound';
 
 export default getUsersUnbound
-  .apply(null, [sanitizeEntities]);
+  .apply(null, [sanitizeModels]);

@@ -1,7 +1,7 @@
 import getUserByEmailUnbound from './getUserByEmail.unbound';
 import { AppError } from 'common/error';
-import initUserModel, { User } from 'model/sequelize/user/user';
-import { UserRole } from 'model/sequelize/user/user.types';
+import initUserModel, { User } from 'model/sequelize/model/user/user';
+import { UserRole } from 'model/sequelize/model/user/user.types';
 import { Options, Sequelize } from 'sequelize';
 import { Either } from 'tsmonad';
 import { EDatabaseDialect } from 'web/server/configuration/loader/database/databaseConfig.types';
