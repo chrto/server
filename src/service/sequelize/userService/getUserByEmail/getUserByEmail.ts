@@ -1,6 +1,5 @@
-
-import getUserByIdUnbound from './getUserById.unbound';
+import getUserByEmailUnbound from './getUserByEmail.unbound';
 import * as sequelizeStorage from 'storage/sequelize/sequelizeStorage';
 
-export default getUserByIdUnbound
+export default getUserByEmailUnbound
   .apply(null, [sequelizeStorage]);

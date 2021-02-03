@@ -1,6 +1,5 @@
-
-import getUserByIdUnbound from './getUserById.unbound';
+import deleteUserUnbound from './deleteUser.unbound';
 import * as sequelizeStorage from 'storage/sequelize/sequelizeStorage';
 
-export default getUserByIdUnbound
+export default deleteUserUnbound
   .apply(null, [sequelizeStorage]);

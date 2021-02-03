@@ -109,14 +109,14 @@ describe('Web Server', () => {
               expect(updateUserExecutor)
                 .toHaveBeenCalledTimes(1);
               expect(updateUserExecutor)
-                .toHaveBeenCalledWith(user);
+                .toHaveBeenNthCalledWith(1, user.get());
             });
 
             it('Should sanitize user model, after service has been called', () => {
               expect(sanitizeEntity)
-                .toHaveBeenCalledTimes(1);
+                .toHaveBeenCalledTimes(2);
               expect(sanitizeEntity)
-                .toHaveBeenCalledWith(user);
+                .toHaveBeenNthCalledWith(2, user);
             });
           });
         });

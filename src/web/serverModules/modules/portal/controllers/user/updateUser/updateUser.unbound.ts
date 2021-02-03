@@ -23,5 +23,6 @@ export default (
         .then(bind<UserBody, UserBody>(bodyValidator))
         .then(bind<UserBody, UserBody>(authorizationValidator(ctx.implicits.user, ctx.loggedInUser)))
         .then(bind<UserBody, PortalUser>(eitherify(setModel(ctx.implicits.user))))
+        .then(lift(sanitizeEntity))
         .then(asyncBind<PortalUser, PortalUser>(updateUser()))
         .then(lift(sanitizeEntity));
