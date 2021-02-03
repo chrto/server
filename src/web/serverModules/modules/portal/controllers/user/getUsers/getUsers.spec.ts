@@ -1,12 +1,12 @@
 import getUsersUnbound from './getUsers.unbound';
 import { AppError } from 'common/error';
-import userFactory from 'model/sequelize/user/factory/userFactory';
-import initUserModel, { User } from 'model/sequelize/user/user';
-import { UserRequired } from 'model/sequelize/user/user.types';
+import userFactory from 'model/sequelize/model/user/factory/userFactory';
+import initUserModel, { User } from 'model/sequelize/model/user/user';
+import { UserRequired } from 'model/sequelize/model/user/user.types';
 import { Sequelize } from 'sequelize';
-import { sanitizeEntity } from 'service/sequelize/common/modelHelper';
 import { DEFAULT_DB_DIALECT } from 'src/defaults';
 import { Either } from 'tsmonad';
+import sanitizeModel from 'model/sequelize/sanitizeModel/sanitizeModel';
 
 const USER_REQUIRED: UserRequired = {
   firstName: 'Joe',
@@ -30,7 +30,7 @@ describe('Web Server', () => {
               sequelize = new Sequelize(null, null, null, { dialect: DEFAULT_DB_DIALECT });
               initUserModel(sequelize);
               users = [userFactory(USER_REQUIRED).lift(userReq => User.build(userReq)).caseOf({ right: (user) => user })];
-              sanitizeEntities = jest.fn().mockImplementation((users: User[]) => users.map(sanitizeEntity));
+              sanitizeEntities = jest.fn().mockImplementation((users: User[]) => users.map(sanitizeModel));
 
               getUsersExecutor = jest.fn().mockResolvedValue(Either.right(users));
               userService = {

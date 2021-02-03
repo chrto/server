@@ -1,14 +1,14 @@
 import getUserByIdUnbound from './getUserById.unbound';
-import { sanitizeEntity } from 'service/sequelize/common/modelHelper';
 import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
-import userFactory from 'model/sequelize/user/factory/userFactory';
-import initUserModel, { User } from 'model/sequelize/user/user';
-import { UserRequired } from 'model/sequelize/user/user.types';
+import userFactory from 'model/sequelize/model/user/factory/userFactory';
+import initUserModel, { User } from 'model/sequelize/model/user/user';
+import { UserRequired } from 'model/sequelize/model/user/user.types';
 import { Sequelize } from 'sequelize';
 import { DEFAULT_DB_DIALECT } from 'src/defaults';
 import { Either } from 'tsmonad';
 import { Context } from '../../../context/context.types';
+import sanitizeModel from 'model/sequelize/sanitizeModel/sanitizeModel';
 
 const USER_REQUIRED: UserRequired = {
   firstName: 'Joe',
@@ -36,7 +36,7 @@ describe('Web Server', () => {
 
               context = { implicits: { user }, loggedInUser: null };
               result = await getUserByIdUnbound
-                .apply(null, [sanitizeEntity])
+                .apply(null, [sanitizeModel])
                 .apply(null, [context, null, null]);
             });
 

@@ -4,7 +4,7 @@ import { isMissing } from 'utils/validation';
 import authValidator, { check } from 'utils/object/validator/properties/properties';
 import { Validator } from 'utils/object/validator/properties/properties.types';
 import { UserBody } from '../updateUser.types';
-import { User as PortalUser } from 'model/sequelize/user/user';
+import { User as PortalUser } from 'model/sequelize/model/user/user';
 import isDifferentUser from 'web/serverModules/common/authorization/validators/differentEntity/differentEntity';
 import { NotAuthorized } from 'common/httpErrors';
 

@@ -1,4 +1,3 @@
-import { map } from 'ramda';
 import {
   CreateOptions,
   DestroyOptions,
@@ -22,12 +21,6 @@ interface RowsAndCount<T> {
   rows: T[];
   count: number;
 }
-
-/** Turn a Sequelize entity into a plain JS object */
-export const sanitizeEntity = <T>(entity: Model<T>): any => entity ? entity.get({ plain: true }) : null;
-
-/** Turn an array of Sequelize entities into an array of plain JS objects */
-export const sanitizeEntities = <T>(entities: Model<T>[]): any[] => map(sanitizeEntity, entities);
 
 const getErrorMessage = (error: Error): string =>
   [
@@ -64,26 +57,15 @@ const errorHandler = (error: Error, message?: string): AppError => {
   }
 };
 
-export const getAllowedFields = <T>(model: T & typeof Model, extAttr: string[] = []): string[] =>
-  Object
-    .keys(model.rawAttributes)
-    .filter(attr => !attr.includes('_'))
-    .concat(
-      Object
-        .keys(model.associations)
-        .filter((attr => model.associations[attr].isMultiAssociation && model.associations[attr].isAliased))
-    )
-    .concat(extAttr);
-
-export async function findAll<T extends Model>(model: { new(): T } & typeof Model, options: FindOptions): Promise<Either<AppError, T[]>> {
+export async function findAll<T extends Model> (model: { new(): T; } & typeof Model, options: FindOptions): Promise<Either<AppError, T[]>> {
   return Promise.resolve(
     model.findAll<T>(options)
-      .then((rows: T[]): Either<AppError, T[]> => either(null, rows))
-      .catch((error: Error): Either<AppError, T[]> => either(errorHandler(error, `while looking for ${model.name}:`), null))
+      .then((rows: T[]): Either<AppError, T[]> => Either.right<AppError, T[]>(rows))
+      .catch((error: Error): Either<AppError, T[]> => Either.left<AppError, T[]>(errorHandler(error, `while looking for ${model.name}:`)))
   );
 }
 
-export async function findOne<T extends Model>(model: { new(): T } & typeof Model, options: FindOptions, error: AppError): Promise<Either<AppError, T>> {
+export async function findOne<T extends Model> (model: { new(): T; } & typeof Model, options: FindOptions, error: AppError): Promise<Either<AppError, T>> {
   return Promise.resolve(
     model.findOne<T>(options)
       .then(valueOrError(error))
@@ -91,7 +73,7 @@ export async function findOne<T extends Model>(model: { new(): T } & typeof Mode
   );
 }
 
-export async function findAndCountAll<T extends Model>(model: { new(): T } & typeof Model, options: FindAndCountOptions): Promise<Either<AppError, RowsAndCount<T>>> {
+export async function findAndCountAll<T extends Model> (model: { new(): T; } & typeof Model, options: FindAndCountOptions): Promise<Either<AppError, RowsAndCount<T>>> {
   return Promise.resolve(
     model.findAndCountAll<T>(options)
       .then((result: RowsAndCount<T>): Either<AppError, RowsAndCount<T>> => either(null, result))
@@ -99,7 +81,7 @@ export async function findAndCountAll<T extends Model>(model: { new(): T } & typ
   );
 }
 
-export async function findByPk<T extends Model>(model: { new(): T } & typeof Model, id: number | string, options: FindOptions, error: AppError): Promise<Either<AppError, T>> {
+export async function findByPk<T extends Model> (model: { new(): T; } & typeof Model, id: number | string, options: FindOptions, error: AppError): Promise<Either<AppError, T>> {
   return Promise.resolve(
     model.findByPk<T>(id, options)
       .then(valueOrError(error))
@@ -107,7 +89,7 @@ export async function findByPk<T extends Model>(model: { new(): T } & typeof Mod
   );
 }
 
-export async function update<T extends Model>(model: { new(): T } & typeof Model, values: object, options: UpdateOptions, error: AppError): Promise<Either<AppError, T>> {
+export async function update<T extends Model> (model: { new(): T; } & typeof Model, values: object, options: UpdateOptions, error: AppError): Promise<Either<AppError, T>> {
   const findAllOptions: UpdateOptions = {
     ...['transaction', 'incude'].reduce((acc: object, key: string): object => options[key] ? (acc[key] = options[key], acc) : acc, {}),
     where: options.where
@@ -129,7 +111,7 @@ export async function update<T extends Model>(model: { new(): T } & typeof Model
   );
 }
 
-export async function updateAll<T extends Model>(model: { new(): T } & typeof Model, object: any, options: UpdateOptions, error: AppError): Promise<Either<AppError, number>> {
+export async function updateAll<T extends Model> (model: { new(): T; } & typeof Model, object: any, options: UpdateOptions, error: AppError): Promise<Either<AppError, number>> {
   return Promise.resolve(
     model.update<T>(object, options)
       .then(
@@ -143,7 +125,7 @@ export async function updateAll<T extends Model>(model: { new(): T } & typeof Mo
   );
 }
 
-export async function create<T extends Model>(model: { new(): T } & typeof Model, values: object, options?: CreateOptions): Promise<Either<AppError, T>> {
+export async function create<T extends Model> (model: { new(): T; } & typeof Model, values: object, options?: CreateOptions): Promise<Either<AppError, T>> {
   return Promise.resolve(
     model.create<T>(values, options)
       .then((newRow: T): Either<AppError, T> => either(null, newRow))
@@ -151,7 +133,7 @@ export async function create<T extends Model>(model: { new(): T } & typeof Model
   );
 }
 
-export async function bulkCreate<T extends Model>(model: { new(): T } & typeof Model, records: object[], options?: CreateOptions): Promise<Either<AppError, T[]>> {
+export async function bulkCreate<T extends Model> (model: { new(): T; } & typeof Model, records: object[], options?: CreateOptions): Promise<Either<AppError, T[]>> {
   return Promise.resolve(
     model.bulkCreate<T>(records, options)
       .then((newRows: T[]): Either<AppError, T[]> => either(null, newRows))
@@ -159,7 +141,7 @@ export async function bulkCreate<T extends Model>(model: { new(): T } & typeof M
   );
 }
 
-export async function destroy<T extends Model>(model: { new(): T } & typeof Model, options?: DestroyOptions): Promise<Either<AppError, number>> {
+export async function destroy<T extends Model> (model: { new(): T; } & typeof Model, options?: DestroyOptions): Promise<Either<AppError, number>> {
   return Promise.resolve(
     model.destroy(options)
       .then((numRows: number): Either<AppError, number> => either(null, numRows))

@@ -2,8 +2,8 @@ import { AppError } from 'common/error';
 import { Conflict, NotFound } from 'common/httpErrors';
 import { Either } from 'tsmonad';
 import { caseOf } from 'utils/either';
-import { User as PortalUser } from 'model/sequelize/user/user';
-import { UserService } from 'service/sequelize/userService';
+import { User as PortalUser } from 'model/sequelize/model/user/user';
+import { UserService } from 'service/sequelize/userService/userService.types';
 import { UserBody } from '../createUser.types';
 
 export default ({ getUserByEmail }: Partial<UserService>) =>

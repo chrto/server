@@ -1,4 +1,4 @@
-import { User as PortalUser } from 'model/sequelize/user/user';
+import { User as PortalUser } from 'model/sequelize/model/user/user';
 
 export enum ModuleParams {
   userId = 'userId'

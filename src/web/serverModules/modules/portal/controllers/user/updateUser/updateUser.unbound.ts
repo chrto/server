@@ -1,8 +1,8 @@
 import { asyncBind, bind, eitherify, lift } from 'utils/either';
-import { UserService } from 'service/sequelize/userService';
+import { UserService } from 'service/sequelize/userService/userService.types';
 import { Response } from 'express';
 import { Either } from 'tsmonad';
-import { User as PortalUser } from 'model/sequelize/user/user';
+import { User as PortalUser } from 'model/sequelize/model/user/user';
 import { AppError } from 'common/error';
 import { AppRequest } from 'web/serverModules/types';
 import { Context as PortalContext } from './../../../context/context.types';
@@ -23,5 +23,6 @@ export default (
         .then(bind<UserBody, UserBody>(bodyValidator))
         .then(bind<UserBody, UserBody>(authorizationValidator(ctx.implicits.user, ctx.loggedInUser)))
         .then(bind<UserBody, PortalUser>(eitherify(setModel(ctx.implicits.user))))
+        .then(lift(sanitizeEntity))
         .then(asyncBind<PortalUser, PortalUser>(updateUser()))
         .then(lift(sanitizeEntity));

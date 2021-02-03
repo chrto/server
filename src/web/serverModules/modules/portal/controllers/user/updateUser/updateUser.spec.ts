@@ -1,7 +1,7 @@
 import updateUserUnbound from './updateUser.unbound';
-import userFactory from 'model/sequelize/user/factory/userFactory';
-import initUserModel, { User } from 'model/sequelize/user/user';
-import { UserRequired } from 'model/sequelize/user/user.types';
+import userFactory from 'model/sequelize/model/user/factory/userFactory';
+import initUserModel, { User } from 'model/sequelize/model/user/user';
+import { UserRequired } from 'model/sequelize/model/user/user.types';
 import { Sequelize } from 'sequelize';
 import { DEFAULT_DB_DIALECT } from 'src/defaults';
 import { Context } from '../../../context/context.types';
@@ -109,14 +109,14 @@ describe('Web Server', () => {
               expect(updateUserExecutor)
                 .toHaveBeenCalledTimes(1);
               expect(updateUserExecutor)
-                .toHaveBeenCalledWith(user);
+                .toHaveBeenNthCalledWith(1, user.get());
             });
 
             it('Should sanitize user model, after service has been called', () => {
               expect(sanitizeEntity)
-                .toHaveBeenCalledTimes(1);
+                .toHaveBeenCalledTimes(2);
               expect(sanitizeEntity)
-                .toHaveBeenCalledWith(user);
+                .toHaveBeenNthCalledWith(2, user);
             });
           });
         });

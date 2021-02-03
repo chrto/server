@@ -1,6 +1,6 @@
 import { AppError } from 'common/error';
 import { Either } from 'tsmonad';
-import { UserItems, UserRequired, UserRole } from './../user.types';
+import { UserItems, UserRequired, UserRole } from '../user.types';
 
 export default (uuidGenrator: () => string) =>
   (userRequired: UserRequired): Either<AppError, UserItems> =>

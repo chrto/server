@@ -4,7 +4,7 @@ export type PromiseConst<T> = (resolve: (value?: T) => void, reject?: (reason: a
 export type Mandatory<T> = {
   [P in keyof Required<T>]: Pick<T, P> extends Required<Pick<T, P>> ? T[P] : (T[P] | undefined);
 }
-
+export type OptionalExceptFor<T, TRequired extends keyof T> = Partial<T> & Pick<T, TRequired>;
 export interface Factory<I, O> {
   (params: I): O;
 }

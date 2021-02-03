@@ -1,5 +1,5 @@
 import { AppError } from 'common/error';
-import { User } from 'model/sequelize/user/user';
+import { User } from 'model/sequelize/model/user/user';
 import { Either } from 'tsmonad';
 import { AppRequest } from 'web/serverModules/types';
 import { Context } from '../../context/context.types';

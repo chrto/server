@@ -1,6 +1,6 @@
 import addEntityInToRequestImplicits from './addEntityInToRequestImplicits';
 import { expect as expectChai } from 'chai';
-import { User } from 'model/sequelize/user/user';
+import { User } from 'model/sequelize/model/user/user';
 import { Response } from 'express';
 import { RequestImplicits } from 'web/serverModules/modules/portal/paramHandlers/paramHandlers.types';
 import { AppRequest } from 'web/serverModules/types';

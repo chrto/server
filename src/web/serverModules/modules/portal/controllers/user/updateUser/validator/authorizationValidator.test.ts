@@ -3,8 +3,8 @@ import { UserBody } from '../updateUser.types';
 import { expect as expectChai } from 'chai';
 import { NotAuthorized } from 'common/httpErrors';
 import { AppError } from 'common/error';
-import { UserRole } from 'model/sequelize/user/user.types';
-import { User as PortalUser } from 'model/sequelize/user/user';
+import { UserRole } from 'model/sequelize/model/user/user.types';
+import { User as PortalUser } from 'model/sequelize/model/user/user';
 
 const id = 'fe28f5fa-82c4-4f4c-9ef4-49da47164868';
 const USER: PortalUser = {

@@ -1,6 +1,6 @@
 import context from './context';
 import { expect as expectChai } from 'chai';
-import { User as PortalUser } from 'model/sequelize/user/user';
+import { User as PortalUser } from 'model/sequelize/model/user/user';
 
 import { AppRequest } from 'web/serverModules/types';
 import { Context } from './context.types';

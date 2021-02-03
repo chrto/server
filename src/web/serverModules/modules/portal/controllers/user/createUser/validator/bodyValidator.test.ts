@@ -2,7 +2,7 @@ import bodyValidator from './bodyValidator';
 
 import { UserBody } from '../createUser.types';
 import { AppError } from 'common/error';
-import { UserRole } from 'model/sequelize/user/user.types';
+import { UserRole } from 'model/sequelize/model/user/user.types';
 import { expect as expectChai } from 'chai';
 import { InvalidInput } from 'common/httpErrors';
 

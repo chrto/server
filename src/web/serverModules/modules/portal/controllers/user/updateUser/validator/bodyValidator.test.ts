@@ -3,7 +3,7 @@ import { UserBody } from '../updateUser.types';
 import { expect as expectChai } from 'chai';
 import { InvalidInput } from 'common/httpErrors';
 import { AppError } from 'common/error';
-import { UserRole } from 'model/sequelize/user/user.types';
+import { UserRole } from 'model/sequelize/model/user/user.types';
 
 const body: UserBody = {
   role: UserRole.Admin,

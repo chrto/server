@@ -1,6 +1,6 @@
 import deleteUserUnbound from './deleteUser.unbound';
-import initUserModel, { User } from 'model/sequelize/user/user';
-import { UserItems, UserRole } from 'model/sequelize/user/user.types';
+import initUserModel, { User } from 'model/sequelize/model/user/user';
+import { UserItems, UserRole } from 'model/sequelize/model/user/user.types';
 import { Sequelize } from 'sequelize';
 import { DEFAULT_DB_DIALECT } from 'src/defaults';
 import { Context } from '../../../context/context.types';
@@ -8,7 +8,7 @@ import { Either } from 'tsmonad';
 import { AppError } from 'common/error';
 import { DeletedUser } from './deleteUser.types';
 import differentEntity from 'web/serverModules/common/authorization/validators/differentEntity/differentEntity';
-import userService from 'service/sequelize/userService';
+import userService from 'service/sequelize/userService/userService';
 import { NotAuthorized } from 'common/httpErrors';
 
 import logger from 'utils/logger';

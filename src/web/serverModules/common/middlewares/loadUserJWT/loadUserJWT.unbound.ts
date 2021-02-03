@@ -1,7 +1,7 @@
 import { caseOf } from 'utils/either';
 import { PluginSdkService } from 'service/serviceFactory/serviceFactory.types';
 import { AppRequest } from 'web/serverModules/types';
-import { User as UserModel } from 'model/sequelize/user/user';
+import { User as UserModel } from 'model/sequelize/model/user/user';
 import { NextFunction, Response } from 'express';
 import { AppError } from 'common/error';
 import { UnauthorizedError } from 'express-jwt';

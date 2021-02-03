@@ -1,7 +1,7 @@
 import isAdmin from './isAdmin';
 import { expect as expectChai } from 'chai';
-import initUserModel, { User } from 'model/sequelize/user/user';
-import { UserItems, UserRole } from 'model/sequelize/user/user.types';
+import initUserModel, { User } from 'model/sequelize/model/user/user';
+import { UserItems, UserRole } from 'model/sequelize/model/user/user.types';
 import { Options, Sequelize } from 'sequelize';
 import { EDatabaseDialect } from 'web/server/configuration/loader/database/databaseConfig.types';
 
