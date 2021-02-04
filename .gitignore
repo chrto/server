@@ -8,7 +8,7 @@ dist
 logs
 
 # SQLite storage
-storage/**
+storage/database.sqlite
 
 # Support for macOS
 .DS_STORE

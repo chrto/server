@@ -17,6 +17,7 @@
     "build:dev": "webpack  --progress --config webpack.dev.js && npm run copy:web.config",
     "stop:server": "(curl localhost:8001/shutdown || echo .)",
     "restart:server": "(curl localhost:8001/restart || echo .)",
+    "create:db": "./storage/scripts/create-db.sh",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
