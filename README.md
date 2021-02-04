@@ -1,16 +1,19 @@
 # API server
 
 ## Install
-Create `.env` file from template
-```
-    $ cp .env-tmp .env
-```
 Install project dependencies
 
 ```
     $ npm install
 ```
-    
+Create sqlite database and seed with data
+```
+    $ npm run create:db  
+```
+Create `.env` file from template
+```
+    $ cp .env.temp .env
+```
 ## Environment Variables
 
 Project can be customized using ENV variables:
@@ -39,15 +42,6 @@ Project can be customized using ENV variables:
 ```
     $ npm run start:dev
 ```
-## Run unit test in jest
-```
-    $ npm run test
-```
-or
-```
-    $ npm run test:watch
-```
-
 ## Stop server
 ```
     $ npm run stop:server
@@ -59,6 +53,14 @@ or
 ## Stop server in Docker
 ```
     $ npm run docker:stop:api
+```
+## Run unit test in jest
+```
+    $ npm run test
+```
+or
+```
+    $ npm run test:watch
 ```
 ## Run dev environment in docker
 ```
@@ -74,8 +76,8 @@ We use several backend services for development
 
 | Url                              | Service        | Description                              |
 |----------------------------------|----------------|------------------------------------------|
-| [localhost:8103](localhost:8103) | Swagger UI     | Swagger editor                           |
-| [localhost:8101](localhost:8101) | Keycloak       | Keycloak SSO Issuer                      |
+| [localhost:8103](http://localhost:8103) | Swagger UI     | Swagger editor                           |
+| [localhost:8101](http://localhost:8101) | Keycloak       | Keycloak SSO Issuer                      |
 
 Keycloak is used as identity manager for development purpose. There is configured default client whit id `server` and secret `155bca8c-5c95-4f40-a084-8f0025b0456b`. You can login to administration console with account `admin/Admin-123`. You can change this settings in `.env` file, which is in project root derectory. 
 There are registered two default users in Keycloak. You can change them in `./dockers/sso/realm-demo.json` file, or in administration console.
