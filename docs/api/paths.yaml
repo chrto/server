@@ -107,6 +107,12 @@
           schema:
             type: object
             properties:
+              firstName:
+                $ref: "#/components/schemas/User/properties/firstName"
+                required: true
+              lastName:
+                $ref: "#/components/schemas/User/properties/lastName"
+                required: true
               email:
                 $ref: "#/components/schemas/User/properties/email"
                 required: true
@@ -117,12 +123,14 @@
                 $ref: "#/components/schemas/User/properties/active"
                 required: false
             example:
-              email: Jane.Doe@starfleet.com
+              firstName: Jack
+              lastName: Black
+              email: jack.black@company.com
               role: User
               active: true
     responses:
       201:
-        $ref: "#/components/responses/UserResponse"
+        $ref: "#/components/responses/CreateUserResponse"
       400:
         $ref: "#/components/responses/40x_BadRequest"
       401:
@@ -175,7 +183,7 @@
                 removedUserId:
                   allOf:
                     - $ref: "#/components/schemas/UUID"
-                    - example: 5
+                    - example: ed3b3493-697f-4915-9906-fc29f8d33521
       401:
         $ref: "#/components/responses/40x_UnauthenticatedErrorBearer"
       403:
