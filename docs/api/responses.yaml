@@ -7,10 +7,10 @@ StatusResponse:
         allOf:
           - $ref: "#/components/schemas/Status"
           - example:
-              buildNumber: 'Unknown BuildNumber'
-              version: '0.0.1-12'
+              buildNumber: "Unknown BuildNumber"
+              version: "0.0.1-12"
               host: "app-server"
-              db: 'Up'
+              db: "Up"
               services:
                 azureAD: true
                 mdm: true
@@ -44,16 +44,34 @@ UserResponse:
     application/json:
       schema:
         allOf:
-          - $ref: '#/components/schemas/User'
+          - $ref: "#/components/schemas/User"
           - example:
-              id: ed3b3493-697f-4915-9906-fc29f8d33521
-              firstName: Jane
+              id: 064615be-15ad-4e10-b06a-6cdc46fa8788
+              firstName: Joe
               lastName: Doe
-              email: Jane.Doe@company.com
+              email: joe.doe@company.com
               active: true
               role: User
-              createdAt: '2019-06-04T10:17:08.706Z'
-              updatedAt: '2019-06-04T10:17:08.707Z'
+              createdAt: "2019-06-04T10:17:08.706Z"
+              updatedAt: "2019-06-04T10:17:08.707Z"
+
+CreateUserResponse:
+  description: Portal User resource detail
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: "#/components/schemas/User"
+          - example:
+              id: ed3b3493-697f-4915-9906-fc29f8d33521
+              firstName: Jack
+              lastName: Black
+              email: jack.black@company.com
+              active: true
+              role: User
+              createdAt: "2019-06-04T10:17:08.706Z"
+              updatedAt: "2019-06-04T10:17:08.707Z"
+
 UserListResponse:
   description: A list of Portal User
   content:
@@ -61,24 +79,24 @@ UserListResponse:
       schema:
         type: array
         items:
-          $ref: '#/components/schemas/User'
+          $ref: "#/components/schemas/User"
         example:
-          - id: ed3b3493-697f-4915-9906-fc29f8d33521
-            firstName: Jane
+          - id: 064615be-15ad-4e10-b06a-6cdc46fa8788
+            firstName: Joe
             lastName: Doe
-            email: Jane.Doe@company.com
+            email: joe.doe@company.com
             active: true
             role: User
-            createdAt: '2019-06-04T10:17:08.706Z'
-            updatedAt: '2019-06-04T10:17:08.707Z'
-          - id: 3d5fff4d-1724-4220-aa8e-c5c19abff139
-            firstName: Deve
-            lastName: Adminowitch
-            email: adminowitch@company.com
+            createdAt: "2019-06-04T10:17:08.706Z"
+            updatedAt: "2019-06-04T10:17:08.707Z"
+          - id: 897bd86c-feda-4c17-ab09-20959550899b
+            firstName: Admin
+            lastName: Adminovitch
+            email: admin.adminovic@company.com
             active: true
             role: Admin
-            createdAt: '2019-06-04T10:17:08.706Z'
-            updatedAt: '2019-06-04T10:17:08.707Z'
+            createdAt: "2019-06-04T10:17:08.706Z"
+            updatedAt: "2019-06-04T10:17:08.707Z"
 
 UserInfoResponse:
   description: Current user inforamation.
@@ -86,16 +104,16 @@ UserInfoResponse:
     application/json:
       schema:
         allOf:
-          - $ref: '#/components/schemas/User'
+          - $ref: "#/components/schemas/User"
           - example:
               id: 1
-              firstName: Jane
+              firstName: Joe
               lastName: Doe
-              email: Jane.Doe@company.com
+              email: joe.doe@company.com
               active: true
               role: User
-              createdAt: '2019-06-04T10:17:08.706Z'
-              updatedAt: '2019-06-04T10:17:08.707Z'
+              createdAt: "2019-06-04T10:17:08.706Z"
+              updatedAt: "2019-06-04T10:17:08.707Z"
 
 # Errors 40x
 40x_UnauthenticatedErrorBearer:
