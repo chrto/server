@@ -15,8 +15,8 @@ export default () => {
     getUserById: getUserById(includes),
     getUserByEmail: getUserByEmail(includes),
     getUsers: getUsers(includes),
-    createUser: createUser(),
+    createUser,
     updateUser: updateUser(includes),
-    deleteUser: deleteUser()
+    deleteUser
   };
 };

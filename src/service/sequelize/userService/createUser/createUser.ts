@@ -1,5 +1,5 @@
 import createUserUnbound from './createUser.unbound';
-import * as sequelizeStorage from 'storage/sequelize/sequelizeStorage';
+import userStorage from 'storage/sequelize/userStorage';
 
 export default createUserUnbound
-  .apply(null, [sequelizeStorage]);
+  .apply(null, [userStorage]);

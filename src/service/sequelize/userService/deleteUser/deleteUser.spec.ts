@@ -2,7 +2,7 @@ import deleteUserUnbound from './deleteUser.unbound';
 import { AppError } from 'common/error';
 import initUserModel, { User } from 'model/sequelize/model/user/user';
 import { UserRole } from 'model/sequelize/model/user/user.types';
-import { Options, Sequelize } from 'sequelize';
+import { DestroyOptions, Options, Sequelize } from 'sequelize';
 import { Either } from 'tsmonad';
 import { EDatabaseDialect } from 'web/server/configuration/loader/database/databaseConfig.types';
 
@@ -23,13 +23,12 @@ describe('Service', () => {
   describe('Sequelize', () => {
     describe('User Service', () => {
       describe(`Delete user`, () => {
-        let deleteUserModel;
+        let deleteUserModel: jest.Mock<Promise<Either<AppError, number>>, [DestroyOptions]>;
         beforeAll(async () => {
           initUserModel(new Sequelize(SEQUELIZE_CONFIG));
           deleteUserModel = jest.fn().mockResolvedValue(Either.right<AppError, number>(1));
           await deleteUserUnbound
             .apply(null, [{ destroy: deleteUserModel }])
-            .apply(null, [])
             .apply(null, [])
             .apply(null, [User.build(ITEMS)]);
         });
@@ -38,7 +37,7 @@ describe('Service', () => {
           expect(deleteUserModel)
             .toHaveBeenCalledTimes(1);
           expect(deleteUserModel)
-            .toHaveBeenCalledWith(User, { where: { id: ITEMS.id } });
+            .toHaveBeenCalledWith({ where: { id: ITEMS.id } });
         });
       });
     });

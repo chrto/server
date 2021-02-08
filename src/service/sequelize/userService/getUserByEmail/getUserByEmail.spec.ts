@@ -2,7 +2,7 @@ import getUserByEmailUnbound from './getUserByEmail.unbound';
 import { AppError } from 'common/error';
 import initUserModel, { User } from 'model/sequelize/model/user/user';
 import { UserRole } from 'model/sequelize/model/user/user.types';
-import { Options, Sequelize } from 'sequelize';
+import { FindOptions, Options, Sequelize } from 'sequelize';
 import { Either } from 'tsmonad';
 import { EDatabaseDialect } from 'web/server/configuration/loader/database/databaseConfig.types';
 import { SequelizeIncludes } from 'service/sequelize/types';
@@ -27,14 +27,13 @@ describe('Service', () => {
   describe('Sequelize', () => {
     describe('User Service', () => {
       describe(`Get user by email`, () => {
-        let findOne;
+        let findOne: jest.Mock<Promise<Either<AppError, User>>, [FindOptions, AppError]>;
         beforeAll(async () => {
           initUserModel(new Sequelize(SEQUELIZE_CONFIG));
           findOne = jest.fn().mockResolvedValue(Either.right<AppError, User>(User.build(ITEMS)));
           await getUserByEmailUnbound
             .apply(null, [{ findOne }])
             .apply(null, [INCLUDES])
-
             .apply(null, [])
             .apply(null, [ITEMS.email]);
         });
@@ -44,7 +43,6 @@ describe('Service', () => {
             .toHaveBeenCalledTimes(1);
           expect(findOne)
             .toHaveBeenCalledWith(
-              User,
               { where: { email: ITEMS.email }, ...INCLUDES },
               new NotFound(`Cannot find user identified by email address '${ITEMS.email}'`)
             );

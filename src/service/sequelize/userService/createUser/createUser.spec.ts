@@ -2,7 +2,7 @@ import createUserUnbound from './createUser.unbound';
 import { AppError } from 'common/error';
 import initUserModel, { User } from 'model/sequelize/model/user/user';
 import { UserRole } from 'model/sequelize/model/user/user.types';
-import { Options, Sequelize } from 'sequelize';
+import { CreateOptions, Options, Sequelize } from 'sequelize';
 import { Either } from 'tsmonad';
 import { EDatabaseDialect } from 'web/server/configuration/loader/database/databaseConfig.types';
 
@@ -23,7 +23,7 @@ describe('Service', () => {
   describe('Sequelize', () => {
     describe('User Service', () => {
       describe(`Create new user`, () => {
-        let createUserModel;
+        let createUserModel: jest.Mock<Promise<Either<AppError, User>>, [object, CreateOptions]>;
         let user: User;
         beforeAll(async () => {
           initUserModel(new Sequelize(SEQUELIZE_CONFIG));
@@ -32,7 +32,6 @@ describe('Service', () => {
           await createUserUnbound
             .apply(null, [{ create: createUserModel }])
             .apply(null, [])
-            .apply(null, [])
             .apply(null, [ITEMS]);
         });
 
@@ -40,7 +39,7 @@ describe('Service', () => {
           expect(createUserModel)
             .toHaveBeenCalledTimes(1);
           expect(createUserModel)
-            .toHaveBeenCalledWith(User, ITEMS, undefined);
+            .toHaveBeenCalledWith(ITEMS, undefined);
         });
       });
     });

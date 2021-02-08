@@ -3,7 +3,7 @@ import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import initUserModel, { User } from 'model/sequelize/model/user/user';
 import { UserRole } from 'model/sequelize/model/user/user.types';
-import { Options, Sequelize } from 'sequelize';
+import { FindOptions, Options, Sequelize } from 'sequelize';
 import { Either } from 'tsmonad';
 import { EDatabaseDialect } from 'web/server/configuration/loader/database/databaseConfig.types';
 import { NotFound } from 'common/httpErrors';
@@ -28,7 +28,7 @@ describe('Service', () => {
   describe('Sequelize', () => {
     describe('User Service', () => {
       describe(`Get user by id`, () => {
-        let findByPk;
+        let findByPk: jest.Mock<Promise<Either<AppError, User>>, [string, FindOptions, AppError]>;
         let user: User;
         let result: Either<AppError, User>;
 

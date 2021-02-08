@@ -1,5 +1,5 @@
 import updateUserUnbound from './updateUser.unbound';
-import * as sequelizeStorage from 'storage/sequelize/sequelizeStorage';
+import userStorage from 'storage/sequelize/userStorage';
 
 export default updateUserUnbound
-  .apply(null, [sequelizeStorage]);
+  .apply(null, [userStorage]);
