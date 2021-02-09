@@ -7,7 +7,7 @@ import { Either } from 'tsmonad';
 import { EDatabaseDialect } from 'web/server/configuration/loader/database/databaseConfig.types';
 
 const SEQUELIZE_CONFIG: Options = {
-  dialect: EDatabaseDialect.sqlite,
+  dialect: EDatabaseDialect.sqlite
 };
 
 const ITEMS = {

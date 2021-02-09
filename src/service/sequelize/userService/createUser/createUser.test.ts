@@ -9,7 +9,7 @@ import { EDatabaseDialect } from 'web/server/configuration/loader/database/datab
 import { Conflict } from 'common/httpErrors';
 
 const SEQUELIZE_CONFIG: Options = {
-  dialect: EDatabaseDialect.sqlite,
+  dialect: EDatabaseDialect.sqlite
 };
 
 const ITEMS = {

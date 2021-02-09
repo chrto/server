@@ -9,7 +9,7 @@ import { SequelizeIncludes } from 'service/sequelize/types';
 import { NotFound } from 'common/httpErrors';
 
 const SEQUELIZE_CONFIG: Options = {
-  dialect: EDatabaseDialect.sqlite,
+  dialect: EDatabaseDialect.sqlite
 };
 
 const ITEMS = {

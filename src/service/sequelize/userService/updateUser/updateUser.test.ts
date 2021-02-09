@@ -11,7 +11,7 @@ import { SequelizeIncludes } from 'service/sequelize/types';
 import { Entity } from 'model/sequelize/modelFactory/modelFactory.types';
 
 const SEQUELIZE_CONFIG: Options = {
-  dialect: EDatabaseDialect.sqlite,
+  dialect: EDatabaseDialect.sqlite
 };
 
 const ITEMS = {
