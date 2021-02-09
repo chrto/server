@@ -2,13 +2,13 @@ import getUsersUnbound from './getUsers.unbound';
 import { AppError } from 'common/error';
 import initUserModel, { User } from 'model/sequelize/model/user/user';
 import { UserRole } from 'model/sequelize/model/user/user.types';
-import { Options, Sequelize, WhereOptions } from 'sequelize';
+import { FindOptions, Options, Sequelize, WhereOptions } from 'sequelize';
 import { Either } from 'tsmonad';
 import { EDatabaseDialect } from 'web/server/configuration/loader/database/databaseConfig.types';
 import { SequelizeIncludes } from 'service/sequelize/types';
 
 const SEQUELIZE_CONFIG: Options = {
-  dialect: EDatabaseDialect.sqlite,
+  dialect: EDatabaseDialect.sqlite
 };
 
 const ITEMS = {
@@ -28,7 +28,7 @@ describe('Service', () => {
   describe('Sequelize', () => {
     describe('User Service', () => {
       describe(`Get users`, () => {
-        let findAll;
+        let findAll: jest.Mock<Promise<Either<AppError, User[]>>, [FindOptions]>;
         beforeAll(async () => {
           initUserModel(new Sequelize(SEQUELIZE_CONFIG));
           findAll = jest.fn().mockResolvedValue(Either.right<AppError, User[]>([User.build(ITEMS)]));
@@ -44,7 +44,6 @@ describe('Service', () => {
             .toHaveBeenCalledTimes(1);
           expect(findAll)
             .toHaveBeenCalledWith(
-              User,
               { where: WHERE, order: undefined, ...INCLUDES }
             );
         });

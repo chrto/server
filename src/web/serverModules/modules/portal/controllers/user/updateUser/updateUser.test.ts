@@ -1,4 +1,6 @@
 import updateUserUnbound from './updateUser.unbound';
+import userService from 'service/sequelize/userService/userService';
+import logger from 'utils/logger';
 import bodyValidator from './validator/bodyValidator';
 import authorizationValidator from './validator/authorizationValidator';
 import userFactory from 'model/sequelize/model/user/factory/userFactory';
@@ -48,19 +50,13 @@ describe('Web Server', () => {
             let req: AppReq;
             let body: UserBody;
 
-            let userService;
-            let updateUserExecutor: jest.Mock<Promise<Either<AppError, User>>, [User]>;
             let result: Either<AppError, User>;
 
             beforeAll(() => {
+              logger.error = (_) => logger; // disable logger
               sequelize = new Sequelize(null, null, null, { dialect: DEFAULT_DB_DIALECT });
               initUserModel(sequelize);
               user = buildUser(USER_REQUIRED);
-              updateUserExecutor = jest.fn().mockResolvedValue(Either.right(user));
-
-              userService = {
-                updateUser: jest.fn().mockImplementation(() => updateUserExecutor)
-              };
             });
 
             describe(`Happy path`, () => {
@@ -72,12 +68,14 @@ describe('Web Server', () => {
                   active: false
                 };
 
+                User.update = jest.fn().mockResolvedValue([1]);
+                User.findAndCountAll = jest.fn().mockResolvedValue({ rows: [user], count: 1 });
                 req = { implicits: { user }, currentUser, body } as AppReq;
                 context = { implicits: req.implicits, loggedInUser: req.currentUser };
 
                 result = await updateUserUnbound
                   .apply(null, [bodyValidator, authorizationValidator, sanitizeModel])
-                  .apply(null, [userService])
+                  .apply(null, [userService()])
                   .apply(null, [context, req, null]);
               });
 
@@ -106,11 +104,11 @@ describe('Web Server', () => {
 
                 result = await updateUserUnbound
                   .apply(null, [bodyValidator, authorizationValidator, sanitizeModel])
-                  .apply(null, [userService])
+                  .apply(null, [userService()])
                   .apply(null, [context, req, null]);
               });
 
-              it(`Should resolve with exact Either right side`, () => {
+              it(`Should resolve with Either with exact error in left side`, () => {
                 const ERROR_MESSAGE: string = 'Validation failed: ["Invalid user role"]';
                 result.do({
                   right: (): void => fail(`Right side has not been expected`),
@@ -138,7 +136,7 @@ describe('Web Server', () => {
 
                 result = await updateUserUnbound
                   .apply(null, [bodyValidator, authorizationValidator, sanitizeModel])
-                  .apply(null, [userService])
+                  .apply(null, [userService()])
                   .apply(null, [context, req, null]);
               });
 

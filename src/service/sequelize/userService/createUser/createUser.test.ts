@@ -3,13 +3,13 @@ import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import initUserModel, { User } from 'model/sequelize/model/user/user';
 import { UserRole } from 'model/sequelize/model/user/user.types';
-import { Options, Sequelize } from 'sequelize';
+import { CreateOptions, Options, Sequelize } from 'sequelize';
 import { Either } from 'tsmonad';
 import { EDatabaseDialect } from 'web/server/configuration/loader/database/databaseConfig.types';
 import { Conflict } from 'common/httpErrors';
 
 const SEQUELIZE_CONFIG: Options = {
-  dialect: EDatabaseDialect.sqlite,
+  dialect: EDatabaseDialect.sqlite
 };
 
 const ITEMS = {
@@ -25,7 +25,7 @@ describe('Service', () => {
   describe('Sequelize', () => {
     describe('User Service', () => {
       describe(`Create new user`, () => {
-        let createUserModel;
+        let createUserModel: jest.Mock<Promise<Either<AppError, User>>, [object, CreateOptions]>;
         let result: Either<AppError, User>;
 
         beforeAll(async () => {
@@ -37,7 +37,6 @@ describe('Service', () => {
             createUserModel = jest.fn().mockResolvedValue(Either.right<AppError, User>(User.build(ITEMS)));
             result = await createUserUnbound
               .apply(null, [{ create: createUserModel }])
-              .apply(null, [])
               .apply(null, [])
               .apply(null, [ITEMS]);
           });
@@ -61,7 +60,6 @@ describe('Service', () => {
             createUserModel = jest.fn().mockResolvedValue(Either.left<AppError, User>(appError));
             result = await createUserUnbound
               .apply(null, [{ create: createUserModel }])
-              .apply(null, [])
               .apply(null, [])
               .apply(null, [ITEMS]);
           });

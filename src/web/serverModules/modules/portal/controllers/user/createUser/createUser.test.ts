@@ -1,16 +1,16 @@
 import createUserUnbound from './createUser.unbound';
+import logger from 'utils/logger';
+import userService from 'service/sequelize/userService/userService';
 import initUserModel, { User } from 'model/sequelize/model/user/user';
 import { Response } from 'express';
 import { UserItems, UserRequired, UserRole } from 'model/sequelize/model/user/user.types';
-import { Sequelize } from 'sequelize';
+import { Sequelize, UniqueConstraintError } from 'sequelize';
 import { DEFAULT_DB_DIALECT } from 'src/defaults';
 import { UserBody } from './createUser.types';
 import { AppError } from 'common/error';
-import { Either } from 'tsmonad';
 import { AppRequest } from 'web/serverModules/types';
 import { RequestImplicits } from '../../../paramHandlers/paramHandlers.types';
-import { UserService } from 'service/sequelize/userService/userService.types';
-import { Conflict, InvalidInput, NotFound } from 'common/httpErrors';
+import { Conflict, InvalidInput } from 'common/httpErrors';
 import bodyValidator from './validator/bodyValidator';
 import emailNotExists from './validator/emailNotExists';
 import userFactory from 'model/sequelize/model/user/factory/userFactory';
@@ -46,11 +46,9 @@ describe('Web Server', () => {
 
             let sequelize: Sequelize;
             let user: User;
-            let userService: Partial<UserService> = {};
-            let createUserExecutor: jest.Mock<Promise<Either<AppError, User>>, [UserRequired]>;
-            let getUserExecutor: jest.Mock<Promise<Either<AppError, User>>, [string]>;
             let createUser;
             beforeAll(() => {
+              logger.error = (_) => logger; // disable logger
               sequelize = new Sequelize(null, null, null, { dialect: DEFAULT_DB_DIALECT });
               initUserModel(sequelize);
 
@@ -59,11 +57,9 @@ describe('Web Server', () => {
                 status: jest.fn().mockReturnThis()
               };
 
-              userService.getUserByEmail = jest.fn().mockImplementation(() => getUserExecutor);
-              userService.createUser = jest.fn().mockImplementation(() => createUserExecutor);
               createUser = createUserUnbound
                 .apply(null, [bodyValidator, emailNotExists, userFactory, sanitizeModel])
-                .apply(null, [userService]);
+                .apply(null, [userService()]);
             });
 
             describe('Happy paty', () => {
@@ -72,8 +68,8 @@ describe('Web Server', () => {
                   body: BODY
                 } as AppReq;
 
-                createUserExecutor = jest.fn().mockResolvedValue(Either.right(user));
-                getUserExecutor = jest.fn().mockResolvedValue(Either.left(new NotFound('')));
+                User.create = jest.fn().mockResolvedValue(user);
+                User.findOne = jest.fn().mockResolvedValue(null);
               });
               it('Should create new user in DB', () => {
                 createUser
@@ -116,8 +112,7 @@ describe('Web Server', () => {
                   req = {
                     body: BODY
                   } as AppReq;
-
-                  getUserExecutor = jest.fn().mockResolvedValue(Either.right(user));
+                  User.findOne = jest.fn().mockResolvedValue(user);
                 });
                 it('Should response with exact error, if body validation has not been passed', () => {
                   const ERROR_MESSAGE = `User with email 'joe.doe@company.com' exists!`;
@@ -135,14 +130,14 @@ describe('Web Server', () => {
                 });
               });
               describe('Email validation', () => {
-                const ERROR_MESSAGE = `Internal Server Error`;
+                const ERROR_MESSAGE = `email exists`;
                 beforeAll(() => {
                   req = {
                     body: BODY
                   } as AppReq;
 
-                  createUserExecutor = jest.fn().mockResolvedValue(Either.left(new AppError('error', ERROR_MESSAGE)));
-                  getUserExecutor = jest.fn().mockResolvedValue(Either.left(new NotFound('')));
+                  User.create = jest.fn().mockRejectedValue(new UniqueConstraintError({ message: ERROR_MESSAGE, errors: [] }));
+                  User.findOne = jest.fn().mockResolvedValue(null);
                 });
                 it('Should response with exact error, if body validation has not been passed', () => {
                   createUser
@@ -151,9 +146,9 @@ describe('Web Server', () => {
                       right: (): void => fail(`Right side has not been expected`),
                       left: (error: AppError) => {
                         expect(error)
-                          .toBeInstanceOf(AppError);
+                          .toBeInstanceOf(Conflict);
                         expect(error.message)
-                          .toEqual(ERROR_MESSAGE);
+                          .toEqual(`message: ${ERROR_MESSAGE}${'\n'}`);
                       }
                     }));
                 });

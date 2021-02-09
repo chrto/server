@@ -3,14 +3,15 @@ import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import initUserModel, { User } from 'model/sequelize/model/user/user';
 import { UserRole } from 'model/sequelize/model/user/user.types';
-import { Options, Sequelize } from 'sequelize';
+import { Options, Sequelize, UpdateOptions } from 'sequelize';
 import { Either } from 'tsmonad';
 import { EDatabaseDialect } from 'web/server/configuration/loader/database/databaseConfig.types';
 import { NotFound } from 'common/httpErrors';
 import { SequelizeIncludes } from 'service/sequelize/types';
+import { Entity } from 'model/sequelize/modelFactory/modelFactory.types';
 
 const SEQUELIZE_CONFIG: Options = {
-  dialect: EDatabaseDialect.sqlite,
+  dialect: EDatabaseDialect.sqlite
 };
 
 const ITEMS = {
@@ -28,7 +29,7 @@ describe('Service', () => {
   describe('Sequelize', () => {
     describe('User Service', () => {
       describe(`Update user`, () => {
-        let update;
+        let updateByPk: jest.Mock<Promise<Either<AppError, User>>, [Entity<string>, UpdateOptions, SequelizeIncludes, AppError]>;
         let user: User;
         let result: Either<AppError, User>;
 
@@ -39,9 +40,9 @@ describe('Service', () => {
 
         describe('Happy path', () => {
           beforeAll(async () => {
-            update = jest.fn().mockResolvedValue(Either.right<AppError, User>(user));
+            updateByPk = jest.fn().mockResolvedValue(Either.right<AppError, User>(user));
             result = await updateUserUnbound
-              .apply(null, [{ update }])
+              .apply(null, [{ updateByPk }])
               .apply(null, [INCLUDES])
               .apply(null, [])
               .apply(null, [ITEMS]);
@@ -63,9 +64,9 @@ describe('Service', () => {
         describe('Error path', () => {
           const appError: NotFound = new NotFound('User not exists');
           beforeAll(async () => {
-            update = jest.fn().mockResolvedValue(Either.left<AppError, User>(appError));
+            updateByPk = jest.fn().mockResolvedValue(Either.left<AppError, User>(appError));
             result = await updateUserUnbound
-              .apply(null, [{ update }])
+              .apply(null, [{ updateByPk }])
               .apply(null, [INCLUDES])
               .apply(null, [])
               .apply(null, [ITEMS]);
