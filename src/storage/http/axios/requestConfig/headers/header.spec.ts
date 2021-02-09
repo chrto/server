@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from 'axios';
 import { expect as expectChai } from 'chai';
 
 import setHeader from './header';
-import { HEADER_ACCEPT, HEADER_CONTENT_TYPE, HEADERS } from '../../../types';
+import { HEADER_ACCEPT, HEADER_CONTENT_TYPE, HEADERS } from '../../axios.types';
 
 describe(`service`, () => {
   describe(`common axios`, () => {

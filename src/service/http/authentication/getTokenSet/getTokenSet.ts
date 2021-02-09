@@ -1,7 +1,7 @@
-import sendAxiosRequest from './../../common/axios/sendRequest/sendRequest';
-import createPostConfig from '../../common/axios/requestConfig/postConfig/postConfig';
-import sanitizeResponse from '../../common/axios/sanitizeResponse/sanitizeResponse';
-import setBody from '../../common/axios/requestConfig/configItems/body/body';
+import sendAxiosRequest from 'storage/http/axios/sendRequest/sendRequest';
+import createPostConfig from 'storage/http/axios/requestConfig/postConfig/postConfig';
+import sanitizeResponse from 'storage/http/axios/sanitizeResponse/sanitizeResponse';
+import setBody from 'storage/http/axios/requestConfig/body/body';
 import tokenSetFactory from 'model/authentication/tokenSet';
 import { lift } from 'utils/either';
 import { Either } from 'tsmonad';
@@ -10,7 +10,7 @@ import { AppError } from 'common/error';
 import { TokenQueryParams } from 'web/serverModules/modules/authentication/controllers/authentication/getTokenSet/getTokenSet.types';
 import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
 import { AuthGrantType, TokenGetReqData, TokenSet } from '../types';
-import { HEADER_CONTENT_TYPE } from '../../common/axios/types';
+import { HEADER_CONTENT_TYPE } from '../../../../storage/http/axios/axios.types';
 import { TokenSet as TokenSetModel } from 'model/authentication/tokenSet.types';
 
 export default (instance: AxiosInstance, ssoConfig: ISSOConfig) =>

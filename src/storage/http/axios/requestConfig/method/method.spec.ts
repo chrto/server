@@ -1,7 +1,7 @@
 import setMethod from './method';
 import { AxiosRequestConfig, Method } from 'axios';
 import { expect as expectChai } from 'chai';
-import { HTTP_METHOD } from '../../../types';
+import { HTTP_METHOD } from '../../axios.types';
 
 describe(`service`, () => {
   describe(`common axios`, () => {

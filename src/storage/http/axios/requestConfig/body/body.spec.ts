@@ -2,7 +2,7 @@ import setBody from './body';
 import { AxiosRequestConfig } from 'axios';
 import { expect as expectChai } from 'chai';
 import { ParsedUrlQueryInput, stringify } from 'querystring';
-import { HEADER_CONTENT_TYPE } from '../../../types';
+import { HEADER_CONTENT_TYPE } from '../../axios.types';
 
 describe(`service`, () => {
   describe(`common axios`, () => {

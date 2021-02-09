@@ -1,7 +1,7 @@
-import sendAxiosRequest from './../../common/axios/sendRequest/sendRequest';
-import sanitizeResponse from '../../common/axios/sanitizeResponse/sanitizeResponse';
-import createGetConfig from '../../common/axios/requestConfig/getConfig/getConfig';
-import setConfigParams from '../../common/axios/requestConfig/configItems/params/params';
+import sendAxiosRequest from 'storage/http/axios/sendRequest/sendRequest';
+import sanitizeResponse from 'storage/http/axios/sanitizeResponse/sanitizeResponse';
+import createGetConfig from 'storage/http/axios/requestConfig/getConfig/getConfig';
+import setConfigParams from 'storage/http/axios/requestConfig/params/params';
 import { lift } from 'utils/either';
 import { AxiosInstance } from 'axios';
 import { AppError } from 'common/error';

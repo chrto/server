@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 import { parse, ParsedUrlQueryInput, stringify } from 'querystring';
 import { isMissing } from 'utils/validation';
-import { HEADER_CONTENT_TYPE } from '../../../types';
+import { HEADER_CONTENT_TYPE } from '../../axios.types';
 
 export default <RB extends ParsedUrlQueryInput>(body: RB, contentType: HEADER_CONTENT_TYPE = HEADER_CONTENT_TYPE.APPL_JSON) =>
   (axiosRequestConfig: AxiosRequestConfig): AxiosRequestConfig =>
