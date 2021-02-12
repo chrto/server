@@ -1,90 +1,61 @@
-import { assert as assertChai, expect as expectChai } from 'chai';
-import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { AppError } from 'common/error';
-import { Either } from 'tsmonad';
-
 import sendRequestUnbound from './sendRequest.unbound';
-import { HTTP_METHOD } from '../types';
+import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, Method } from 'axios';
+import { AppError } from 'common/error';
 
-describe(`service`, () => {
-  describe(`common axios`, () => {
-    describe(`send request`, () => {
-      let config: AxiosRequestConfig;
-      let handleAxiosError: (error: AxiosError) => AppError;
-      const errCode: string = 'errCode';
-      const errMsg: string = 'errMessage';
-      beforeAll(async () => {
-        config = {
-          url: 'http://example.com',
-          method: HTTP_METHOD.GET
-        };
-        handleAxiosError = jest.fn().mockReturnValue(new AppError(errCode, errMsg));
-      });
+type ConfigHandler = jest.Mock<AxiosRequestConfig, [AxiosRequestConfig]>;
+const APP_ERROR: AppError = new AppError('error', 'Internal Server Error');
+const CONFIG: AxiosRequestConfig = {};
+const AXIOS_RESPONSE: AxiosResponse<any> = {
+  data: {}
+} as AxiosResponse<any>;
+const METHOD: Method = 'POST';
+const URL: string = 'http://ep.com/api/user';
 
-      describe('Happy path', () => {
-        const data: string = 'result data..';
-        let result: Either<AppError, string>;
-        let instance: AxiosInstance = {} as AxiosInstance;
+describe(`storage`, () => {
+  describe(`http storage`, () => {
+    describe(`axios`, () => {
+      describe(`send request`, () => {
+        let axiosInstance: AxiosInstance = {} as AxiosInstance;
+        let handleAxiosError: jest.Mock<AppError, [AxiosError]>;
+        let configHandler: ConfigHandler;
+        let setMethod: jest.Mock<ConfigHandler, [Method]>;
+        let setUrl: jest.Mock<ConfigHandler, [string]>;
+
         beforeAll(async () => {
-          instance.request = jest.fn().mockResolvedValue({
-            data
-          } as AxiosResponse<string>);
-          result = await sendRequestUnbound
-            .apply(null, [handleAxiosError])
-            .apply(null, [instance])
-            .apply(null, [config]);
-        });
-        it(`Should return either with exact string in right side`, () => {
-          result.do({
-            right: (value: string) =>
-              expectChai(value)
-                .to.haveOwnProperty('data')
-                .which.is.an('string')
-                .which.is.equal(data),
-            left: (error: AppError) => assertChai
-              .fail(null, null, 'Left side was not expected.' + '\n' + error.code + '\n' + error.message)
-          });
-        });
-        it(`Should call 'instance.request' method with exact data`, () => {
-          expect(instance.request)
-            .toHaveBeenCalledWith(config);
-        });
-      });
-      describe('Error path', () => {
-        const errorResp: AxiosError = {
-          response: {
-            statusText: 'Some status text..',
-            data: {
-              error_description: 'Some error desc..'
-            }
-          } as AxiosResponse<any>
-        } as AxiosError;
+          axiosInstance.request = jest.fn().mockResolvedValue(AXIOS_RESPONSE);
+          handleAxiosError = jest.fn().mockReturnValue(APP_ERROR);
+          configHandler = jest.fn().mockReturnValue(CONFIG);
+          setMethod = jest.fn().mockReturnValue(configHandler);
+          setUrl = jest.fn().mockReturnValue(configHandler);
 
-        let result: Either<AppError, string>;
-        let instance: AxiosInstance = {} as AxiosInstance;
-        beforeAll(async () => {
-          instance.request = jest.fn().mockRejectedValue(errorResp);
-          result = await sendRequestUnbound
-            .apply(null, [handleAxiosError])
-            .apply(null, [instance])
-            .apply(null, [config]);
+          await sendRequestUnbound
+            .apply(null, [handleAxiosError, setMethod, setUrl])
+            .apply(null, [axiosInstance])
+            .apply(null, [METHOD, URL])
+            .apply(null, [CONFIG]);
         });
-        it(`Should return either with exact error in left side`, () => {
-          result.do({
-            right: () =>
-              assertChai
-                .fail(null, null, 'Right side was not expected.'),
-            left: (error: AppError) => {
-              expectChai(error)
-                .to.be.instanceOf(AppError);
-              expectChai(error)
-                .to.haveOwnProperty('message')
-                .which.is.equal(errMsg);
-              expectChai(error)
-                .to.haveOwnProperty('code')
-                .which.is.equal(errCode);
-            }
-          });
+        it(`Should set exact http method into axios configuration`, () => {
+          expect(setMethod)
+            .toHaveBeenCalledTimes(1);
+          expect(setMethod)
+            .toHaveBeenCalledWith(METHOD);
+        });
+
+        it(`Should set exact url into axios configuration`, () => {
+          expect(setUrl)
+            .toHaveBeenCalledTimes(1);
+          expect(setUrl)
+            .toHaveBeenCalledWith(URL);
+        });
+
+        it(`Should send axios request`, () => {
+          expect(axiosInstance.request)
+            .toHaveBeenCalledTimes(1);
+        });
+
+        it(`Should not call error handler, if error has not been rejected`, () => {
+          expect(handleAxiosError)
+            .toHaveBeenCalledTimes(0);
         });
       });
     });
