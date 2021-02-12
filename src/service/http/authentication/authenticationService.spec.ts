@@ -1,29 +1,26 @@
-import authenticationServiceUnbound from './authenticationService.unbound';
+import authenticationService from './authenticationService';
 import { expect as expectChai } from 'chai';
 import { AuthenticationService } from './types';
-import { AxiosInstance } from 'axios';
 import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
 
+const CONFIG: ISSOConfig = {} as ISSOConfig;
 describe(`service`, () => {
   describe(`authentication`, () => {
-    const axiosInstance: AxiosInstance = {} as AxiosInstance;
-    const ssoConfig: ISSOConfig = {} as ISSOConfig;
-    let authenticationService: AuthenticationService;
+    let service: AuthenticationService;
     beforeAll(() => {
-      authenticationService = authenticationServiceUnbound
-        .apply(null, [axiosInstance])
-        .apply(null, [ssoConfig]);
+      service = authenticationService
+        .apply(null, [CONFIG]);
     });
-    it('Happy path', () => {
-      expectChai(authenticationService)
+    it('Should build authentication service', () => {
+      expectChai(service)
         .to.be.an('object');
-      expectChai(authenticationService)
+      expectChai(service)
         .which.haveOwnProperty('getTokensSet');
-      expectChai(authenticationService)
+      expectChai(service)
         .which.haveOwnProperty('refreshTokens');
-      expectChai(authenticationService)
+      expectChai(service)
         .which.haveOwnProperty('logOut');
-      expectChai(authenticationService)
+      expectChai(service)
         .which.haveOwnProperty('ping');
     });
   });

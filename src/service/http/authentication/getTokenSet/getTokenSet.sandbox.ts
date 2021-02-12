@@ -1,12 +1,11 @@
-import getTokenSetUnbound from './getTokenSet';
-import axios from 'axios';
+import getTokenSet from './getTokenSet';
 import * as sniff from 'supersniff';
 import { _do } from 'utils/either';
 import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
 
 require('dotenv').config();
 
-const AUTH_CODE = 'dda910ae-1e61-4793-8566-abf1f787e2b4.c77af9d0-9803-4948-8e2e-a10820545be9.352f1660-95a7-4b66-81ef-12f1868ba27f';
+const AUTH_CODE = '01df9415-6991-445f-b5fa-f582f314dc2c.e1c0c9c9-e5d1-4c2d-92e2-b5f6cefe4e1f.352f1660-95a7-4b66-81ef-12f1868ba27f';
 const config: ISSOConfig = {
   ssoClientId: process.env.SSO_CLIENT_ID,
   ssoRedirectUri: process.env.SSO_REDIRECT_URI,
@@ -14,8 +13,8 @@ const config: ISSOConfig = {
   ssoTokenEndpoint: process.env.SSO_TOKEN_ENDPOINT
 } as ISSOConfig;
 
-getTokenSetUnbound
-  .apply(null, [axios.create(), config])
+getTokenSet
+  .apply(null, [config])
   .apply(null, [{ auth_code: AUTH_CODE }])
   .then(_do({
     right: sniff,

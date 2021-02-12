@@ -1,14 +1,6 @@
-import sendAxiosRequest from 'storage/http/axios/sendRequest/sendRequest';
-import createGetConfig from 'storage/http/axios/requestConfig/getConfig/getConfig';
+import pingUnbound from './ping.unbound';
+import axiosStorage from 'storage/http/axios/axios';
+import requestConfig from 'storage/http/axios/requestConfig/requestConfig';
 import sanitizeResponse from 'storage/http/axios/sanitizeResponse/sanitizeResponse';
-import { lift } from 'utils/either';
-import { AxiosInstance } from 'axios';
-import { Either } from 'tsmonad';
-import { AppError } from 'common/error';
-import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
 
-export default (instance: AxiosInstance, ssoConfig: ISSOConfig) =>
-  (): Promise<Either<AppError, any>> =>
-    Promise.resolve(createGetConfig(ssoConfig.ssoWellKnown))
-      .then(sendAxiosRequest<any>(instance))
-      .then(lift(sanitizeResponse));
+export default pingUnbound.apply(null, [axiosStorage.getRequest, requestConfig, sanitizeResponse]);
