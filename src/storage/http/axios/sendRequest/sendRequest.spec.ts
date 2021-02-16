@@ -12,7 +12,7 @@ const METHOD: Method = 'POST';
 const URL: string = 'http://ep.com/api/user';
 
 describe(`storage`, () => {
-  describe(`http storage`, () => {
+  describe(`http`, () => {
     describe(`axios`, () => {
       describe(`send request`, () => {
         let axiosInstance: AxiosInstance = {} as AxiosInstance;

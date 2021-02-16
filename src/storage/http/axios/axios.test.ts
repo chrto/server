@@ -6,7 +6,7 @@ import { AxiosInstance } from 'axios';
 const AXIOS: AxiosInstance = {} as AxiosInstance;
 
 describe(`storage`, () => {
-  describe(`http storage`, () => {
+  describe(`http`, () => {
     describe(`axios`, () => {
       let storage: AxiosStorage;
       beforeAll(() => {
