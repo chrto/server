@@ -2,7 +2,8 @@ import caseOf from 'utils/either/caseOf/caseOf';
 import { assert, expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { Either } from 'tsmonad';
-import { takeRight, valueOrError, eitherify, ftap } from 'utils/either';
+import eitherify from 'utils/either/eitherify/eitherify';
+import { takeRight, valueOrError, ftap } from 'utils/either';
 
 describe('Either', () => {
   describe('ftap', () => {

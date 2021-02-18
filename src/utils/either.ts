@@ -32,22 +32,6 @@ type Binder<I, O> = (input: Either<AppError, I>) => Either<AppError, O>;
 
 type Lifter<I, O> = (input: Either<AppError, I>) => Either<AppError, O>;
 
-export const eitherify = <I extends any[], O> (f: (...args: I) => O) =>
-  (...args: I): Either<AppError, O> => {
-    try {
-      return Either.right<AppError, O>(f(...args));
-    } catch (error) {
-      return Either.left<AppError, O>(
-        error instanceof AppError
-          ? error
-          : new AppError(
-            !error.code ? '' : error.code,
-            !error.message ? 'unknown error' : error.message
-          )
-      );
-    }
-  };
-
 export const either = <T> (val: T, appError: AppError): Either<AppError, T> =>
   typeof val !== 'undefined' && val !== null ? Either.right(val) : Either.left(appError);
 
