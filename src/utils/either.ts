@@ -1,7 +1,7 @@
 import { AppError } from 'common/error';
 import { InvalidInput } from 'common/httpErrors';
 import { Predicate } from 'common/types';
-import { Either, EitherPatterns, OptionalEitherPatterns } from 'tsmonad';
+import { Either, EitherPatterns } from 'tsmonad';
 
 /**
  * Only use for Eithers where there is no possible Left value,
@@ -31,9 +31,6 @@ type Injector<I, O> = (input: Either<AppError, I>) => Promise<Either<AppError, O
 type Binder<I, O> = (input: Either<AppError, I>) => Either<AppError, O>;
 
 type Lifter<I, O> = (input: Either<AppError, I>) => Either<AppError, O>;
-
-type Doer<T> = (input: Either<AppError, T>) => Either<AppError, T>;
-type DoerVoid<T> = (input: Either<AppError, T>) => void;
 
 export const eitherify = <I extends any[], O> (f: (...args: I) => O) =>
   (...args: I): Either<AppError, O> => {
@@ -84,15 +81,6 @@ export const asyncLift = <I, O> (f: (val: I) => Promise<O>): Injector<I, O> =>
 
 export const ignoreResult = <T> (action: () => Either<AppError, any>) =>
   (prevResult: Either<AppError, T>): Either<AppError, T> => action().bind(() => prevResult);
-
-export const _do = <T> (pattern: OptionalEitherPatterns<AppError, T, void>): Doer<T> =>
-  (valueOrError: Either<AppError, T>) =>
-    valueOrError.do(pattern);
-
-export const _doVoid = <T> (pattern: OptionalEitherPatterns<AppError, T, void>): DoerVoid<T> =>
-  (valueOrError: Either<AppError, T>) => {
-    valueOrError.do(pattern);
-  };
 
 export const caseOf = <R, T> (pattern: EitherPatterns<AppError, R, T>) =>
   (valueOrError: Either<AppError, R>): T =>

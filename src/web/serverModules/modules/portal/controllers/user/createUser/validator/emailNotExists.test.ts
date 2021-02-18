@@ -1,10 +1,10 @@
 import emailNotExists from './emailNotExists';
+import doer from 'utils/either/do/doer';
 import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { User } from 'model/sequelize/model/user/user';
 import { Either } from 'tsmonad';
 import { UserBody } from '../createUser.types';
-import { _do } from 'utils/either';
 import { Conflict, NotFound } from 'common/httpErrors';
 import { UserService } from 'service/sequelize/userService/userService.types';
 
@@ -38,7 +38,7 @@ describe('Web Server', () => {
                 emailNotExists
                   .apply(null, [userService])
                   .apply(null, [BODY])
-                  .then(_do({
+                  .then(doer({
                     right: (): void => fail(`Right side has not been expected`),
                     left: (error: AppError) => {
                       expect(error)
@@ -55,7 +55,7 @@ describe('Web Server', () => {
                 emailNotExists
                   .apply(null, [userService])
                   .apply(null, [BODY])
-                  .then(_do({
+                  .then(doer({
                     right: (): void => fail(`Right side has not been expected`),
                     left: (error: AppError) => {
                       expect(error)
@@ -71,7 +71,7 @@ describe('Web Server', () => {
                 emailNotExists
                   .apply(null, [userService])
                   .apply(null, [BODY])
-                  .then(_do({
+                  .then(doer({
                     right: (body: UserBody) =>
                       expectChai(body)
                         .to.be.an({}.constructor.name)

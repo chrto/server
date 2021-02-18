@@ -1,4 +1,5 @@
 import createUserUnbound from './createUser.unbound';
+import doer from 'utils/either/do/doer';
 import logger from 'utils/logger';
 import userService from 'service/sequelize/userService/userService';
 import initUserModel, { User } from 'model/sequelize/model/user/user';
@@ -14,7 +15,6 @@ import { Conflict, InvalidInput } from 'common/httpErrors';
 import bodyValidator from './validator/bodyValidator';
 import emailNotExists from './validator/emailNotExists';
 import userFactory from 'model/sequelize/model/user/factory/userFactory';
-import { _do } from 'utils/either';
 import { expect as expectChai } from 'chai';
 import sanitizeModel from 'model/sequelize/sanitizeModel/sanitizeModel';
 
@@ -74,7 +74,7 @@ describe('Web Server', () => {
               it('Should create new user in DB', () => {
                 createUser
                   .apply(null, [null, req, res])
-                  .then(_do({
+                  .then(doer({
                     right: (result: User) =>
                       expectChai(result)
                         .to.be.an({}.constructor.name)
@@ -95,7 +95,7 @@ describe('Web Server', () => {
                   const ERROR_MESSAGE = 'Validation failed: ["Missing mandatory property firstName"]';
                   createUser
                     .apply(null, [null, req, res])
-                    .then(_do({
+                    .then(doer({
                       right: (): void => fail(`Right side has not been expected`),
                       left: (error: AppError) => {
                         expect(error)
@@ -118,7 +118,7 @@ describe('Web Server', () => {
                   const ERROR_MESSAGE = `User with email 'joe.doe@company.com' exists!`;
                   createUser
                     .apply(null, [null, req, res])
-                    .then(_do({
+                    .then(doer({
                       right: (): void => fail(`Right side has not been expected`),
                       left: (error: AppError) => {
                         expect(error)
@@ -142,7 +142,7 @@ describe('Web Server', () => {
                 it('Should response with exact error, if body validation has not been passed', () => {
                   createUser
                     .apply(null, [null, req, res])
-                    .then(_do({
+                    .then(doer({
                       right: (): void => fail(`Right side has not been expected`),
                       left: (error: AppError) => {
                         expect(error)

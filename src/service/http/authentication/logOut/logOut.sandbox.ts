@@ -1,5 +1,5 @@
 import logOut from './logOut';
-import { _do } from 'utils/either';
+import doer from 'utils/either/do/doer';
 import * as sniff from 'supersniff';
 import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
 
@@ -13,7 +13,7 @@ const config: ISSOConfig = {
 logOut
   .apply(null, [config])
   .apply(null, [ID_TOKEN])
-  .then(_do({
+  .then(doer({
     right: sniff,
     left: sniff
   }));
