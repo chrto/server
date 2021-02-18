@@ -82,10 +82,6 @@ export const asyncLift = <I, O> (f: (val: I) => Promise<O>): Injector<I, O> =>
 export const ignoreResult = <T> (action: () => Either<AppError, any>) =>
   (prevResult: Either<AppError, T>): Either<AppError, T> => action().bind(() => prevResult);
 
-export const caseOf = <R, T> (pattern: EitherPatterns<AppError, R, T>) =>
-  (valueOrError: Either<AppError, R>): T =>
-    valueOrError.caseOf(pattern);
-
 export const asyncCaseOf = <R, T> (pattern: EitherPatterns<AppError, R, Promise<T>>) =>
   (valueOrError: Either<AppError, R>): Promise<T> =>
     valueOrError.caseOf(pattern);

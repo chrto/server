@@ -1,10 +1,10 @@
 import doer from 'utils/either/do/doer';
+import caseOf from 'utils/either/caseOf/caseOf';
 import { AppError } from 'common/error';
 import { NotAuthorized } from 'common/httpErrors';
 import { Fcn } from 'common/types';
 import { NextFunction, Response } from 'express';
 import { Either, Maybe } from 'tsmonad';
-import { caseOf } from 'utils/either';
 import { AppRequest } from 'web/serverModules/types';
 import { Logger } from 'winston';
 import { Handler, ContextCreator } from '../../registerRoutes.types';
