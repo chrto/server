@@ -1,4 +1,5 @@
 import bind from 'utils/either/bind/bind';
+import asyncBind from 'utils/either/asyncBind/asyncBind';
 import lift from 'utils/either/lift/lift';
 import { User as PortalUser } from 'model/sequelize/model/user/user';
 import { Either } from 'tsmonad';
@@ -7,7 +8,7 @@ import { DeletedUser } from './deleteUser.types';
 import { AppRequest } from 'web/serverModules/types';
 import { RequestImplicits } from '../../../paramHandlers/paramHandlers.types';
 import { Context as PortalContext } from './../../../context/context.types';
-import { asyncBind, makeSure } from 'utils/either';
+import { makeSure } from 'utils/either';
 import { NotAuthorized } from 'common/httpErrors';
 import { Fcn } from 'common/types';
 import { UserService } from 'service/sequelize/userService/userService.types';

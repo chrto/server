@@ -1,9 +1,8 @@
+import asyncBind from 'utils/either/asyncBind/asyncBind';
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Either } from 'tsmonad';
 import { AppError } from 'common/error';
 import { AxiosStorage, HTTP_METHOD } from './axios.types';
-
-import { asyncBind } from 'utils/either';
 import sendRequest from './sendRequest/sendRequest';
 
 export default (axiosInstance: AxiosInstance): AxiosStorage => ({

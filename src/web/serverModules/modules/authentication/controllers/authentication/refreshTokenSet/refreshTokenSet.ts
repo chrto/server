@@ -1,3 +1,4 @@
+import asyncBind from 'utils/either/asyncBind/asyncBind';
 import { AppError } from 'common/error';
 import { Response } from 'express';
 import { AuthenticationService } from 'service/http/authentication/types';
@@ -6,7 +7,6 @@ import { AppRequest } from 'web/serverModules/types';
 import { Context } from '../../../context/context.types';
 import { TokenSet as TokenSetModel } from 'model/authentication/tokenSet.types';
 import queryValidator from './validators/queryValidator';
-import { asyncBind } from 'utils/either';
 import { TokenRefreshQueryParams } from './refreshTokenSet.types';
 
 export default (authenticationService: AuthenticationService) =>

@@ -1,3 +1,4 @@
+import asyncBind from 'utils/either/asyncBind/asyncBind';
 import { Context } from '../../../context/context.types';
 import { TokenSet as TokenSetModel } from 'model/authentication/tokenSet.types';
 import { Response } from 'express';
@@ -5,7 +6,6 @@ import { AppRequest } from 'web/serverModules/types';
 import { Either } from 'tsmonad';
 import { AppError } from 'common/error';
 import queryValidator from './validators/queryValidator';
-import { asyncBind } from 'utils/either';
 import { AuthenticationService } from 'service/http/authentication/types';
 import { TokenQueryParams } from './getTokenSet.types';
 

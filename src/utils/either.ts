@@ -12,20 +12,6 @@ export const takeRight = <T> (): EitherPatterns<AppError, T, T> => ({
   left: () => null
 });
 
-/**
- * For a right value extracts the promise from Either<Error, Promise<Either<Error, T>>> and returns it or
- * returns a new promise with the resolved error for a left value.
- */
-const extractPromise = <T> (): EitherPatterns<AppError, Promise<Either<AppError, T>>, Promise<Either<AppError, T>>> => ({
-  right: (promise: Promise<Either<AppError, T>>): Promise<Either<AppError, T>> => promise,
-  left: (error: AppError): Promise<Either<AppError, T>> => Promise.resolve(Either.left<AppError, T>(error))
-});
-
-export const asyncStep = <I, O> (f: (val: I) => Promise<Either<AppError, O>>, valueOrError: Either<AppError, I>): Promise<Either<AppError, O>> =>
-  valueOrError
-    .lift(f)
-    .caseOf(extractPromise());
-
 type Injector<I, O> = (input: Either<AppError, I>) => Promise<Either<AppError, O>>;
 
 export const either = <T> (val: T, appError: AppError): Either<AppError, T> =>
@@ -35,12 +21,6 @@ export const valueOrError =
   <T> (e: AppError) =>
     (v: T): Either<AppError, T> =>
       v !== null ? Either.right(v) : Either.left(e);
-
-export const asyncBind = <I, O> (f: (val: I) => Promise<Either<AppError, O>>): Injector<I, O> =>
-  (valueOrError: Either<AppError, I>): Promise<Either<AppError, O>> =>
-    valueOrError
-      .lift(f)
-      .caseOf(extractPromise());
 
 export const asyncLift = <I, O> (f: (val: I) => Promise<O>): Injector<I, O> =>
   (valueOrError: Either<AppError, I>): Promise<Either<AppError, O>> =>
