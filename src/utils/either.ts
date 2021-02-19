@@ -1,7 +1,7 @@
 import { AppError } from 'common/error';
-import { InvalidInput } from 'common/httpErrors';
 import { Predicate } from 'common/types';
 import { Either, EitherPatterns } from 'tsmonad';
+import asyncLift from './either/asyncLift/asyncLift';
 
 /**
  * Only use for Eithers where there is no possible Left value,
@@ -12,24 +12,13 @@ export const takeRight = <T> (): EitherPatterns<AppError, T, T> => ({
   left: () => null
 });
 
-type Injector<I, O> = (input: Either<AppError, I>) => Promise<Either<AppError, O>>;
-
 export const either = <T> (val: T, appError: AppError): Either<AppError, T> =>
   typeof val !== 'undefined' && val !== null ? Either.right(val) : Either.left(appError);
 
 export const valueOrError =
   <T> (e: AppError) =>
     (v: T): Either<AppError, T> =>
-      v !== null ? Either.right(v) : Either.left(e);
-
-export const asyncLift = <I, O> (f: (val: I) => Promise<O>): Injector<I, O> =>
-  (valueOrError: Either<AppError, I>): Promise<Either<AppError, O>> =>
-    valueOrError
-      .lift(f)
-      .caseOf({
-        right: (valPromise: Promise<O>): Promise<Either<AppError, O>> => valPromise.then(val => either(val, new InvalidInput(`Got null value`))),
-        left: (error: AppError): Promise<Either<AppError, O>> => Promise.resolve(Either.left(error))
-      });
+      v !== undefined && v !== null ? Either.right(v) : Either.left(e);
 
 export const ignoreResult = <T> (action: () => Either<AppError, any>) =>
   (prevResult: Either<AppError, T>): Either<AppError, T> => action().bind(() => prevResult);
