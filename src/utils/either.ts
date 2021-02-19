@@ -28,8 +28,6 @@ export const asyncStep = <I, O> (f: (val: I) => Promise<Either<AppError, O>>, va
 
 type Injector<I, O> = (input: Either<AppError, I>) => Promise<Either<AppError, O>>;
 
-type Lifter<I, O> = (input: Either<AppError, I>) => Either<AppError, O>;
-
 export const either = <T> (val: T, appError: AppError): Either<AppError, T> =>
   typeof val !== 'undefined' && val !== null ? Either.right(val) : Either.left(appError);
 
@@ -43,10 +41,6 @@ export const asyncBind = <I, O> (f: (val: I) => Promise<Either<AppError, O>>): I
     valueOrError
       .lift(f)
       .caseOf(extractPromise());
-
-export const lift = <I, O> (f: (val: I) => O): Lifter<I, O> =>
-  (valueOrError: Either<AppError, I>): Either<AppError, O> =>
-    valueOrError.lift(f);
 
 export const asyncLift = <I, O> (f: (val: I) => Promise<O>): Injector<I, O> =>
   (valueOrError: Either<AppError, I>): Promise<Either<AppError, O>> =>

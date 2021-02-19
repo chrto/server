@@ -1,6 +1,7 @@
 import bind from 'utils/either/bind/bind';
+import lift from 'utils/either/lift/lift';
 import eitherify from 'utils/either/eitherify/eitherify';
-import { asyncBind, lift } from 'utils/either';
+import { asyncBind } from 'utils/either';
 import { UserService } from 'service/sequelize/userService/userService.types';
 import { Response } from 'express';
 import { Either } from 'tsmonad';

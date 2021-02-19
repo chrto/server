@@ -1,8 +1,9 @@
 import 'source-map-support/register';
 
+import lift from 'utils/either/lift/lift';
 import errorHandler from 'web/server/errorHandler/errorHandler';
 import eitherify from 'utils/either/eitherify/eitherify';
-import { asyncLift, ftap, lift, tap, tapLeft } from 'utils/either';
+import { asyncLift, ftap, tap, tapLeft } from 'utils/either';
 import loadAppConfig from './web/server/configuration/loader/appConfig';
 import logAppConfig from './web/server/configuration/logger/logger';
 import getServerParams from './web/server/factory/params/factoryParams';

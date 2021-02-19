@@ -1,4 +1,5 @@
-import { asyncBind, lift } from 'utils/either';
+import lift from 'utils/either/lift/lift';
+import { asyncBind } from 'utils/either';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { AppError } from 'common/error';
 import { Either } from 'tsmonad';

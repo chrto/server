@@ -1,5 +1,6 @@
 
-import { asyncLift, lift } from 'utils/either';
+import lift from 'utils/either/lift/lift';
+import { asyncLift } from 'utils/either';
 import { Response } from 'express';
 import { Either } from 'tsmonad';
 import { AppError } from 'common/error';
