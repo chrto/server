@@ -23,10 +23,6 @@ export const valueOrError =
 export const ignoreResult = <T> (action: () => Either<AppError, any>) =>
   (prevResult: Either<AppError, T>): Either<AppError, T> => action().bind(() => prevResult);
 
-export const asyncCaseOf = <R, T> (pattern: EitherPatterns<AppError, R, Promise<T>>) =>
-  (valueOrError: Either<AppError, R>): Promise<T> =>
-    valueOrError.caseOf(pattern);
-
 export const makeSure = <T> (predicate: Predicate<T>, error: AppError) =>
   (val: T): Either<AppError, T> =>
     predicate(val) ?
