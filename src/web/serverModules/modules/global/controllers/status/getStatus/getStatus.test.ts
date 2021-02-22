@@ -2,6 +2,7 @@ import getStatusUnbound from './getStatus.unbound';
 import checkDbConnection from './check/dbConnection/checkDbConnection';
 import checkService from './check/service/checkService';
 import checkAllSystemsWorking from './check/allSystemsWorking/checkAllSystemsWorking';
+import doer from 'utils/either/do/doer';
 
 import { expect as expectChai } from 'chai';
 import { Either } from 'tsmonad';
@@ -10,7 +11,6 @@ import { AppError } from 'common/error';
 import { DatabaseState, ServerStatus, ServiceItem } from 'model/global/serverStatus/serverStatus.types';
 import { AppRequest } from 'web/serverModules/types';
 import { Context } from '../../../context/context.types';
-import { _do } from 'utils/either';
 import { AsyncStartStop } from 'model/sequelize/modelFactory/modelFactory.types';
 import { ServicePing } from './check/service/checkService.types';
 
@@ -52,7 +52,7 @@ describe('Web Server', () => {
 
               it('Should return exact ServerStatus object', () => {
                 callCTRL({ ping }, { start: sdkStart })
-                  .then(_do({
+                  .then(doer({
                     right: (serverStatus: ServerStatus) => {
                       expectChai(serverStatus)
                         .to.be.an('object')
@@ -72,7 +72,7 @@ describe('Web Server', () => {
 
                 it('Should return exact ServerStatus object', () => {
                   callCTRL({ ping }, { start: sdkStart })
-                    .then(_do({
+                    .then(doer({
                       right: (serverStatus: ServerStatus) => {
                         expectChai(serverStatus)
                           .to.be.an('object')
@@ -91,7 +91,7 @@ describe('Web Server', () => {
 
                 it('Should return exact ServerStatus object', () => {
                   callCTRL({ ping }, { start: sdkStart })
-                    .then(_do({
+                    .then(doer({
                       right: (serverStatus: ServerStatus) => {
                         expectChai(serverStatus)
                           .to.be.an('object')

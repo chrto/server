@@ -1,6 +1,6 @@
 import getTokenSet from './getTokenSet';
+import doer from 'utils/either/do/doer';
 import * as sniff from 'supersniff';
-import { _do } from 'utils/either';
 import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
 
 require('dotenv').config();
@@ -16,7 +16,7 @@ const config: ISSOConfig = {
 getTokenSet
   .apply(null, [config])
   .apply(null, [{ auth_code: AUTH_CODE }])
-  .then(_do({
+  .then(doer({
     right: sniff,
     left: sniff
   }));

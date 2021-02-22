@@ -1,7 +1,7 @@
 import { AppError } from 'common/error';
-import { InvalidInput } from 'common/httpErrors';
 import { Predicate } from 'common/types';
-import { Either, EitherPatterns, OptionalEitherPatterns } from 'tsmonad';
+import { Either, EitherPatterns } from 'tsmonad';
+import asyncLift from './either/asyncLift/asyncLift';
 
 /**
  * Only use for Eithers where there is no possible Left value,
@@ -12,95 +12,16 @@ export const takeRight = <T> (): EitherPatterns<AppError, T, T> => ({
   left: () => null
 });
 
-/**
- * For a right value extracts the promise from Either<Error, Promise<Either<Error, T>>> and returns it or
- * returns a new promise with the resolved error for a left value.
- */
-const extractPromise = <T> (): EitherPatterns<AppError, Promise<Either<AppError, T>>, Promise<Either<AppError, T>>> => ({
-  right: (promise: Promise<Either<AppError, T>>): Promise<Either<AppError, T>> => promise,
-  left: (error: AppError): Promise<Either<AppError, T>> => Promise.resolve(Either.left<AppError, T>(error))
-});
-
-export const asyncStep = <I, O> (f: (val: I) => Promise<Either<AppError, O>>, valueOrError: Either<AppError, I>): Promise<Either<AppError, O>> =>
-  valueOrError
-    .lift(f)
-    .caseOf(extractPromise());
-
-type Injector<I, O> = (input: Either<AppError, I>) => Promise<Either<AppError, O>>;
-
-type Binder<I, O> = (input: Either<AppError, I>) => Either<AppError, O>;
-
-type Lifter<I, O> = (input: Either<AppError, I>) => Either<AppError, O>;
-
-type Doer<T> = (input: Either<AppError, T>) => Either<AppError, T>;
-type DoerVoid<T> = (input: Either<AppError, T>) => void;
-
-export const eitherify = <I extends any[], O> (f: (...args: I) => O) =>
-  (...args: I): Either<AppError, O> => {
-    try {
-      return Either.right<AppError, O>(f(...args));
-    } catch (error) {
-      return Either.left<AppError, O>(
-        error instanceof AppError
-          ? error
-          : new AppError(
-            !error.code ? '' : error.code,
-            !error.message ? 'unknown error' : error.message
-          )
-      );
-    }
-  };
-
 export const either = <T> (val: T, appError: AppError): Either<AppError, T> =>
   typeof val !== 'undefined' && val !== null ? Either.right(val) : Either.left(appError);
 
 export const valueOrError =
   <T> (e: AppError) =>
     (v: T): Either<AppError, T> =>
-      v !== null ? Either.right(v) : Either.left(e);
-
-export const bind = <I, O> (f: (val: I) => Either<AppError, O>): Binder<I, O> =>
-  (valueOrError: Either<AppError, I>): Either<AppError, O> =>
-    valueOrError.bind(f);
-
-export const asyncBind = <I, O> (f: (val: I) => Promise<Either<AppError, O>>): Injector<I, O> =>
-  (valueOrError: Either<AppError, I>): Promise<Either<AppError, O>> =>
-    valueOrError
-      .lift(f)
-      .caseOf(extractPromise());
-
-export const lift = <I, O> (f: (val: I) => O): Lifter<I, O> =>
-  (valueOrError: Either<AppError, I>): Either<AppError, O> =>
-    valueOrError.lift(f);
-
-export const asyncLift = <I, O> (f: (val: I) => Promise<O>): Injector<I, O> =>
-  (valueOrError: Either<AppError, I>): Promise<Either<AppError, O>> =>
-    valueOrError
-      .lift(f)
-      .caseOf({
-        right: (valPromise: Promise<O>): Promise<Either<AppError, O>> => valPromise.then(val => either(val, new InvalidInput(`Got null value`))),
-        left: (error: AppError): Promise<Either<AppError, O>> => Promise.resolve(Either.left(error))
-      });
+      v !== undefined && v !== null ? Either.right(v) : Either.left(e);
 
 export const ignoreResult = <T> (action: () => Either<AppError, any>) =>
   (prevResult: Either<AppError, T>): Either<AppError, T> => action().bind(() => prevResult);
-
-export const _do = <T> (pattern: OptionalEitherPatterns<AppError, T, void>): Doer<T> =>
-  (valueOrError: Either<AppError, T>) =>
-    valueOrError.do(pattern);
-
-export const _doVoid = <T> (pattern: OptionalEitherPatterns<AppError, T, void>): DoerVoid<T> =>
-  (valueOrError: Either<AppError, T>) => {
-    valueOrError.do(pattern);
-  };
-
-export const caseOf = <R, T> (pattern: EitherPatterns<AppError, R, T>) =>
-  (valueOrError: Either<AppError, R>): T =>
-    valueOrError.caseOf(pattern);
-
-export const asyncCaseOf = <R, T> (pattern: EitherPatterns<AppError, R, Promise<T>>) =>
-  (valueOrError: Either<AppError, R>): Promise<T> =>
-    valueOrError.caseOf(pattern);
 
 export const makeSure = <T> (predicate: Predicate<T>, error: AppError) =>
   (val: T): Either<AppError, T> =>

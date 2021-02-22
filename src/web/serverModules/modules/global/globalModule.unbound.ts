@@ -1,11 +1,11 @@
+import eitherify from 'utils/either/eitherify/eitherify';
+import { Router } from 'express';
+import { Either } from 'tsmonad';
+import { Logger } from 'winston';
 import { PluginSdkService } from 'service/serviceFactory/serviceFactory.types';
 import { AppConfig } from 'web/server/configuration/loader/appConfig.types';
 import { Context as GlobalContext } from './context/context.types';
 import { ModuleConfig, ModuleConfigFactory } from 'web/serverModules/types';
-import { Router } from 'express';
-import { Either } from 'tsmonad';
-import { eitherify } from 'utils/either';
-import { Logger } from 'winston';
 
 export default (
   logger: Logger,

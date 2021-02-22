@@ -1,6 +1,6 @@
 import refreshTokens from './refreshTokens';
+import doer from 'utils/either/do/doer';
 import * as sniff from 'supersniff';
-import { _do } from 'utils/either';
 import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
 
 require('dotenv').config();
@@ -15,7 +15,7 @@ const config: ISSOConfig = {
 refreshTokens
   .apply(null, [config])
   .apply(null, [{ refresh_token: REFRESH_TOKEN }])
-  .then(_do({
+  .then(doer({
     right: sniff,
     left: sniff
   }));

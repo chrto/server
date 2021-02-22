@@ -1,8 +1,9 @@
+import lift from 'utils/either/lift/lift';
+import asyncLift from 'utils/either/asyncLift/asyncLift';
 import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import { AppError } from 'common/error';
 import { Fcn } from 'common/types';
 import { Either } from 'tsmonad';
-import { asyncLift, lift } from 'utils/either';
 
 export default (
   handleAxiosError: Fcn<[AxiosError], AppError>,

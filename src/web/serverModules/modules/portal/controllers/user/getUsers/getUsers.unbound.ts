@@ -1,3 +1,4 @@
+import lift from 'utils/either/lift/lift';
 import { UserService } from 'service/sequelize/userService/userService.types';
 import { Response } from 'express';
 import { AppRequest } from 'web/serverModules/types';
@@ -6,7 +7,6 @@ import { User as PortalUser } from 'model/sequelize/model/user/user';
 import { Either } from 'tsmonad';
 import { AppError } from 'common/error';
 import { Fcn } from 'common/types';
-import { lift } from 'utils/either';
 import { RequestImplicits } from '../../../paramHandlers/paramHandlers.types';
 
 export default (

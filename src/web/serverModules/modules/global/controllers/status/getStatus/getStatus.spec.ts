@@ -1,4 +1,5 @@
 import getStatusUnbound from './getStatus.unbound';
+import caseOf from 'utils/either/caseOf/caseOf';
 import { Response } from 'express';
 import { AppError } from 'common/error';
 import { ServerStatus, ServiceItem } from 'model/global/serverStatus/serverStatus.types';
@@ -7,7 +8,6 @@ import { Context } from '../../../context/context.types';
 import { Either } from 'tsmonad';
 import { AuthenticationService } from 'service/http/authentication/types';
 import { ServicePing } from './check/service/checkService.types';
-import { caseOf } from 'utils/either';
 
 type ExecutorMock = jest.Mock<ServerStatus, [ServerStatus]>;
 type ExecutorAsyncMock = jest.Mock<Promise<ServerStatus>, [ServerStatus]>;
