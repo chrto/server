@@ -1,4 +1,4 @@
-import eitherify from 'utils/either/eitherify/eitherify';
+import eitherify from 'utils/monad/either/eitherify/eitherify';
 import { Router } from 'express';
 import { Either } from 'tsmonad';
 import { Logger } from 'winston';

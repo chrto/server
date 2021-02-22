@@ -1,4 +1,4 @@
-import asyncBind from 'utils/either/asyncBind/asyncBind';
+import asyncBind from 'utils/monad/either/asyncBind/asyncBind';
 import { AppError } from 'common/error';
 import { Response } from 'express';
 import { AuthenticationService } from 'service/http/authentication/types';

@@ -1,5 +1,5 @@
 import readFileString from './readFileString';
-import doer from 'utils/either/do/doer';
+import doer from 'utils/monad/either/do/doer';
 import { WORK_DIR } from 'src/defaults';
 import * as sniff from 'supersniff';
 

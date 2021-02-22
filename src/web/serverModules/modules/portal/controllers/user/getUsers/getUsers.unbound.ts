@@ -1,4 +1,4 @@
-import lift from 'utils/either/lift/lift';
+import lift from 'utils/monad/either/lift/lift';
 import { UserService } from 'service/sequelize/userService/userService.types';
 import { Response } from 'express';
 import { AppRequest } from 'web/serverModules/types';

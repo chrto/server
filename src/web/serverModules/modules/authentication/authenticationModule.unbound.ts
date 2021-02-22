@@ -1,4 +1,4 @@
-import eitherify from 'utils/either/eitherify/eitherify';
+import eitherify from 'utils/monad/either/eitherify/eitherify';
 import { PluginSdkService } from 'service/serviceFactory/serviceFactory.types';
 import { AppConfig } from 'web/server/configuration/loader/appConfig.types';
 import { Context as AuthContext } from './context/context.types';

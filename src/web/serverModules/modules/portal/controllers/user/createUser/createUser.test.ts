@@ -1,5 +1,5 @@
 import createUserUnbound from './createUser.unbound';
-import doer from 'utils/either/do/doer';
+import doer from 'utils/monad/either/do/doer';
 import logger from 'utils/logger';
 import userService from 'service/sequelize/userService/userService';
 import initUserModel, { User } from 'model/sequelize/model/user/user';

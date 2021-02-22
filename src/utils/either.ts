@@ -1,7 +1,7 @@
 import { AppError } from 'common/error';
 import { Predicate } from 'common/types';
 import { Either, EitherPatterns } from 'tsmonad';
-import asyncLift from './either/asyncLift/asyncLift';
+import asyncLift from './monad/either/asyncLift/asyncLift';
 
 /**
  * Only use for Eithers where there is no possible Left value,
