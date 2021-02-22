@@ -1,9 +1,8 @@
-import caseOf from 'utils/monad/either/caseOf/caseOf';
 import { assert, expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { Either } from 'tsmonad';
 import eitherify from 'utils/monad/either/eitherify/eitherify';
-import { takeRight, valueOrError, ftap } from 'utils/either';
+import { valueOrError, ftap } from 'utils/either';
 
 describe('Either', () => {
   describe('ftap', () => {
@@ -101,29 +100,6 @@ describe('Either', () => {
     });
   });
 
-  describe(`'takeRight'`, () => {
-    it('Should return value, if right side.', () => {
-      const val: number = 10;
-      const either = Either.right<AppError, number>(val);
-      Promise.resolve(either)
-        .then(caseOf(takeRight()))
-        .then((value: number) => {
-          expectChai(value)
-            .to.be.an('number')
-            .which.is.equal(val);
-        });
-    });
-
-    it('Should return null, if left side.', () => {
-      const either = Either.left<AppError, number>(new AppError('code', 'message'));
-      Promise.resolve(either)
-        .then(caseOf(takeRight()))
-        .then((value: number) => {
-          expectChai(value)
-            .to.be.equal(null);
-        });
-    });
-  });
   describe('Value or error function', () => {
 
     const valueOrErrorTestCases = [{

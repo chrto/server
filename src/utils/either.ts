@@ -1,16 +1,7 @@
 import { AppError } from 'common/error';
 import { Predicate } from 'common/types';
-import { Either, EitherPatterns } from 'tsmonad';
+import { Either } from 'tsmonad';
 import asyncLift from './monad/either/asyncLift/asyncLift';
-
-/**
- * Only use for Eithers where there is no possible Left value,
- * because it returns null for a Left value (so that it type-checks)
- */
-export const takeRight = <T> (): EitherPatterns<AppError, T, T> => ({
-  right: v => v,
-  left: () => null
-});
 
 export const either = <T> (val: T, appError: AppError): Either<AppError, T> =>
   typeof val !== 'undefined' && val !== null ? Either.right(val) : Either.left(appError);
