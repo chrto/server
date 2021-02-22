@@ -49,11 +49,3 @@ export const tapLeft = <T> (f: (error: AppError) => void) =>
   (valueOrError: Either<AppError, T>): Either<AppError, T> =>
     valueOrError
       .do({ left: f });
-
-export const forError = <T> (f: (err: AppError) => AppError) =>
-  (input: Either<AppError, T>): Either<AppError, T> =>
-    input
-      .caseOf({
-        right: value => Either.right(value),
-        left: err => Either.left(f(err))
-      });
