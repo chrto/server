@@ -1,4 +1,4 @@
-import { valueOrError } from 'utils/either';
+import valueOrError from '../valueOrError/valueOrError';
 import { InvalidInput } from 'common/httpErrors';
 import { Either, EitherPatterns } from 'tsmonad';
 import { AppError } from 'common/error';

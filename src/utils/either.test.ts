@@ -1,8 +1,8 @@
-import { assert, expect as expectChai } from 'chai';
+import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { Either } from 'tsmonad';
 import eitherify from 'utils/monad/either/eitherify/eitherify';
-import { valueOrError, ftap } from 'utils/either';
+import { ftap } from 'utils/either';
 
 describe('Either', () => {
   describe('ftap', () => {
@@ -98,29 +98,5 @@ describe('Either', () => {
           }
         });
     });
-  });
-
-  describe('Value or error function', () => {
-
-    const valueOrErrorTestCases = [{
-      description: 'should return value',
-      either: Either.right({ test: 'test' }),
-      right: value => assert.isNotNull(value),
-      left: () => null
-    }, {
-      description: 'should return error',
-      either: null,
-      right: () => null,
-      left: error => assert.isNotNull(error)
-    }];
-
-    valueOrErrorTestCases.forEach(testCase =>
-      it(testCase.description, () =>
-        valueOrError(new AppError('1', 'testing app error'))(testCase.either).caseOf({
-          right: testCase.right,
-          left: testCase.left
-        })
-      )
-    );
   });
 });

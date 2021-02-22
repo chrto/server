@@ -1,4 +1,4 @@
-import { valueOrError } from 'utils/either';
+import valueOrError from 'utils/monad/either/patterns/valueOrError/valueOrError';
 import { AppError } from 'common/error';
 import { Model, UpdateOptions } from 'sequelize/types';
 import { Either } from 'tsmonad';

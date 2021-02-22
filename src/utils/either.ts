@@ -6,11 +6,6 @@ import asyncLift from './monad/either/asyncLift/asyncLift';
 export const either = <T> (val: T, appError: AppError): Either<AppError, T> =>
   typeof val !== 'undefined' && val !== null ? Either.right(val) : Either.left(appError);
 
-export const valueOrError =
-  <T> (e: AppError) =>
-    (v: T): Either<AppError, T> =>
-      v !== undefined && v !== null ? Either.right(v) : Either.left(e);
-
 export const ignoreResult = <T> (action: () => Either<AppError, any>) =>
   (prevResult: Either<AppError, T>): Either<AppError, T> => action().bind(() => prevResult);
 
