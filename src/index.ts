@@ -2,9 +2,10 @@ import 'source-map-support/register';
 
 import lift from 'utils/monad/either/lift/lift';
 import asyncLift from 'utils/monad/either/asyncLift/asyncLift';
+import tap from 'utils/monad/either/tap/tap';
 import errorHandler from 'web/server/errorHandler/errorHandler';
 import eitherify from 'utils/monad/either/eitherify/eitherify';
-import { ftap, tap, tapLeft } from 'utils/either';
+import { ftap, tapLeft } from 'utils/either';
 import loadAppConfig from './web/server/configuration/loader/appConfig';
 import logAppConfig from './web/server/configuration/logger/logger';
 import getServerParams from './web/server/factory/params/factoryParams';
