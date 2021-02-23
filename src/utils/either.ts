@@ -1,19 +1,9 @@
 import { AppError } from 'common/error';
-import { Predicate } from 'common/types';
 import { Either } from 'tsmonad';
 import asyncLift from './monad/either/asyncLift/asyncLift';
 
 export const either = <T> (val: T, appError: AppError): Either<AppError, T> =>
   typeof val !== 'undefined' && val !== null ? Either.right(val) : Either.left(appError);
-
-export const ignoreResult = <T> (action: () => Either<AppError, any>) =>
-  (prevResult: Either<AppError, T>): Either<AppError, T> => action().bind(() => prevResult);
-
-export const makeSure = <T> (predicate: Predicate<T>, error: AppError) =>
-  (val: T): Either<AppError, T> =>
-    predicate(val) ?
-      Either.right(val) :
-      Either.left(error);
 
 export const asyncIgnoreResult = <T> (action: (val: T) => Promise<any>) =>
   (prevResult: Either<AppError, T>): Promise<Either<AppError, T>> =>
