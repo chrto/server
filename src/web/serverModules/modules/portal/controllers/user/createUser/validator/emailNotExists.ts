@@ -1,4 +1,4 @@
-import caseOf from 'utils/either/caseOf/caseOf';
+import caseOf from 'utils/monad/either/caseOf/caseOf';
 import { AppError } from 'common/error';
 import { Conflict, NotFound } from 'common/httpErrors';
 import { Either } from 'tsmonad';

@@ -1,5 +1,5 @@
 import emailNotExists from './emailNotExists';
-import doer from 'utils/either/do/doer';
+import doer from 'utils/monad/either/do/doer';
 import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { User } from 'model/sequelize/model/user/user';

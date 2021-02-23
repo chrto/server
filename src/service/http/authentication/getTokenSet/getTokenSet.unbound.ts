@@ -1,5 +1,5 @@
-import lift from 'utils/either/lift/lift';
-import asyncBind from 'utils/either/asyncBind/asyncBind';
+import lift from 'utils/monad/either/lift/lift';
+import asyncBind from 'utils/monad/either/asyncBind/asyncBind';
 import { Either } from 'tsmonad';
 import { AppError } from 'common/error';
 import { TokenQueryParams } from 'web/serverModules/modules/authentication/controllers/authentication/getTokenSet/getTokenSet.types';

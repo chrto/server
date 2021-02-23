@@ -1,4 +1,4 @@
-import asyncBind from 'utils/either/asyncBind/asyncBind';
+import asyncBind from 'utils/monad/either/asyncBind/asyncBind';
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Either } from 'tsmonad';
 import { AppError } from 'common/error';

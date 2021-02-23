@@ -1,7 +1,7 @@
-import caseOf from 'utils/either/caseOf/caseOf';
-import bind from 'utils/either/bind/bind';
-import asyncBind from 'utils/either/asyncBind/asyncBind';
-import { makeSure } from 'utils/either';
+import makeSure from 'utils/monad/either/makeSure/makeSure';
+import caseOf from 'utils/monad/either/caseOf/caseOf';
+import bind from 'utils/monad/either/bind/bind';
+import asyncBind from 'utils/monad/either/asyncBind/asyncBind';
 import { Either } from 'tsmonad';
 import { NextFunction, Response } from 'express';
 import { AppError } from 'common/error';

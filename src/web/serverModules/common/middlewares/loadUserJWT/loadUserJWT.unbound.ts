@@ -1,4 +1,4 @@
-import caseOf from 'utils/either/caseOf/caseOf';
+import caseOf from 'utils/monad/either/caseOf/caseOf';
 import { PluginSdkService } from 'service/serviceFactory/serviceFactory.types';
 import { AppRequest } from 'web/serverModules/types';
 import { User as UserModel } from 'model/sequelize/model/user/user';

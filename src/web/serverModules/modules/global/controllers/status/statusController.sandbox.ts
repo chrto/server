@@ -1,4 +1,4 @@
-import lift from 'utils/either/lift/lift';
+import lift from 'utils/monad/either/lift/lift';
 import statusController from './statusController';
 import authenticationService from 'service/http/authentication/authenticationService';
 import modelFactory from 'model/sequelize/modelFactory/modelFactory';

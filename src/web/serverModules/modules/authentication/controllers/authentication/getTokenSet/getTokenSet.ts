@@ -1,4 +1,4 @@
-import asyncBind from 'utils/either/asyncBind/asyncBind';
+import asyncBind from 'utils/monad/either/asyncBind/asyncBind';
 import { Context } from '../../../context/context.types';
 import { TokenSet as TokenSetModel } from 'model/authentication/tokenSet.types';
 import { Response } from 'express';

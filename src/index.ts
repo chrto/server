@@ -1,10 +1,12 @@
 import 'source-map-support/register';
 
-import lift from 'utils/either/lift/lift';
-import asyncLift from 'utils/either/asyncLift/asyncLift';
+import lift from 'utils/monad/either/lift/lift';
+import asyncLift from 'utils/monad/either/asyncLift/asyncLift';
+import tap from 'utils/monad/either/tap/tap';
+import fTap from 'utils/monad/either/tapFlatten/fTap';
+import tapLeft from 'utils/monad/either/tapLeft/tapLeft';
 import errorHandler from 'web/server/errorHandler/errorHandler';
-import eitherify from 'utils/either/eitherify/eitherify';
-import { ftap, tap, tapLeft } from 'utils/either';
+import eitherify from 'utils/monad/either/eitherify/eitherify';
 import loadAppConfig from './web/server/configuration/loader/appConfig';
 import logAppConfig from './web/server/configuration/logger/logger';
 import getServerParams from './web/server/factory/params/factoryParams';
@@ -28,7 +30,7 @@ const startServer = (server: WebServer): Promise<WebServer> => server.start();
 Promise.resolve(loadAppConfig())
   .then(tap<AppConfig>(logAppConfig))
   .then(lift<AppConfig, ServerFactoryParams>(getServerParams))
-  .then(ftap<ServerFactoryParams>(eitherify<[ServerFactoryParams], void>(registerModules)))
+  .then(fTap<ServerFactoryParams>(eitherify<[ServerFactoryParams], void>(registerModules)))
   .then(lift<ServerFactoryParams, WebServer>(serverFactory))
   .then(tap<WebServer>(logger.debug.bind(null, 'starting server...')))
   .then(asyncLift<WebServer, WebServer>(startServer))

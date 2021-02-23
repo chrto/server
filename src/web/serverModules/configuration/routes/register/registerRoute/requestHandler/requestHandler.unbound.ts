@@ -1,5 +1,5 @@
-import doer from 'utils/either/do/doer';
-import caseOf from 'utils/either/caseOf/caseOf';
+import doer from 'utils/monad/either/do/doer';
+import caseOf from 'utils/monad/either/caseOf/caseOf';
 import { AppError } from 'common/error';
 import { NotAuthorized } from 'common/httpErrors';
 import { Fcn } from 'common/types';

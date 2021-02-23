@@ -1,5 +1,5 @@
 import logOut from './logOut';
-import doer from 'utils/either/do/doer';
+import doer from 'utils/monad/either/do/doer';
 import * as sniff from 'supersniff';
 import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
 

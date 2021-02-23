@@ -1,5 +1,5 @@
-import lift from 'utils/either/lift/lift';
-import asyncLift from 'utils/either/asyncLift/asyncLift';
+import lift from 'utils/monad/either/lift/lift';
+import asyncLift from 'utils/monad/either/asyncLift/asyncLift';
 import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import { AppError } from 'common/error';
 import { Fcn } from 'common/types';

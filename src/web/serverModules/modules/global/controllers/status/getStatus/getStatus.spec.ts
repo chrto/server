@@ -1,5 +1,5 @@
 import getStatusUnbound from './getStatus.unbound';
-import caseOf from 'utils/either/caseOf/caseOf';
+import caseOf from 'utils/monad/either/caseOf/caseOf';
 import { Response } from 'express';
 import { AppError } from 'common/error';
 import { ServerStatus, ServiceItem } from 'model/global/serverStatus/serverStatus.types';

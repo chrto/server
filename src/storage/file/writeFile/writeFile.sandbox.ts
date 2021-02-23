@@ -1,5 +1,5 @@
 import writeFile from './writeFile';
-import doer from 'utils/either/do/doer';
+import doer from 'utils/monad/either/do/doer';
 import { WORK_DIR } from 'src/defaults';
 import * as sniff from 'supersniff';
 import { FSWriteOptions } from '../file.types';

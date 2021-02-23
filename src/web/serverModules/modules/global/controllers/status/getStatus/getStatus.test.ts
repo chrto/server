@@ -2,7 +2,7 @@ import getStatusUnbound from './getStatus.unbound';
 import checkDbConnection from './check/dbConnection/checkDbConnection';
 import checkService from './check/service/checkService';
 import checkAllSystemsWorking from './check/allSystemsWorking/checkAllSystemsWorking';
-import doer from 'utils/either/do/doer';
+import doer from 'utils/monad/either/do/doer';
 
 import { expect as expectChai } from 'chai';
 import { Either } from 'tsmonad';
