@@ -14,14 +14,3 @@ export const asyncIgnoreResult = <T> (action: (val: T) => Promise<any>) =>
       .then(
         asyncLift(res => action(res).then(() => res).catch(() => res))
       );
-
-export const bindAll = (eithers: Either<any, any>[]): Either<any, any[]> =>
-  eithers.reduce((prevsOrError, currOrError) =>
-    prevsOrError.bind(prevs => currOrError.lift(curr => [...prevs, curr]))
-    , Either.right([])
-  );
-
-export const tapLeft = <T> (f: (error: AppError) => void) =>
-  (valueOrError: Either<AppError, T>): Either<AppError, T> =>
-    valueOrError
-      .do({ left: f });
