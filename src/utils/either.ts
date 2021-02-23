@@ -31,15 +31,6 @@ export const bindAll = (eithers: Either<any, any>[]): Either<any, any[]> =>
     , Either.right([])
   );
 
-export const ftap = <T> (f: (val: T) => Either<AppError, void>) =>
-  (valueOrError: Either<AppError, T>): Either<AppError, T> =>
-    valueOrError
-      .bind(f)
-      .caseOf({
-        right: (): Either<AppError, T> => valueOrError,
-        left: (error: AppError): Either<AppError, T> => Either.left(error)
-      });
-
 export const tapLeft = <T> (f: (error: AppError) => void) =>
   (valueOrError: Either<AppError, T>): Either<AppError, T> =>
     valueOrError
