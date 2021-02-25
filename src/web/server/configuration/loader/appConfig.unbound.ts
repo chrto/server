@@ -8,4 +8,5 @@ export default (loaders: ConfigurationLoaders) =>
       .bind(loaders.loadNodeEnvConfiguration)
       .lift(loaders.loadServerConfiguration)
       .lift(loaders.loadDatabaseConfiguration)
-      .bind(loaders.loadSSOConfiguration);
+      .bind(loaders.loadSSOConfiguration)
+      .lift(loaders.loadLoggerConfiguration);
