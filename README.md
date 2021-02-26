@@ -37,6 +37,19 @@ Project can be customized using ENV variables:
 |                             |                                                                           |                                                 |
 | KEYCLOAK_USER               | admin                                                                     | Keycloak admin user                             |
 | KEYCLOAK_PASSWORD           | Admin-123                                                                 | Keycloak admin passwd                           |
+|                             |                                                                           |                                                 |
+| LOG_LABEL                   | SERVER                                                                    | Log entry preffix                               |
+| LOG_DIR                     | ./logs                                                                    |                                                 |
+| LOG_FILE_LEVEL              | debug                                                                     | Log level for file log                          |
+| LOG_FILE_NAME_INFO          | info-%DATE%.log                                                           | Log file name                                   |
+| LOG_FILE_NAME_ERROR         | error-%DATE%.log                                                          | Error log file name                             |
+| LOG_FILE_DATE_PATTERN       | YYYY-MM-DD                                                                | Daily log rotation                              |
+| LOG_FILE_ZIP_ARCH           | true                                                                      | Archive old logs                                |
+| LOG_FILE_MAX_SIZE           | 10m                                                                       | Max file size is 10 MB                          |
+| LOG_FILE_MAX_FILES          | 14d                                                                       | Keep logs for 14 days                           |
+| LOG_CONSOLE_LEVEL           | debug                                                                     | Log level for console log                       |
+| LOG_CONSOLE_ENABLE          | true                                                                      | Enabled console log                             |
+|                             |                                                                           |                                                 |
 
 ## Run server in development mode
 ```
