@@ -1,6 +1,7 @@
 import { Logger } from 'winston';
 import { AppConfig } from '../loader/appConfig.types';
 import { IDatabaseConfig } from '../loader/database/databaseConfig.types';
+import { ILoggerConfig } from '../loader/logger/loggerConfig.types';
 import { ENodeENV } from '../loader/nodeEnv/nodeEnvConfig.types';
 import { IServerConfig } from '../loader/server/serverConfig.types';
 import { ISSOConfig } from '../loader/sso/ssoConfig.types';
@@ -14,7 +15,8 @@ describe('server configuration module', () => {
       environment: ENodeENV.development,
       server: {} as IServerConfig,
       database: {} as IDatabaseConfig,
-      sso: {} as ISSOConfig
+      sso: {} as ISSOConfig,
+      logger: {} as ILoggerConfig
     };
 
     beforeAll(() => {
