@@ -1,5 +1,4 @@
 import { COLORS } from './config';
-import * as mkdirp from 'mkdirp';
 
 import { Maybe } from 'tsmonad';
 import { Logger, LoggerOptions } from 'winston';
@@ -9,8 +8,9 @@ import * as Transport from 'winston-transport';
 import { AppConfig } from 'web/server/configuration/loader/appConfig.types';
 import { Fcn } from 'common/types';
 import { IAppLogger } from '../appLogger.types';
+import { FileStorage } from 'storage/file/file.types';
 
-export default (isMasterCluster: boolean) =>
+export default (fileStorage: FileStorage, isMasterCluster: boolean) =>
   (addColors: Fcn<[AbstractConfigSetColors], any>) =>
     (
       transports: Fcn<[AppConfig], Maybe<Transport[]>>,
@@ -22,7 +22,7 @@ export default (isMasterCluster: boolean) =>
           .do({
             just: (appConfig: AppConfig): void => {
               if (isMasterCluster) {
-                mkdirp.sync(appConfig.appLogger.dir);  // TODO
+                fileStorage.mkDirSync(appConfig.appLogger.dir, { recursive: true });
               }
             }
           })
