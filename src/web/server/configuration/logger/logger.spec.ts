@@ -16,7 +16,7 @@ describe('server configuration module', () => {
       server: {} as IServerConfig,
       database: {} as IDatabaseConfig,
       sso: {} as ISSOConfig,
-      logger: {} as ILoggerConfig
+      appLogger: {} as ILoggerConfig
     };
 
     beforeAll(() => {

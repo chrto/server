@@ -10,7 +10,7 @@ export interface AppConfig extends INodeEnv {
   server: IServerConfig;
   database: IDatabaseConfig;
   sso: ISSOConfig;
-  logger: ILoggerConfig;
+  appLogger: ILoggerConfig;
 }
 
 export interface ConfigurationLoaders {

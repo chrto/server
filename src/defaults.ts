@@ -20,6 +20,7 @@ export const DEFAULT_LOG_DIR = `${WORK_DIR}logs`;
 export const DEFAULT_LOG_FILE_LEVEL = 'debug';
 export const DEFAULT_LOG_FILE_NAME_INFO = 'info-%DATE%.log';
 export const DEFAULT_LOG_FILE_NAME_ERROR = 'error-%DATE%.log';
+export const DEFAULT_LOG_FILE_NAME_EXCEPTIONS = 'exceptions.log';
 export const DEFAULT_LOG_FILE_DATE_PATTERN = 'YYYY-MM-DD';
 export const DEFAULT_LOG_FILE_ZIP_ARCH = true;
 export const DEFAULT_LOG_FILE_MAX_SIZE = '10m';

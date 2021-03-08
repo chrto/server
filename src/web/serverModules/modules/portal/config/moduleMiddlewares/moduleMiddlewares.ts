@@ -15,8 +15,8 @@ export default (appConfig?: AppConfig, service?: PluginSdkService) =>
   registerMiddlewares.apply(null, [[
     cors,
     json(JSON_OPTIONS),
-    expressLogger,
-    expressErrorLogger,
+    expressLogger(appConfig),
+    expressErrorLogger(appConfig),
     jwtAuthentication(appConfig.sso),
     loadUserJWT(service),
     authenticationErrorHandler

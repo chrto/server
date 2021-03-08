@@ -1,5 +1,5 @@
 import serverStopExecutorUbound from './serverStopExecutor.ubound';
-import logger from 'utils/logger';
+import appLogger from 'logger/appLogger';
 
 const message: string = 'server listener has been closed';
-export default serverStopExecutorUbound.apply(null, [logger, message]);
+export default serverStopExecutorUbound.apply(null, [appLogger, message]);

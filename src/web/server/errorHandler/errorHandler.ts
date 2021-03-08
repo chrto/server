@@ -1,4 +1,4 @@
 import errorHandlerUnbound from './errorHandler.unbound';
-import logger from 'utils/logger';
+import appLogger from 'logger/appLogger';
 
-export default errorHandlerUnbound.apply(null, [logger, process]);
+export default errorHandlerUnbound.apply(null, [appLogger, process]);

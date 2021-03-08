@@ -57,7 +57,7 @@ describe('server configuration module', () => {
           });
           it(`should have own property 'logger'`, () => {
             expectChai(appConfig)
-              .haveOwnProperty('logger');
+              .haveOwnProperty('appLogger');
           });
         },
         left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)

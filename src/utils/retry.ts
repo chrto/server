@@ -1,14 +1,14 @@
-import logger from 'utils/logger';
+import appLogger from 'logger/appLogger';
 import sleep from './sleep';
 
-const retry = <T>(operation: () => Promise<void>, delay: number = 1000, retries: number = 10, err: T = null, silent: boolean = false) =>
+const retry = <T> (operation: () => Promise<void>, delay: number = 1000, retries: number = 10, err: T = null, silent: boolean = false) =>
   !retries
     ? Promise.reject(err)
     : operation()
       .catch(
         (err: T) => {
           if (!silent) {
-            logger.error(`Failing operation ${err}, ${retries} retries left with ${delay} ms delay`);
+            appLogger.error(`Failing operation ${err}, ${retries} retries left with ${delay} ms delay`);
           }
           return sleep(delay)
             .then(

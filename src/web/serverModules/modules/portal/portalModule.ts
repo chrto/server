@@ -1,5 +1,5 @@
 import portalModuleUnbound from './portalModule.unbound';
-import logger from 'utils/logger';
+import appLogger from 'logger/appLogger';
 import moduleDefinition from './config/moduleDefinition/moduleDefinition';
 import moduleMiddlewares from './config/moduleMiddlewares/moduleMiddlewares';
 import moduleParamHandler from './config/moduleParamHandler/moduleParamHandler';
@@ -10,7 +10,7 @@ import { Router } from 'express';
 
 export default portalModuleUnbound
   .apply(null, [
-    logger,
+    appLogger,
     moduleDefinition,
     moduleMiddlewares,
     moduleParamHandler,

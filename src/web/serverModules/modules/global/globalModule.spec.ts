@@ -8,10 +8,16 @@ import { AuthenticationService } from 'service/http/authentication/types';
 import { AsyncStartStop } from 'model/sequelize/modelFactory/modelFactory.types';
 import { ModuleConfig, ModuleConfigFactory } from 'web/serverModules/types';
 import { Context as GlobalContext } from './context/context.types';
+import { AppConfig } from 'web/server/configuration/loader/appConfig.types';
 
 const AUTH_SERVICE: AuthenticationService = {} as AuthenticationService;
 const SDK_START_STOP: AsyncStartStop = {} as AsyncStartStop;
 const SERVICE: PluginSdkService = { authenticationService: AUTH_SERVICE, sdkStartStop: SDK_START_STOP } as PluginSdkService;
+const APP_CONFIG: AppConfig = {
+  appLogger: {
+    fileLevel: 'debug'
+  }
+} as AppConfig;
 
 describe('Web Server', () => {
   describe('Modules', () => {
@@ -19,7 +25,8 @@ describe('Web Server', () => {
       let logger: Logger = {} as Logger;
       let moduleDefinition: jest.Mock<ModuleConfigFactory<GlobalContext>, [PluginSdkService]>;
       let setModuleDefinition: jest.Mock<ModuleConfigFactory<GlobalContext>, [PluginSdkService]>;
-      let moduleMiddlewares: jest.Mock<Either<any, ModuleConfig<GlobalContext>>, [ModuleConfig<GlobalContext>]>;
+      let configFactory: jest.Mock<ModuleConfigFactory<GlobalContext>>;
+      let moduleMiddlewares: jest.Mock<ModuleConfigFactory<GlobalContext>, [AppConfig]>;
       let registerErrorHandlerMiddleware: jest.Mock<Either<any, ModuleConfig<GlobalContext>>, [ModuleConfig<GlobalContext>]>;
       let registerRoutes: jest.Mock<ModuleConfig<GlobalContext>, [ModuleConfig<GlobalContext>]>;
       let result: Router;
@@ -36,14 +43,15 @@ describe('Web Server', () => {
         logger.error = jest.fn().mockReturnThis();
         setModuleDefinition = jest.fn().mockImplementation((moduleConfig: ModuleConfig<GlobalContext>): ModuleConfig<GlobalContext> => moduleConfig);
         moduleDefinition = jest.fn().mockReturnValue(setModuleDefinition);
-        moduleMiddlewares = jest.fn().mockImplementation((moduleConfig: ModuleConfig<GlobalContext>): ModuleConfig<GlobalContext> => moduleConfig);
+        configFactory = jest.fn().mockImplementation((moduleConfig: ModuleConfig<GlobalContext>) => moduleConfig);
+        moduleMiddlewares = jest.fn().mockImplementation((_appConfig: AppConfig) => configFactory);
         registerErrorHandlerMiddleware = jest.fn().mockImplementation((moduleConfig: ModuleConfig<GlobalContext>): ModuleConfig<GlobalContext> => moduleConfig);
         registerRoutes = jest.fn().mockImplementation((moduleConfig: ModuleConfig<GlobalContext>): ModuleConfig<GlobalContext> => moduleConfig);
 
         result = globalModuleUnbound
           .apply(null, [logger, moduleDefinition, moduleMiddlewares, registerErrorHandlerMiddleware, registerRoutes])
           .apply(null, [moduleConfig])
-          .apply(null, [SERVICE, null]);
+          .apply(null, [SERVICE, APP_CONFIG]);
       });
 
       describe('Happy path', () => {
@@ -65,6 +73,8 @@ describe('Web Server', () => {
           expect(moduleMiddlewares)
             .toHaveBeenCalledTimes(1);
           expect(moduleMiddlewares)
+            .toHaveBeenCalledWith(APP_CONFIG);
+          expect(configFactory)
             .toHaveBeenCalledWith(moduleConfig);
           expect(moduleMiddlewares)
             .toHaveBeenCalledAfter(moduleDefinition);
@@ -100,14 +110,16 @@ describe('Web Server', () => {
 
         beforeAll(() => {
           jest.clearAllMocks();
-          moduleMiddlewares = jest.fn().mockImplementation((_moduleConfig: ModuleConfig<GlobalContext>): ModuleConfig<GlobalContext> => {
+
+          moduleMiddlewares = jest.fn().mockImplementation((_appConfig: AppConfig) => configFactory);
+          configFactory = jest.fn().mockImplementation((_moduleConfig: ModuleConfig<GlobalContext>): ModuleConfig<GlobalContext> => {
             throw new Error(ERROR_MSG);
           });
           try {
             globalModuleUnbound
               .apply(null, [logger, moduleDefinition, moduleMiddlewares, registerErrorHandlerMiddleware, registerRoutes])
               .apply(null, [moduleConfig])
-              .apply(null, [SERVICE, null]);
+              .apply(null, [SERVICE, APP_CONFIG]);
           } catch (e) {
             result = e;
           }

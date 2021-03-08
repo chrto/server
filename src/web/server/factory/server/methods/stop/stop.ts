@@ -1,6 +1,6 @@
 import stopUnbound from './stop.unbound';
 import { exit } from 'process';
-import logger from 'utils/logger';
+import logger from 'logger/logError';
 import serverStopExecutor from '../../executors/serverStopExecutor/serverStopExecutor';
 import shutdownServerStopExecutor from '../../executors/serverStopExecutor/shutdownServerStopExecutor';
 

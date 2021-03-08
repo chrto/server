@@ -4,6 +4,7 @@ export interface ILoggerConfig {
   fileLevel: string;
   fileNameInfo: string;
   fileNameError: string;
+  fileNameExceptions: string;
   fileDatePattern: string;
   fileZipArchive: boolean;
   fileMaxSize: string | number;

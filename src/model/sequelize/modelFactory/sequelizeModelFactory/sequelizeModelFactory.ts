@@ -1,4 +1,4 @@
-import logger from 'utils/logger';
+import appLogger from 'logger/appLogger';
 import sequelizeModelFactoryUnbound from './sequelizeModelFactory.unbound';
 
-export default sequelizeModelFactoryUnbound.apply(null, [logger]);
+export default sequelizeModelFactoryUnbound.apply(null, [appLogger]);

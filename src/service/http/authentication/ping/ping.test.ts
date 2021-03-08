@@ -1,6 +1,6 @@
 import pingUnbound from './ping.unbound';
 import axiosUnbound from 'storage/http/axios/axios.unbound';
-import logger from 'utils/logger';
+import appLogger from 'logger/appLogger';
 import requestConfig from 'storage/http/axios/requestConfig/requestConfig';
 import sanitizeResponse from 'storage/http/axios/sanitizeResponse/sanitizeResponse';
 import tokenSetFactory from 'model/authentication/tokenSet';
@@ -40,7 +40,7 @@ describe(`service`, () => {
         let result: Either<AppError, any>;
 
         beforeAll(() => {
-          logger.error = (_) => logger; // disable logger
+          appLogger.error = (_) => appLogger; // disable logger
           axiosStorage = axiosUnbound(axiosInstance);
         });
 

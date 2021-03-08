@@ -12,6 +12,7 @@ module.exports = {
     "^storage/(.*)": "<rootDir>/src/storage/$1",
     "^utils/(.*)": "<rootDir>/src/utils/$1",
     "^web/(.*)": "<rootDir>/src/web/$1",
+    "^logger/(.*)": "<rootDir>/src/logger/$1",
     "^src/(.*)": "<rootDir>/src/$1",
 },
 };

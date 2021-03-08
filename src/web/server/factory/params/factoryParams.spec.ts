@@ -11,12 +11,14 @@ import { PluginSdkSequelize } from 'model/sequelize/modelFactory/modelFactory.ty
 
 import factoryParamsUnbound from './factoryParams.unbound';
 import { ServerFactoryParams } from './factoryParams.types';
+import { ILoggerConfig } from 'web/server/configuration/loader/logger/loggerConfig.types';
 
 const APP_CONFIG: AppConfig = {
   environment: ENodeENV.development,
   server: {} as IServerConfig,
   database: {} as IDatabaseConfig,
-  sso: {} as ISSOConfig
+  sso: {} as ISSOConfig,
+  appLogger: {} as ILoggerConfig
 };
 
 describe('server factory params module', () => {
