@@ -13,7 +13,7 @@ import getServerParams from './web/server/factory/params/factoryParams';
 import serverFactory from 'web/server/factory/server/serverFactory';
 import registerModules from './web/server/registerModules/registerModules';
 import { WebServer } from 'web/server/types';
-import logger from 'utils/logger';
+import appLogger from 'logger/appLogger';
 import { AppConfig } from 'web/server/configuration/loader/appConfig.types';
 import { ServerFactoryParams } from 'web/server/factory/params/factoryParams.types';
 
@@ -28,11 +28,12 @@ export const waitForShutdown = (server: WebServer): void => {
 const startServer = (server: WebServer): Promise<WebServer> => server.start();
 
 Promise.resolve(loadAppConfig())
+  .then(tap<AppConfig>(appLogger.init))
   .then(tap<AppConfig>(logAppConfig))
   .then(lift<AppConfig, ServerFactoryParams>(getServerParams))
   .then(fTap<ServerFactoryParams>(eitherify<[ServerFactoryParams], void>(registerModules)))
   .then(lift<ServerFactoryParams, WebServer>(serverFactory))
-  .then(tap<WebServer>(logger.debug.bind(null, 'starting server...')))
+  .then(tap<WebServer>(appLogger.debug.bind(null, 'starting server...')))
   .then(asyncLift<WebServer, WebServer>(startServer))
   .then(tap<WebServer>(waitForShutdown))
   .then(tapLeft<WebServer>(errorHandler))

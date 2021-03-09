@@ -10,8 +10,8 @@ const appErrorFactory = (error: FSError): AppError =>
 
 export default (isMissing: Fcn<[FSError], boolean>) =>
   <T> (resolve: FSPromiseResolve<T>) =>
-    (err: FSError, content: T): void => {
+    (err: FSError, content?: T): void => {
       isMissing(err)
-        ? resolve(Either.right<AppError, T>(content))
+        ? resolve(Either.right<AppError, T>(content || null))
         : resolve(Either.left<AppError, T>(appErrorFactory(err)));
     };

@@ -1,4 +1,4 @@
-import logger from 'utils/logger';
+import appLogger from 'logger/appLogger';
 import configLogger from './logger.unbound';
 
-export default configLogger.apply(null, [logger]);
+export default configLogger.apply(null, [appLogger]);

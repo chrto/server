@@ -1,6 +1,6 @@
 import createUserUnbound from './createUser.unbound';
 import doer from 'utils/monad/either/do/doer';
-import logger from 'utils/logger';
+import appLogger from 'logger/appLogger';
 import userService from 'service/sequelize/userService/userService';
 import initUserModel, { User } from 'model/sequelize/model/user/user';
 import { Response } from 'express';
@@ -48,7 +48,7 @@ describe('Web Server', () => {
             let user: User;
             let createUser;
             beforeAll(() => {
-              logger.error = (_) => logger; // disable logger
+              appLogger.error = (_) => appLogger; // disable logger
               sequelize = new Sequelize(null, null, null, { dialect: DEFAULT_DB_DIALECT });
               initUserModel(sequelize);
 

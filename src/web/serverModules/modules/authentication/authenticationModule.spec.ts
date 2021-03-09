@@ -7,9 +7,16 @@ import { AuthenticationService } from 'service/http/authentication/types';
 import { Router } from 'express';
 import { Either } from 'tsmonad';
 import { Logger } from 'winston';
+import { AppConfig } from 'web/server/configuration/loader/appConfig.types';
+import { Context as GlobalContext } from './context/context.types';
 
 const AUTH_SERVICE: AuthenticationService = {} as AuthenticationService;
 const SERVICE: PluginSdkService = { authenticationService: AUTH_SERVICE } as PluginSdkService;
+const APP_CONFIG: AppConfig = {
+  appLogger: {
+    fileLevel: 'debug'
+  }
+} as AppConfig;
 
 describe('Web Server', () => {
   describe('Modules', () => {
@@ -17,7 +24,8 @@ describe('Web Server', () => {
       let logger: Logger = {} as Logger;
       let moduleDefinition: jest.Mock<ModuleConfigFactory<AuthContext>, [PluginSdkService]>;
       let setModuleDefinition: jest.Mock<ModuleConfigFactory<AuthContext>, [PluginSdkService]>;
-      let moduleMiddlewares: jest.Mock<Either<any, ModuleConfig<AuthContext>>, [ModuleConfig<AuthContext>]>;
+      let configFactory: jest.Mock<ModuleConfigFactory<GlobalContext>>;
+      let moduleMiddlewares: jest.Mock<ModuleConfigFactory<GlobalContext>, [AppConfig]>;
       let registerErrorHandlerMiddleware: jest.Mock<Either<any, ModuleConfig<AuthContext>>, [ModuleConfig<AuthContext>]>;
       let registerRoutes: jest.Mock<ModuleConfig<AuthContext>, [ModuleConfig<AuthContext>]>;
       let result: Router;
@@ -34,14 +42,15 @@ describe('Web Server', () => {
         logger.error = jest.fn().mockReturnThis();
         setModuleDefinition = jest.fn().mockImplementation((moduleConfig: ModuleConfig<AuthContext>): ModuleConfig<AuthContext> => moduleConfig);
         moduleDefinition = jest.fn().mockReturnValue(setModuleDefinition);
-        moduleMiddlewares = jest.fn().mockImplementation((moduleConfig: ModuleConfig<AuthContext>): ModuleConfig<AuthContext> => moduleConfig);
+        configFactory = jest.fn().mockImplementation((moduleConfig: ModuleConfig<GlobalContext>) => moduleConfig);
+        moduleMiddlewares = jest.fn().mockImplementation((_appConfig: AppConfig) => configFactory);
         registerErrorHandlerMiddleware = jest.fn().mockImplementation((moduleConfig: ModuleConfig<AuthContext>): ModuleConfig<AuthContext> => moduleConfig);
         registerRoutes = jest.fn().mockImplementation((moduleConfig: ModuleConfig<AuthContext>): ModuleConfig<AuthContext> => moduleConfig);
 
         result = authenticationModuleUnbound
           .apply(null, [logger, moduleDefinition, moduleMiddlewares, registerErrorHandlerMiddleware, registerRoutes])
           .apply(null, [moduleConfig])
-          .apply(null, [SERVICE, null]);
+          .apply(null, [SERVICE, APP_CONFIG]);
       });
 
       describe('Happy path', () => {
@@ -63,6 +72,8 @@ describe('Web Server', () => {
           expect(moduleMiddlewares)
             .toHaveBeenCalledTimes(1);
           expect(moduleMiddlewares)
+            .toHaveBeenCalledWith(APP_CONFIG);
+          expect(configFactory)
             .toHaveBeenCalledWith(moduleConfig);
           expect(moduleMiddlewares)
             .toHaveBeenCalledAfter(moduleDefinition);
@@ -98,7 +109,8 @@ describe('Web Server', () => {
 
         beforeAll(() => {
           jest.clearAllMocks();
-          moduleMiddlewares = jest.fn().mockImplementation((_moduleConfig: ModuleConfig<AuthContext>): ModuleConfig<AuthContext> => {
+          moduleMiddlewares = jest.fn().mockImplementation((_appConfig: AppConfig) => configFactory);
+          configFactory = jest.fn().mockImplementation((_moduleConfig: ModuleConfig<GlobalContext>): ModuleConfig<GlobalContext> => {
             throw new Error(ERROR_MSG);
           });
           try {

@@ -1,4 +1,4 @@
 import requestHandlerUnbound from './requestHandler.unbound';
-import logger from 'utils/logger';
+import appLogger from 'logger/appLogger';
 
-export default requestHandlerUnbound.apply(null, [logger]);
+export default requestHandlerUnbound.apply(null, [appLogger]);

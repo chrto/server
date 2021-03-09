@@ -20,7 +20,8 @@
       "service/*": ["src/service/*"],
       "storage/*": ["src/storage/*"],
       "utils/*": ["src/utils/*"],
-      "web/*": ["src/web/*"]
+      "web/*": ["src/web/*"],
+      "logger/*": ["src/logger/*"]
     }
   },
   "exclude": [

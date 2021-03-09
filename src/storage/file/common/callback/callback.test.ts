@@ -11,27 +11,53 @@ describe(`storage`, () => {
       let result: Either<AppError, string>;
 
       describe(`Happy path`, () => {
-        const ERROR: FSError = null;
-        const CONTENT: string = 'file content here..';
-        beforeAll(async () => {
-          result = await new Promise((resolve) => {
-            callbackUnbound
-              .apply(null, [isMissing])
-              .apply(null, [resolve])
-              .apply(null, [ERROR, CONTENT]);
+        describe(`Has content`, () => {
+          const ERROR: FSError = null;
+          const CONTENT: string = 'file content here..';
+          beforeAll(async () => {
+            result = await new Promise((resolve) => {
+              callbackUnbound
+                .apply(null, [isMissing])
+                .apply(null, [resolve])
+                .apply(null, [ERROR, CONTENT]);
 
+            });
           });
+          it(`Should resolve Either with content in right side`, () => {
+            result.do({
+              right: (content: string): void => {
+                expectChai(content)
+                  .to.be.an(''.constructor.name);
+                expectChai(content)
+                  .to.be.equal(CONTENT);
+              },
+              left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
+            });
+          });
+
         });
-        it(`Should resolve Either with content in right side`, () => {
-          result.do({
-            right: (content: string): void => {
-              expectChai(content)
-                .to.be.an(''.constructor.name);
-              expectChai(content)
-                .to.be.equal(CONTENT);
-            },
-            left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
+
+        describe(`Has not content`, () => {
+          const ERROR: FSError = null;
+          beforeAll(async () => {
+            result = await new Promise((resolve) => {
+              callbackUnbound
+                .apply(null, [isMissing])
+                .apply(null, [resolve])
+                .apply(null, [ERROR]);
+
+            });
           });
+          it(`Should resolve Either with content in right side`, () => {
+            result.do({
+              right: (content): void => {
+                expectChai(content)
+                  .to.be.null;
+              },
+              left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
+            });
+          });
+
         });
       });
 

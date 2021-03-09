@@ -1,11 +1,5 @@
+import optionsUnbound from './options.unbound';
 import messageTemplate from './messageTemplate';
-import { LoggerOptions } from 'express-winston';
-import { transportsDefinition } from 'utils/logger';
+import getTransportsDefinition from 'logger/config/transports/transports';
 
-const expressLoggerOptions: LoggerOptions = {
-  transports: transportsDefinition,
-  expressFormat: false,
-  msg: messageTemplate
-};
-
-export default expressLoggerOptions;
+export default optionsUnbound(getTransportsDefinition, messageTemplate);

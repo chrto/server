@@ -1,6 +1,6 @@
 import updateUserUnbound from './updateUser.unbound';
 import userService from 'service/sequelize/userService/userService';
-import logger from 'utils/logger';
+import appLogger from 'logger/appLogger';
 import bodyValidator from './validator/bodyValidator';
 import authorizationValidator from './validator/authorizationValidator';
 import userFactory from 'model/sequelize/model/user/factory/userFactory';
@@ -53,7 +53,7 @@ describe('Web Server', () => {
             let result: Either<AppError, User>;
 
             beforeAll(() => {
-              logger.error = (_) => logger; // disable logger
+              appLogger.error = (_) => appLogger; // disable logger
               sequelize = new Sequelize(null, null, null, { dialect: DEFAULT_DB_DIALECT });
               initUserModel(sequelize);
               user = buildUser(USER_REQUIRED);

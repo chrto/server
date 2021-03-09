@@ -1,4 +1,4 @@
-import logger from 'utils/logger';
+import appLogger from 'logger/appLogger';
 import registerModuleUnbound from './registerModule.unbound';
 
-export default registerModuleUnbound.apply(null, [logger]);
+export default registerModuleUnbound.apply(null, [appLogger]);

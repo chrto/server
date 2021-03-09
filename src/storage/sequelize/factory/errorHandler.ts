@@ -1,7 +1,7 @@
 import { AppError } from 'common/error';
 import { Conflict } from 'common/httpErrors';
 import { ExclusionConstraintError, ForeignKeyConstraintError, SequelizeScopeError, UniqueConstraintError, ValidationError } from 'sequelize';
-import logger from 'utils/logger';
+import appLogger from 'logger/appLogger';
 
 const getErrorMessage = (error: Error): string =>
   [
@@ -23,7 +23,7 @@ const createErrorLogMessage = (error: Error, msg?: string): string =>
     .join('\n');
 
 export default (error: Error, message?: string): AppError => {
-  logger.error(createErrorLogMessage(error, message));
+  appLogger.error(createErrorLogMessage(error, message));
 
   if (
     error instanceof ExclusionConstraintError ||

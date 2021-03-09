@@ -1,5 +1,5 @@
 import sendRequest from './sendRequest';
-import logger from 'utils/logger';
+import appLogger from 'logger/appLogger';
 import { expect as expectChai } from 'chai';
 import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import { AppError } from 'common/error';
@@ -36,7 +36,7 @@ describe(`storage`, () => {
         let result: Either<AppError, any>;
 
         beforeAll(() => {
-          logger.error = (_) => logger; // disable logger
+          appLogger.error = (_) => appLogger; // disable logger
         });
         describe('Happy path', () => {
           beforeAll(async () => {

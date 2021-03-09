@@ -30,5 +30,21 @@ export default (logger: Logger) =>
       .debug(`'DB URL'                    ='${appConfig.database.url}'`)
       .debug(`'DB dialect'                ='${appConfig.database.dialect}'`)
       .debug(`'DB allow sync'             ='${appConfig.database.allowSync}'`)
-      .debug(`'DB allow logging'          ='${appConfig.database.allowLogging}'`);
+      .debug(`'DB allow logging'          ='${appConfig.database.allowLogging}'`)
+
+      .debug('Logger setup:')
+      .debug(`'Log label'                 ='${appConfig.appLogger.label}'`)
+      .debug('File log:')
+      .debug(`'Directory'                 ='${appConfig.appLogger.dir}'`)
+      .debug(`'Level'                     ='${appConfig.appLogger.fileLevel}'`)
+      .debug(`'Log file name'             ='${appConfig.appLogger.fileNameInfo}'`)
+      .debug(`'Error log file name'       ='${appConfig.appLogger.fileNameError}'`)
+      .debug(`'Exceptions log file name'  ='${appConfig.appLogger.fileNameExceptions}'`)
+      .debug(`'Rotate log pattern'        ='${appConfig.appLogger.fileDatePattern}'`)
+      .debug(`'Archive log files'         ='${appConfig.appLogger.fileZipArchive}'`)
+      .debug(`'Log file max size'         ='${appConfig.appLogger.fileMaxSize}'`)
+      .debug(`'Log file max'              ='${appConfig.appLogger.fileMaxFiles}'`)
+      .debug('Console log:')
+      .debug(`'Level'                     ='${appConfig.appLogger.consoleLevel}'`)
+      .debug(`'Enable'                    ='${appConfig.appLogger.consoleEnable}'`);
   };

@@ -5,14 +5,14 @@ import regiserRoutes from 'web/serverModules/configuration/routes/register/regis
 import registerErrorHandlerMiddleware from 'web/serverModules/configuration/middlewares/registerErrorHandlerMiddleware';
 import contextFactory from './context/context';
 import { Router } from 'express';
-import logger from 'utils/logger';
+import appLogger from 'logger/appLogger';
 
 export default globalModuleUnbound
   .apply(null, [
-    logger,
+    appLogger,
     moduleDefinition,
     moduleMiddlewares,
     registerErrorHandlerMiddleware,
     regiserRoutes
   ])
-  .apply(null, [{router: Router(), contextFactory, moduleDefinition: null}]);
+  .apply(null, [{ router: Router(), contextFactory, moduleDefinition: null }]);
