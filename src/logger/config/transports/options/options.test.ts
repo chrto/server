@@ -3,7 +3,7 @@ import { expect as expectChai } from 'chai';
 import * as DailyRotateFile from 'winston-daily-rotate-file';
 import { ColorizeOptions, Colorizer, Format } from 'logform';
 import { ILoggerConfig } from 'web/server/configuration/loader/logger/loggerConfig.types';
-import { TransportOptions } from './options.types';
+import { SplunkTransportOptions, TransportOptions } from './options.types';
 import { ConsoleTransportOptions, FileTransportOptions } from 'winston/lib/winston/transports';
 
 const CONFIG: ILoggerConfig = {
@@ -14,6 +14,15 @@ const CONFIG: ILoggerConfig = {
   fileMaxSize: 1024,
   fileMaxFiles: '14d',
   consoleLevel: 'debug',
+  splunkLevel: 'debug',
+  splunkToken: 's_token',
+  splunkIndex: 's_index',
+  splunkSource: 's_source',
+  splunkSourceType: 's_source_type',
+  splunkHost: 's_host',
+  splunkPort: 8104,
+  splunkPath: 's/path',
+  splunkProtocol: 's_proto'
 } as ILoggerConfig;
 
 describe('Logger', () => {
@@ -51,6 +60,7 @@ describe('Logger', () => {
             .to.be.an({}.constructor.name)
             .which.is.deep.equal(expected);
         });
+
         it(`Should create exact console transport options`, () => {
           const expected: ConsoleTransportOptions = {
             level: CONFIG.consoleLevel,
@@ -69,6 +79,52 @@ describe('Logger', () => {
             format: LOGFORM_FORMAT
           };
           expectChai(result.exceptions)
+            .to.be.an({}.constructor.name)
+            .which.is.deep.equal(expected);
+        });
+
+        it(`Should create exact splunk transport options`, () => {
+          const expected: SplunkTransportOptions = {
+            level: CONFIG.splunkLevel,
+            splunk: {
+              token: CONFIG.splunkToken,
+              index: CONFIG.splunkIndex,
+              source: CONFIG.splunkSource,
+              sourcetype: CONFIG.splunkSourceType,
+              host: CONFIG.splunkHost,
+              port: CONFIG.splunkPort,
+              path: CONFIG.splunkPath,
+              protocol: CONFIG.splunkProtocol
+            }
+          };
+          expectChai(result.splunk)
+            .to.be.an({}.constructor.name)
+            .which.is.deep.equal(expected);
+        });
+
+        it(`Should create splunk transport options item, only if not null`, () => {
+          const expected: SplunkTransportOptions = {
+            level: CONFIG.splunkLevel,
+            splunk: {
+              token: CONFIG.splunkToken,
+            }
+          };
+          expectChai(
+            optionsUnbound
+              .apply(null, [{ combine, colorize }])
+              .apply(null, [{
+                ...CONFIG,
+                splunkIndex: null,
+                splunkSource: null,
+                splunkSourceType: null,
+                splunkHost: null,
+                splunkPort: null,
+                splunkPath: null,
+                splunkProtocol: null
+              }])
+              .apply(null, [LOGFORM_FORMAT])
+              .splunk
+          )
             .to.be.an({}.constructor.name)
             .which.is.deep.equal(expected);
         });

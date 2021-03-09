@@ -25,5 +25,9 @@ export const DEFAULT_LOG_FILE_DATE_PATTERN = 'YYYY-MM-DD';
 export const DEFAULT_LOG_FILE_ZIP_ARCH = true;
 export const DEFAULT_LOG_FILE_MAX_SIZE = '10m';
 export const DEFAULT_LOG_FILE_MAX_FILES = '14d';
-export const DEFAULT_LOG_CONSOLE_LEVEL = 'debug';
 export const DEFAULT_LOG_CONSOLE_ENABLE = true;
+export const DEFAULT_LOG_CONSOLE_LEVEL = 'debug';
+
+export const DEFAULT_LOG_SPLUNK_ENABLE = false;
+export const DEFAULT_LOG_SPLUNK_LEVEL = 'info';
+export const DEFAULT_LOG_SPLUNK_INDEX = 'main';

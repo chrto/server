@@ -2,7 +2,7 @@ import loggerConfigUnbound from './loggerConfig.unbound';
 import { expect as expectChai } from 'chai';
 import { AppConfig, AppConfigLoader } from '../appConfig.types';
 import { ILoggerConfig } from './loggerConfig.types';
-import { DEFAULT_LOG_CONSOLE_ENABLE, DEFAULT_LOG_CONSOLE_LEVEL, DEFAULT_LOG_DIR, DEFAULT_LOG_FILE_DATE_PATTERN, DEFAULT_LOG_FILE_LEVEL, DEFAULT_LOG_FILE_MAX_FILES, DEFAULT_LOG_FILE_MAX_SIZE, DEFAULT_LOG_FILE_NAME_ERROR, DEFAULT_LOG_FILE_NAME_EXCEPTIONS, DEFAULT_LOG_FILE_NAME_INFO, DEFAULT_LOG_FILE_ZIP_ARCH, DEFAULT_LOG_LABEL } from 'src/defaults';
+import { DEFAULT_LOG_CONSOLE_ENABLE, DEFAULT_LOG_CONSOLE_LEVEL, DEFAULT_LOG_DIR, DEFAULT_LOG_FILE_DATE_PATTERN, DEFAULT_LOG_FILE_LEVEL, DEFAULT_LOG_FILE_MAX_FILES, DEFAULT_LOG_FILE_MAX_SIZE, DEFAULT_LOG_FILE_NAME_ERROR, DEFAULT_LOG_FILE_NAME_EXCEPTIONS, DEFAULT_LOG_FILE_NAME_INFO, DEFAULT_LOG_FILE_ZIP_ARCH, DEFAULT_LOG_LABEL, DEFAULT_LOG_SPLUNK_ENABLE, DEFAULT_LOG_SPLUNK_INDEX, DEFAULT_LOG_SPLUNK_LEVEL } from 'src/defaults';
 
 describe('server configuration module', () => {
   describe(`'logger'`, () => {
@@ -17,8 +17,18 @@ describe('server configuration module', () => {
       LOG_FILE_ZIP_ARCH: '0',
       LOG_FILE_MAX_SIZE: '1024',
       LOG_FILE_MAX_FILES: '14s',
+      LOG_CONSOLE_ENABLE: '0',
       LOG_CONSOLE_LEVEL: 'debug',
-      LOG_CONSOLE_ENABLE: '0'
+      LOG_SPLUNK_ENABLE: '0',
+      LOG_SPLUNK_LEVEL: 'info',
+      LOG_SPLUNK_PROTOCOL: 'http',
+      LOG_SPLUNK_HOST: 'local',
+      LOG_SPLUNK_PORT: '8016',
+      LOG_SPLUNK_PATH: '/path/splunk',
+      LOG_SPLUNK_TOKEN: 'splunk_token..',
+      LOG_SPLUNK_INDEX: 'splunk_token..',
+      LOG_SPLUNK_SOURCE: 'splunk_source..',
+      LOG_SPLUNK_SOURCE_TYPE: 'splunk_source_type..'
     };
 
     it(`Should use values from environment, if exists.`, () => {
@@ -33,8 +43,18 @@ describe('server configuration module', () => {
         fileZipArchive: false,
         fileMaxSize: Number(env.LOG_FILE_MAX_SIZE),
         fileMaxFiles: env.LOG_FILE_MAX_FILES,
-        consoleLevel: env.LOG_CONSOLE_LEVEL,
         consoleEnable: false,
+        consoleLevel: env.LOG_CONSOLE_LEVEL,
+        splunkEnable: false,
+        splunkLevel: env.LOG_SPLUNK_LEVEL,
+        splunkProtocol: env.LOG_SPLUNK_PROTOCOL,
+        splunkHost: env.LOG_SPLUNK_HOST,
+        splunkPort: Number(env.LOG_SPLUNK_PORT),
+        splunkPath: env.LOG_SPLUNK_PATH,
+        splunkToken: env.LOG_SPLUNK_TOKEN,
+        splunkIndex: env.LOG_SPLUNK_INDEX,
+        splunkSource: env.LOG_SPLUNK_SOURCE,
+        splunkSourceType: env.LOG_SPLUNK_SOURCE_TYPE
       };
       const loggerConfig: AppConfigLoader<AppConfig> = loggerConfigUnbound.apply(null, [env]);
 
@@ -55,8 +75,19 @@ describe('server configuration module', () => {
         fileZipArchive: DEFAULT_LOG_FILE_ZIP_ARCH,
         fileMaxSize: DEFAULT_LOG_FILE_MAX_SIZE,
         fileMaxFiles: DEFAULT_LOG_FILE_MAX_FILES,
-        consoleLevel: DEFAULT_LOG_CONSOLE_LEVEL,
         consoleEnable: DEFAULT_LOG_CONSOLE_ENABLE,
+        consoleLevel: DEFAULT_LOG_CONSOLE_LEVEL,
+
+        splunkEnable: DEFAULT_LOG_SPLUNK_ENABLE,
+        splunkLevel: DEFAULT_LOG_SPLUNK_LEVEL,
+        splunkProtocol: null,
+        splunkHost: null,
+        splunkPort: null,
+        splunkPath: null,
+        splunkToken: null,
+        splunkIndex: DEFAULT_LOG_SPLUNK_INDEX,
+        splunkSource: null,
+        splunkSourceType: null
       };
       const loggerConfig: AppConfigLoader<AppConfig> = loggerConfigUnbound.apply(null, [{}]);
 

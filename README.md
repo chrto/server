@@ -48,7 +48,17 @@ Project can be customized using ENV variables:
 | LOG_FILE_MAX_SIZE           | 10m                                                                       | Max file size is 10 MB                          |
 | LOG_FILE_MAX_FILES          | 14d                                                                       | Keep logs for 14 days                           |
 | LOG_CONSOLE_LEVEL           | debug                                                                     | Log level for console log                       |
-| LOG_CONSOLE_ENABLE          | true                                                                      | Enabled console log                             |
+| LOG_CONSOLE_ENABLE          | true                                                                      | Enable console log                              |
+| LOG_SPLUNK_ENABLE           | false                                                                     | Enable log into splunk                          |
+| LOG_SPLUNK_LEVEL            | info                                                                      | Log level for splunk                            |
+| LOG_SPLUNK_PROTOCOL         | https                                                                     | Protocol to use                                 |
+| LOG_SPLUNK_HOST             | localhost                                                                 | Splunk HTTP Event Collector host                |
+| LOG_SPLUNK_PORT             | 8088                                                                      | Splunk HTTP Event Collector port                |
+| LOG_SPLUNK_PATH             | /services/collector/event/1.0                                             | URL path to use                                 |
+| LOG_SPLUNK_INDEX            | main                                                                      | Index for the events sent to Splunk             |
+| LOG_SPLUNK_SOURCE           | winston                                                                   | Source for the events sent to Splunk            |
+| LOG_SPLUNK_SOURCE_TYPE      | winston-splunk-logger                                                     | Sourcetype for the events sent to Splunk        |
+| LOG_SPLUNK_TOKEN            |                                                                           | Splunk HTTP Event Collector token               |
 |                             |                                                                           |                                                 |
 
 ## Run server in development mode

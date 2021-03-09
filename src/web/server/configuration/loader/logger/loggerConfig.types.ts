@@ -9,6 +9,17 @@ export interface ILoggerConfig {
   fileZipArchive: boolean;
   fileMaxSize: string | number;
   fileMaxFiles: string | number;
-  consoleLevel: string;
   consoleEnable: boolean;
+  consoleLevel: string;
+
+  splunkEnable: boolean;
+  splunkLevel: string;
+  splunkProtocol: string;
+  splunkHost: string;
+  splunkPort: number;
+  splunkPath: string;
+  splunkToken: string;
+  splunkIndex: string;
+  splunkSource: string;
+  splunkSourceType: string;
 }
