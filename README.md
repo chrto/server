@@ -60,7 +60,7 @@ Project can be customized using ENV variables:
 | LOG_SPLUNK_SOURCE_TYPE      | winston-splunk-logger                                                     | Sourcetype for the events sent to Splunk        |
 | LOG_SPLUNK_TOKEN            |                                                                           | Splunk HTTP Event Collector token               |
 |                             |                                                                           |                                                 |
-| SPLUNK_PASSWORD             |                                                                           |                                                 |
+| SPLUNK_PASSWORD             |                                                                           | Default password of the admin user              |
 |                             |                                                                           |                                                 |
 
 ## Run server in development mode
@@ -91,6 +91,10 @@ or
 ```
     $ npm run docker:compose:up:dev
 ```
+## Run splunk in docker
+```
+    $ npm run docker:splunk
+```
 ## Stop dev environment in docker
 ```
     $ npm run docker:compose:down
@@ -99,10 +103,11 @@ or
 
 We use several backend services for development
 
-| Url                              | Service        | Description                              |
-|----------------------------------|----------------|------------------------------------------|
+| Url                                     | Service        | Description                              |
+|-----------------------------------------|----------------|------------------------------------------|
 | [localhost:8103](http://localhost:8103) | Swagger UI     | Swagger editor                           |
 | [localhost:8101](http://localhost:8101) | Keycloak       | Keycloak SSO Issuer                      |
+| [localhost:8104](http://localhost:8104) | Splunk         | Splunk Enterprise                        |
 
 Keycloak is used as identity manager for development purpose. There is configured default client whit id `server` and secret `155bca8c-5c95-4f40-a084-8f0025b0456b`. You can login to administration console with account `admin/Admin-123`. You can change this settings in `.env` file, which is in project root derectory. 
 There are registered two default users in Keycloak. You can change them in `./dockers/sso/realm-demo.json` file, or in administration console.
