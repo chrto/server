@@ -25,6 +25,7 @@
     "docker:build": "npm run build && docker build -f ./deployment/server/Dockerfile -t demo/server .",
     "docker:start:api": "npm run docker:build && docker run --rm -it -v $PWD/etc:/home/node/app/etc -v $PWD/storage:/home/node/app/storage -p 8180:8000 -p 8181:8001 --name \"server\" -d demo/server",
     "docker:stop:api": "(docker stop server || echo .) && (docker rm server || echo .) && docker rmi demo/server",
+    "docker:splunk": "docker-compose up --detach splunk",
     "docker:compose:up:dev": "docker-compose up --detach swagger-ui keycloak",
     "docker:compose:down": "docker-compose down",
     "prune": "ts-prune",

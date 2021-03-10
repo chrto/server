@@ -15,6 +15,23 @@ services:
       - "8000:8000"
       - "8001:8001"
 
+  splunk:
+    image: demo/splunk
+    container_name: splunk
+    build:
+      context: ./dockers/splunk
+      args:
+        - SPLUNK_PASSWORD
+        - LOG_SPLUNK_TOKEN
+    networks:
+      - demo-network
+    ports:
+      - "8104:8000"
+      - "8088:8088"
+    volumes:
+      - splunk-var:/opt/splunk/var
+      - splunk-etc:/opt/splunk/etc
+
   swagger-ui:
     image: shotat/swagger-ui-watcher
     container_name: swagger-ui
@@ -38,7 +55,13 @@ services:
       - KEYCLOAK_PASSWORD
       - KEYCLOAK_IMPORT=/tmp/realm-demo.json
     volumes:
-       - ./dockers/sso/realm-demo.json:/tmp/realm-demo.json
+      - ./dockers/sso/realm-demo.json:/tmp/realm-demo.json
+
 networks:
   demo-network:
     driver: bridge
+    attachable: true
+
+volumes:
+  splunk-var:
+  splunk-etc:

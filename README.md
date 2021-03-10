@@ -60,6 +60,8 @@ Project can be customized using ENV variables:
 | LOG_SPLUNK_SOURCE_TYPE      | winston-splunk-logger                                                     | Sourcetype for the events sent to Splunk        |
 | LOG_SPLUNK_TOKEN            |                                                                           | Splunk HTTP Event Collector token               |
 |                             |                                                                           |                                                 |
+| SPLUNK_PASSWORD             |                                                                           |                                                 |
+|                             |                                                                           |                                                 |
 
 ## Run server in development mode
 ```
