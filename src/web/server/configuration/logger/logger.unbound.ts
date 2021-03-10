@@ -44,7 +44,19 @@ export default (logger: Logger) =>
       .debug(`'Archive log files'         ='${appConfig.appLogger.fileZipArchive}'`)
       .debug(`'Log file max size'         ='${appConfig.appLogger.fileMaxSize}'`)
       .debug(`'Log file max'              ='${appConfig.appLogger.fileMaxFiles}'`)
+
       .debug('Console log:')
-      .debug(`'Level'                     ='${appConfig.appLogger.consoleLevel}'`)
-      .debug(`'Enable'                    ='${appConfig.appLogger.consoleEnable}'`);
+      .debug(`'Enable'                    ='${appConfig.appLogger.consoleEnable}'`)
+      .debug(`'Level'                     ='${appConfig.appLogger.consoleLevel}'`, !appConfig.appLogger.consoleEnable)
+
+      .debug('Splunk log:')
+      .debug(`'Enable'                    ='${appConfig.appLogger.splunkEnable}'`)
+      .debug(`'Level'                     ='${appConfig.appLogger.splunkLevel}'`, !appConfig.appLogger.splunkEnable || !appConfig.appLogger.fileLevel)
+      .debug(`'Host'                      ='${appConfig.appLogger.splunkHost}'`, !appConfig.appLogger.splunkEnable || !appConfig.appLogger.splunkHost)
+      .debug(`'Port'                      ='${appConfig.appLogger.splunkPort}'`, !appConfig.appLogger.splunkEnable || !appConfig.appLogger.splunkPort)
+      .debug(`'Path'                      ='${appConfig.appLogger.splunkPath}'`, !appConfig.appLogger.splunkEnable || !appConfig.appLogger.splunkPath)
+      .debug(`'Token'                     ='${appConfig.appLogger.splunkToken}'`, !appConfig.appLogger.splunkEnable || !appConfig.appLogger.splunkToken)
+      .debug(`'Index'                     ='${appConfig.appLogger.splunkIndex}'`, !appConfig.appLogger.splunkEnable || !appConfig.appLogger.splunkIndex)
+      .debug(`'Source'                    ='${appConfig.appLogger.splunkSource}'`, !appConfig.appLogger.splunkEnable || !appConfig.appLogger.splunkSource)
+      .debug(`'Source type'               ='${appConfig.appLogger.splunkSourceType}'`, !appConfig.appLogger.splunkEnable || !appConfig.appLogger.splunkSourceType);
   };

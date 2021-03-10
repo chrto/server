@@ -48,7 +48,19 @@ Project can be customized using ENV variables:
 | LOG_FILE_MAX_SIZE           | 10m                                                                       | Max file size is 10 MB                          |
 | LOG_FILE_MAX_FILES          | 14d                                                                       | Keep logs for 14 days                           |
 | LOG_CONSOLE_LEVEL           | debug                                                                     | Log level for console log                       |
-| LOG_CONSOLE_ENABLE          | true                                                                      | Enabled console log                             |
+| LOG_CONSOLE_ENABLE          | true                                                                      | Enable console log                              |
+| LOG_SPLUNK_ENABLE           | false                                                                     | Enable log into splunk                          |
+| LOG_SPLUNK_LEVEL            | info                                                                      | Log level for splunk                            |
+| LOG_SPLUNK_PROTOCOL         | https                                                                     | Protocol to use                                 |
+| LOG_SPLUNK_HOST             | localhost                                                                 | Splunk HTTP Event Collector host                |
+| LOG_SPLUNK_PORT             | 8088                                                                      | Splunk HTTP Event Collector port                |
+| LOG_SPLUNK_PATH             | /services/collector/event/1.0                                             | URL path to use                                 |
+| LOG_SPLUNK_INDEX            | main                                                                      | Index for the events sent to Splunk             |
+| LOG_SPLUNK_SOURCE           | winston                                                                   | Source for the events sent to Splunk            |
+| LOG_SPLUNK_SOURCE_TYPE      | winston-splunk-logger                                                     | Sourcetype for the events sent to Splunk        |
+| LOG_SPLUNK_TOKEN            |                                                                           | Splunk HTTP Event Collector token               |
+|                             |                                                                           |                                                 |
+| SPLUNK_PASSWORD             |                                                                           | Default password of the admin user              |
 |                             |                                                                           |                                                 |
 
 ## Run server in development mode
@@ -79,6 +91,10 @@ or
 ```
     $ npm run docker:compose:up:dev
 ```
+## Run splunk in docker
+```
+    $ npm run docker:splunk
+```
 ## Stop dev environment in docker
 ```
     $ npm run docker:compose:down
@@ -87,10 +103,11 @@ or
 
 We use several backend services for development
 
-| Url                              | Service        | Description                              |
-|----------------------------------|----------------|------------------------------------------|
+| Url                                     | Service        | Description                              |
+|-----------------------------------------|----------------|------------------------------------------|
 | [localhost:8103](http://localhost:8103) | Swagger UI     | Swagger editor                           |
 | [localhost:8101](http://localhost:8101) | Keycloak       | Keycloak SSO Issuer                      |
+| [localhost:8104](http://localhost:8104) | Splunk         | Splunk Enterprise                        |
 
 Keycloak is used as identity manager for development purpose. There is configured default client whit id `server` and secret `155bca8c-5c95-4f40-a084-8f0025b0456b`. You can login to administration console with account `admin/Admin-123`. You can change this settings in `.env` file, which is in project root derectory. 
 There are registered two default users in Keycloak. You can change them in `./dockers/sso/realm-demo.json` file, or in administration console.

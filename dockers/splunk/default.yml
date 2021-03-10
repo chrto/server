@@ -1,0 +1,35 @@
+splunk:
+  conf:
+    inputs:
+      # Configure HTTP Event Controller
+      directory: /opt/splunk/etc/apps/splunk_httpinput/local/
+      content:
+        http:
+          disabled: 0
+          sourcetype: _json
+          port: 8088
+        http://demo_event_controller:
+          disabled: 0
+          index: main
+          token: ##LOG_SPLUNK_TOKEN##
+  exec: /opt/splunk/bin/splunk
+  group: splunk
+  # hec:
+  #   enable: true
+  #   port: 8088
+  #   ssl: true
+  #   token: a2747c44-26fb-41c4-9bdf-43026a66541c
+  home: /opt/splunk
+  http_port: 8000
+  opt: /opt
+  password: ##SPLUNK_PASSWORD##
+  pid: /opt/splunk/var/run/splunk/splunkd.pid
+  s2s:
+    ca: null
+    cert: null
+    enable: true
+    password: null
+    port: 9997
+    ssl: false
+  svc_port: 8089
+  user: splunk

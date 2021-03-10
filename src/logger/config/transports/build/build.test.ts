@@ -2,7 +2,7 @@ import transportsUnbound from './build.unbound';
 import { expect as expectChai } from 'chai';
 import { ConsoleTransportOptions, FileTransportOptions } from 'winston/lib/winston/transports';
 import { DailyRotateFileTransportOptions } from 'winston-daily-rotate-file';
-import { TransportOptions } from '../options/options.types';
+import { SplunkTransportOptions, TransportOptions } from '../options/options.types';
 import { ILoggerConfig } from 'web/server/configuration/loader/logger/loggerConfig.types';
 import { TransportsDefinition } from '../transports.types';
 
@@ -25,6 +25,11 @@ function Console (opt: ConsoleTransportOptions): void {
   // ...
 };
 
+function SplunkStreamEvent (opt: SplunkTransportOptions): void {
+  this.level = opt.level;
+  // ...
+};
+
 const OPTIONS: TransportOptions = {
   file: {
     filename: 'exceptions.log',
@@ -38,6 +43,15 @@ const OPTIONS: TransportOptions = {
     filename: 'exceptions.log',
     handleExceptions: true,
     dirname: './logs'
+  },
+  splunk: {
+    splunk: {
+      token: 's_token',
+      host: 's_host',
+      port: 8104,
+      path: 's_path',
+      protocol: 's_proto'
+    }
   }
 };
 const CONFIG: ILoggerConfig = {
@@ -54,7 +68,7 @@ describe('Logger', () => {
 
         beforeAll(() => {
           transports = transportsUnbound
-            .apply(null, [{ Console, File }, DailyRotateFile]);
+            .apply(null, [{ Console, File }, DailyRotateFile, SplunkStreamEvent]);
         });
 
         it(`Should return TransportsDefinition object`, () => {
@@ -87,7 +101,24 @@ describe('Logger', () => {
             .and.has.deep.members(expected);
         });
 
-        it(`Should return list of exact 2 logger transports in logger item, if console log has been disabled`, () => {
+        it(`Should return list of exact 3 logger transports in logger item, if splunk log has been enabled`, () => {
+          const expected = [
+            new SplunkStreamEvent(OPTIONS.splunk),
+            new DailyRotateFile({ ...OPTIONS.file, filename: CONFIG.fileNameInfo, level: CONFIG.fileLevel, stream: undefined }),
+            new DailyRotateFile({ ...OPTIONS.file, filename: CONFIG.fileNameError, level: 'error', stream: undefined })
+          ];
+
+          const result: TransportsDefinition = transports
+            .apply(null, [{ ...CONFIG, splunkEnable: true }])
+            .apply(null, [OPTIONS]);
+
+          expectChai(result.logger)
+            .to.be.an([].constructor.name)
+            .which.has.length(3)
+            .and.has.deep.members(expected);
+        });
+
+        it(`Should return list of exact 2 logger transports in logger item, if console and splunk log has been disabled `, () => {
           const expected = [
             new DailyRotateFile({ ...OPTIONS.file, filename: CONFIG.fileNameInfo, level: CONFIG.fileLevel, stream: undefined }),
             new DailyRotateFile({ ...OPTIONS.file, filename: CONFIG.fileNameError, level: 'error', stream: undefined })

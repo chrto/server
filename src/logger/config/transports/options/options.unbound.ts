@@ -27,5 +27,18 @@ export default ({ combine, colorize }) =>
         filename: loggerConfig.fileNameExceptions,
         dirname: loggerConfig.dir,
         format: customFormat
+      },
+      splunk: {
+        level: loggerConfig.splunkLevel,
+        splunk: {
+          token: loggerConfig.splunkToken,
+          ... !!loggerConfig.splunkIndex && { index: loggerConfig.splunkIndex },
+          ... !!loggerConfig.splunkSource && { source: loggerConfig.splunkSource },
+          ... !!loggerConfig.splunkSourceType && { sourcetype: loggerConfig.splunkSourceType },
+          ... !!loggerConfig.splunkHost && { host: loggerConfig.splunkHost },
+          ... !!loggerConfig.splunkPort && { port: loggerConfig.splunkPort },
+          ... !!loggerConfig.splunkPath && { path: loggerConfig.splunkPath },
+          ... !!loggerConfig.splunkProtocol && { protocol: loggerConfig.splunkProtocol }
+        }
       }
     });
