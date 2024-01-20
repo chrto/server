@@ -18,19 +18,19 @@ const isENVConfigured = (env: NodeJS.ProcessEnv): boolean =>
 
 export const getHashAlg = (hashAlg: string): Algorithm => {
   switch (hashAlg) {
-    case "HS256":
-    case "HS384":
-    case "HS512":
-    case "RS256":
-    case "RS384":
-    case "RS512":
-    case "ES256":
-    case "ES384":
-    case "ES512":
-    case "PS256":
-    case "PS384":
-    case "PS512":
-    case "none":
+    case 'HS256':
+    case 'HS384':
+    case 'HS512':
+    case 'RS256':
+    case 'RS384':
+    case 'RS512':
+    case 'ES256':
+    case 'ES384':
+    case 'ES512':
+    case 'PS256':
+    case 'PS384':
+    case 'PS512':
+    case 'none':
       return hashAlg;
     default:
       return DEFAULT_SSO_HASH_ALG;
