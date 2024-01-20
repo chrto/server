@@ -1,5 +1,5 @@
 import jwtAuthenticationUnbound from './jwtAuthentication.unbound';
 import { expressJwtSecret } from 'jwks-rsa';
-import * as jwt from 'express-jwt';
+import { expressjwt } from 'express-jwt';
 
-export default jwtAuthenticationUnbound.apply(null, [jwt, expressJwtSecret]);
+export default jwtAuthenticationUnbound.apply(null, [expressjwt, expressJwtSecret]);

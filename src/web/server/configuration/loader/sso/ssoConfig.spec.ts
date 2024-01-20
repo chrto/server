@@ -1,5 +1,5 @@
 import { assert as assertChai, expect as expectChai } from 'chai';
-import ssoConfigUnbound from './ssoConfig.unbound';
+import ssoConfigUnbound, { getHashAlg } from './ssoConfig.unbound';
 import { ISSOConfig } from './ssoConfig.types';
 import { DEFAULT_SSO_HASH_ALG } from 'src/defaults';
 import { AppConfig, AppConfigLoader } from '../appConfig.types';
@@ -28,7 +28,7 @@ describe('server configuration module', () => {
       ssoJwksUri: env.SSO_JWKS_URI,
       ssoTokenEndpoint: env.SSO_TOKEN_ENDPOINT,
       ssoEndSessionEndpoint: env.SSO_END_SESSION_ENDPOINT,
-      ssoHashAlg: env.SSO_HASH_ALG,
+      ssoHashAlg: getHashAlg(env.SSO_HASH_ALG),
       ssoClientId: env.SSO_CLIENT_ID,
       ssoClientSecret: env.SSO_CLIENT_SECRET,
       ssoRedirectUri: env.SSO_REDIRECT_URI
