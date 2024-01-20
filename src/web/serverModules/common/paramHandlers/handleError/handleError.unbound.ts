@@ -1,10 +1,10 @@
 import { AppError } from 'common/error';
 import { NotFound } from 'common/httpErrors';
+import { Predicate } from 'common/types';
 import { NextFunction } from 'express';
-import { Pred } from 'ramda';
 import { AppRequest } from 'web/serverModules/types';
 
-export default (isMissing: Pred) =>
+export default (isMissing: Predicate<string>) =>
   <UT>(_request: AppRequest<unknown, unknown, UT>, _response: Response, next: NextFunction, errMessage?: string) =>
     (error: AppError) =>
       error instanceof NotFound && !isMissing(errMessage)
