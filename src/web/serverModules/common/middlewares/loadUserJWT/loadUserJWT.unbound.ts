@@ -20,7 +20,7 @@ const addUserToReq = <UT> (req: AppRequest<UT>, next: NextFunction) => (user: UT
 
 export default (logError: Fcn<[string], <E>(e: E) => E>) =>
   ({ userService }: PluginSdkService) =>
-    (req: AppRequest<unknown, unknown, UserModel>, _res: Response, next: NextFunction): Promise<void> =>
+    (req: AppRequest<UserModel>, _res: Response, next: NextFunction): Promise<void> =>
       userService.getUserByEmail()(req.jwt.preferred_username)
         .then(
           caseOf({
