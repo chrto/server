@@ -5,6 +5,7 @@ import { AppError } from 'common/error';
 import { InvalidInput, NotAuthenticated, NotFound } from 'common/httpErrors';
 
 import errorHandlerUnbound from './errorHandler.unbound';
+import { AxiosErrorData } from './model.types';
 
 describe(`storage`, () => {
   describe(`http`, () => {
@@ -14,7 +15,7 @@ describe(`storage`, () => {
         let errorHandler: Fcn<[AxiosError], AppError>;
         let result: AppError;
 
-        const errorResp: AxiosError = {
+        const errorResp: AxiosError<AxiosErrorData, any> = {
           response: {
             statusText: 'status',
             status: 500,

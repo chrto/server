@@ -5,13 +5,14 @@ import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, Method } 
 import { AppError } from 'common/error';
 import { Either } from 'tsmonad';
 import { InvalidInput } from 'common/httpErrors';
+import { AxiosErrorData } from '../errorHandler/model.types';
 
 const CONFIG: AxiosRequestConfig = {
   data: {},
   headers: {}
 };
 
-let ERROR_RESPONSE: AxiosError = {
+let ERROR_RESPONSE: AxiosError<AxiosErrorData, any> = {
   response: {
     statusText: 'status',
     status: 400,
