@@ -9,6 +9,6 @@ import loggerOptions from './options/options';
 import buildLogger from './buildLogger/buildLogger';
 
 export default initUnbound
-  .apply(null, [fileStorage, cluster.isMaster])
+  .apply(null, [fileStorage, cluster.default.isPrimary])
   .apply(null, [addColors])
   .apply(null, [transports, loggerOptions, buildLogger]);
