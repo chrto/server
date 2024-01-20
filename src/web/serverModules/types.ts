@@ -1,5 +1,5 @@
 import { Request, Router } from 'express';
-import { Query } from "express-serve-static-core";
+import { Query, ParamsDictionary } from "express-serve-static-core";
 import { PluginSdkService } from 'service/serviceFactory/serviceFactory.types';
 import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
 import { ModuleDef } from './configuration/routes/register/registerRoutes.types';
@@ -48,7 +48,7 @@ export interface JwtPayload {
   [JwtPayloadItemDev.VER]?: string;
 }
 
-export interface AppRequest<QT = Query, BT = any, UT = unknown, IT = unknown> extends Request<core.ParamsDictionary, any, BT, QT> {
+export interface AppRequest<QT = Query, BT = any, UT = unknown, IT = unknown> extends Request<ParamsDictionary, any, BT, QT> {
   jwt: JwtPayload;
   ssoConfig?: ISSOConfig;
   implicits?: IT;
