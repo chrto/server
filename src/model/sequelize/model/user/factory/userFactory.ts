@@ -1,4 +1,4 @@
 import userFactoryUnbound from './userFactory.unbound';
-import * as uuid from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
-export default userFactoryUnbound.apply(null, [uuid]);
+export default userFactoryUnbound.apply(null, [uuidv4]);
