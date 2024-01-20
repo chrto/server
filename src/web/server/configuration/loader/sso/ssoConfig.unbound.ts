@@ -35,7 +35,7 @@ export const getHashAlg = (hashAlg: string): Algorithm => {
     default:
       return DEFAULT_SSO_HASH_ALG;
   }
-}
+};
 
 export default (env: NodeJS.ProcessEnv) =>
   (appConfig: AppConfig = {} as AppConfig): Either<AppError, AppConfig> =>
