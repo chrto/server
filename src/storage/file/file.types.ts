@@ -7,7 +7,7 @@ export type FSError = NodeJS.ErrnoException | null;
 export type FSPath = PathOrFileDescriptor;
 export type FSReadTextOptions = BufferEncoding;
 export type FSReadOptions = { flag?: string; } | { encoding?: null; flag?: string; };
-export type FSWriteOptions = WriteFileOptions | string;
+export type FSWriteOptions = WriteFileOptions;
 export type FSMKDirOptions = Mode | MakeDirectoryOptions | null;
 
 export interface FileStorage {
