@@ -56,7 +56,7 @@ export interface AppRequest<UT = unknown, IT = unknown, QT = Query, BT = any> ex
 }
 
 export type ControllerFactory<CTL> = (service: PluginSdkService) => CTL;
-export type ContextFactory<CTX, RU = unknown> = (request?: AppRequest<unknown, unknown, RU>) => CTX;
+export type ContextFactory<CTX, RU = unknown> = (request?: AppRequest<RU>) => CTX;
 export type ModuleConfigFactory<CTX> = (config: ModuleConfig<CTX>) => ModuleConfig<CTX>;
 export interface ModuleConfig<CTX> {
   router: Router;
