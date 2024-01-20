@@ -8,6 +8,6 @@ import { TokenQueryParams } from './getTokenSet/getTokenSet.types';
 import { TokenRefreshQueryParams } from './refreshTokenSet/refreshTokenSet.types';
 
 export interface AuthenticationController {
-  token: (ctx: Context, req: AppRequest<TokenQueryParams, unknown, unknown>, res: Response) => Promise<Either<AppError, TokenSetModel>>;
+  token: (ctx: Context, req: AppRequest<unknown, unknown, TokenQueryParams>, res: Response) => Promise<Either<AppError, TokenSetModel>>;
   refreshToken: (ctx: Context, req: AppRequest<TokenRefreshQueryParams, unknown, unknown>, res: Response) => Promise<Either<AppError, TokenSetModel>>;
 }

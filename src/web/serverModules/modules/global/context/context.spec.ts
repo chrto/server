@@ -7,7 +7,7 @@ describe('Web Server', () => {
   describe('Modules', () => {
     describe('Global', () => {
       describe('context', () => {
-        let request: AppRequest<unknown, unknown, unknown> = {} as AppRequest<unknown, unknown, unknown>;
+        let request: AppRequest = {} as AppRequest;
         let globalContext: Context;
         beforeAll(() => {
           globalContext = context.apply(null, [request]);

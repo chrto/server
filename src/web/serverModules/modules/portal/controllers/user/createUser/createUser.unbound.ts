@@ -20,7 +20,7 @@ export default (
   sanitizeEntity: Fcn<[PortalUser], any>
 ) =>
   ({ createUser, getUserByEmail }: UserService) =>
-    async (_ctx: PortalContext, req: AppRequest<unknown, UserBody, PortalUser, RequestImplicits>, res: Response): Promise<Either<AppError, PortalUser>> =>
+    async (_ctx: PortalContext, req: AppRequest<PortalUser, RequestImplicits, unknown, UserBody>, res: Response): Promise<Either<AppError, PortalUser>> =>
       Promise.resolve(Either.right<AppError, UserBody>(req.body))
         .then(bind(bodyValidator))
         .then(asyncBind(emailNotExistsValidator({ getUserByEmail })))

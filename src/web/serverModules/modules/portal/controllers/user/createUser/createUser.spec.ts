@@ -15,7 +15,7 @@ import { Fcn } from 'common/types';
 import { NotFound } from 'common/httpErrors';
 
 type BodyValidator = jest.Mock<Either<AppError, UserBody>, [UserBody]>;
-type AppReq = AppRequest<unknown, UserBody, User, RequestImplicits>;
+type AppReq = AppRequest<User, RequestImplicits, unknown, UserBody>;
 const UUID: string = '92b814ed-1aff-46c1-b669-0c9fd2ea81a3';
 const USER_REQUIRED: UserRequired = {
   firstName: 'Joe',

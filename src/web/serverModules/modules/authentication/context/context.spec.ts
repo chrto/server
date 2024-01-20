@@ -7,7 +7,7 @@ describe('Web Server', () => {
   describe('Modules', () => {
     describe('Authentication', () => {
       describe('context', () => {
-        let request: AppRequest<unknown, unknown, unknown> = {} as AppRequest<unknown, unknown, unknown>;
+        let request: AppRequest = {} as AppRequest;
         let authenticationContext: Context;
         beforeAll(() => {
           authenticationContext = context.apply(null, [request]);

@@ -48,7 +48,7 @@ export interface JwtPayload {
   [JwtPayloadItemDev.VER]?: string;
 }
 
-export interface AppRequest<QT = Query, BT = any, UT = unknown, IT = unknown> extends Request<ParamsDictionary, any, BT, QT> {
+export interface AppRequest<UT = unknown, IT = unknown, QT = Query, BT = any> extends Request<ParamsDictionary, any, BT, QT> {
   jwt: JwtPayload;
   ssoConfig?: ISSOConfig;
   implicits?: IT;

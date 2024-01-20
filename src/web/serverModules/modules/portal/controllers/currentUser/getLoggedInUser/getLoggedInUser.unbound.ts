@@ -9,6 +9,6 @@ import { Model } from 'sequelize/types';
 
 export default (
   sanitizeEntity: Fcn<[Model<PortalUser>], any>
-) => async (ctx: PortalContext, _req: AppRequest<unknown, unknown, PortalUser>, _res: Response): Promise<Either<AppError, PortalUser>> =>
+) => async (ctx: PortalContext, _req: AppRequest<PortalUser>, _res: Response): Promise<Either<AppError, PortalUser>> =>
     Either.right<AppError, PortalUser>(ctx.loggedInUser)
       .lift(sanitizeEntity);

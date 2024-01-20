@@ -38,11 +38,11 @@ describe(`Test 'web' module`, () => {
 
         describe('Happy path', () => {
           const USER: UserModel = {} as UserModel;
-          let request: AppRequest<unknown, unknown, UserModel> = {
+          let request: AppRequest<UserModel> = {
             jwt: {
               preferred_username: USERNAME
             }
-          } as AppRequest<unknown, unknown, UserModel>;
+          } as AppRequest<UserModel>;
 
           beforeAll(() => {
             getUserByEmail = jest.fn().mockResolvedValue(Either.right<AppError, UserModel>(USER));
@@ -69,11 +69,11 @@ describe(`Test 'web' module`, () => {
         });
 
         describe('Error path', () => {
-          let request: AppRequest<unknown, unknown, UserModel> = {
+          let request: AppRequest<UserModel> = {
             jwt: {
               preferred_username: USERNAME
             }
-          } as AppRequest<unknown, unknown, UserModel>;
+          } as AppRequest<UserModel>;
           describe('User not found', () => {
             const ERROR_NOT_FOUND: NotFound = new NotFound('user not found');
             beforeAll(() => {

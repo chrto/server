@@ -18,7 +18,7 @@ import { expect as expectChai } from 'chai';
 import { InvalidInput, NotAuthorized } from 'common/httpErrors';
 import sanitizeModel from 'model/sequelize/sanitizeModel/sanitizeModel';
 
-type AppReq = AppRequest<unknown, UserBody, User, RequestImplicits>;
+type AppReq = AppRequest<User, RequestImplicits, unknown, UserBody>;
 
 const USER_REQUIRED: UserRequired = {
   firstName: 'Joe',

@@ -18,7 +18,7 @@ import userFactory from 'model/sequelize/model/user/factory/userFactory';
 import { expect as expectChai } from 'chai';
 import sanitizeModel from 'model/sequelize/sanitizeModel/sanitizeModel';
 
-type AppReq = AppRequest<unknown, UserBody, User, RequestImplicits>;
+type AppReq = AppRequest<User, RequestImplicits, unknown, UserBody>;
 const UUID: string = '92b814ed-1aff-46c1-b669-0c9fd2ea81a3';
 const USER_REQUIRED: UserRequired = {
   firstName: 'Joe',

@@ -10,9 +10,9 @@ import { UserBody as UpdateUserBody } from './updateUser/updateUser.types';
 import { UserBody as CreateUserBody } from './createUser/createUser.types';
 
 export interface UserController {
-  getUserById: (ctx: PortalContext, req: AppRequest<unknown, unknown, User, RequestImplicits>, res: Response) => Promise<Either<AppError, User>>;
-  deleteUser: (ctx: PortalContext, req: AppRequest<unknown, unknown, User, RequestImplicits>, res: Response) => Promise<Either<AppError, DeletedUser>>;
-  updateUser: (ctx: PortalContext, req: AppRequest<unknown, UpdateUserBody, User, RequestImplicits>, res: Response) => Promise<Either<AppError, User>>;
-  getUsers: (ctx: PortalContext, req: AppRequest<unknown, unknown, User, RequestImplicits>, res: Response) => Promise<Either<AppError, User[]>>;
-  createUser: (ctx: PortalContext, req: AppRequest<unknown, CreateUserBody, User, RequestImplicits>, res: Response) => Promise<Either<AppError, User>>;
+  getUserById: (ctx: PortalContext, req: AppRequest<User, RequestImplicits>, res: Response) => Promise<Either<AppError, User>>;
+  deleteUser: (ctx: PortalContext, req: AppRequest<User, RequestImplicits>, res: Response) => Promise<Either<AppError, DeletedUser>>;
+  updateUser: (ctx: PortalContext, req: AppRequest<User, RequestImplicits, unknown, UpdateUserBody>, res: Response) => Promise<Either<AppError, User>>;
+  getUsers: (ctx: PortalContext, req: AppRequest<User, RequestImplicits>, res: Response) => Promise<Either<AppError, User[]>>;
+  createUser: (ctx: PortalContext, req: AppRequest<User, RequestImplicits, unknown, CreateUserBody>, res: Response) => Promise<Either<AppError, User>>;
 }

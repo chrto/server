@@ -30,7 +30,7 @@ describe(`Test 'web' module`, () => {
         });
 
         it(`Should add entity in to existing request implicits`, () => {
-          const req: AppRequest<unknown, unknown, unknown, Implicits> = { implicits: { impl_01: 'test' } } as AppRequest<unknown, unknown, unknown, Implicits>;
+          const req: AppRequest<unknown, Implicits> = { implicits: { impl_01: 'test' } } as AppRequest<unknown, Implicits>;
           addEntityInToRequestImplicits(req, RES, next, 'user')(USER);
           expectChai(req)
             .to.haveOwnProperty('implicits')
@@ -38,7 +38,7 @@ describe(`Test 'web' module`, () => {
         });
 
         it(`Should add 'implicits' item in to request and set exact entity in it`, () => {
-          const req: AppRequest<unknown, unknown, unknown, Implicits> = {} as AppRequest<unknown, unknown, unknown, Implicits>;
+          const req: AppRequest<unknown, Implicits> = {} as AppRequest<unknown, Implicits>;
           addEntityInToRequestImplicits(req, RES, next, 'user')(USER);
           expectChai(req)
             .to.haveOwnProperty('implicits')
@@ -46,7 +46,7 @@ describe(`Test 'web' module`, () => {
         });
 
         it(`Should call NextFunction, after request implicits has been updated`, () => {
-          const req: AppRequest<unknown, unknown, unknown, Implicits> = {} as AppRequest<unknown, unknown, unknown, Implicits>;
+          const req: AppRequest<unknown, Implicits> = {} as AppRequest<unknown, Implicits>;
           addEntityInToRequestImplicits(req, RES, next, 'user')(USER);
           expect(next)
             .toHaveBeenCalledTimes(1);
