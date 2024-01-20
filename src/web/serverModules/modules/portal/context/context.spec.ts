@@ -19,10 +19,10 @@ describe('Web Server', () => {
   describe('Modules', () => {
     describe('Global', () => {
       describe('context', () => {
-        let request: AppRequest<unknown, unknown, PortalUser> = {
+        let request: AppRequest<PortalUser> = {
           currentUser,
           implicits: { user }
-        } as AppRequest<unknown, unknown, PortalUser>;
+        } as AppRequest<PortalUser>;
         let portalContext: Context;
 
         beforeAll(() => {

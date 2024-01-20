@@ -13,6 +13,6 @@ export default (
   sanitizeEntities: Fcn<[PortalUser[]], any[]>
 ) =>
   ({ getUsers }: UserService) =>
-    async (_ctx: PortalContext, _req: AppRequest<unknown, unknown, PortalUser, RequestImplicits>, _res: Response): Promise<Either<AppError, PortalUser[]>> =>
+    async (_ctx: PortalContext, _req: AppRequest<PortalUser, RequestImplicits>, _res: Response): Promise<Either<AppError, PortalUser[]>> =>
       getUsers()()
         .then(lift(sanitizeEntities));

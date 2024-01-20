@@ -34,11 +34,11 @@ describe('Web Server', () => {
             });
 
             describe('Happy path', () => {
-              const REQUEST: AppRequest<TokenQueryParams, unknown, unknown> = {
+              const REQUEST: AppRequest<unknown, unknown, TokenQueryParams> = {
                 query: {
                   auth_code: 'auth_code..'
                 }
-              } as AppRequest<TokenQueryParams, unknown, unknown>;
+              } as AppRequest<unknown, unknown, TokenQueryParams>;
 
               beforeAll(async () => {
                 jest.clearAllMocks();
@@ -78,11 +78,11 @@ describe('Web Server', () => {
             });
 
             describe('Error path - service', () => {
-              const REQUEST: AppRequest<TokenQueryParams, unknown, unknown> = {
+              const REQUEST: AppRequest<unknown, unknown, TokenQueryParams> = {
                 query: {
                   auth_code: 'auth_code..'
                 }
-              } as AppRequest<TokenQueryParams, unknown, unknown>;
+              } as AppRequest<unknown, unknown, TokenQueryParams>;
 
               beforeAll(async () => {
                 jest.clearAllMocks();
@@ -130,11 +130,11 @@ describe('Web Server', () => {
             });
 
             describe('Error path - validator', () => {
-              const REQUEST: AppRequest<TokenQueryParams, unknown, unknown> = {
+              const REQUEST: AppRequest<unknown, unknown, TokenQueryParams> = {
                 query: {
                   auth_code: null
                 }
-              } as AppRequest<TokenQueryParams, unknown, unknown>;
+              } as AppRequest<unknown, unknown, TokenQueryParams>;
               beforeAll(async () => {
                 jest.clearAllMocks();
 

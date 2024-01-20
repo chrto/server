@@ -6,5 +6,5 @@ import { Context } from '../../context/context.types';
 import { Response } from 'express';
 
 export interface CurrentUserController {
-  getLoggedInUser: (ctx: Context, req: AppRequest<unknown, unknown, User>, res: Response) => Promise<Either<AppError, User>>;
+  getLoggedInUser: (ctx: Context, req: AppRequest<User>, res: Response) => Promise<Either<AppError, User>>;
 }

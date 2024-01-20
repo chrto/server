@@ -10,6 +10,6 @@ import queryValidator from './validators/queryValidator';
 import { TokenRefreshQueryParams } from './refreshTokenSet.types';
 
 export default (authenticationService: AuthenticationService) =>
-  async (_ctx: Context, req: AppRequest<TokenRefreshQueryParams, unknown, unknown>, _res: Response): Promise<Either<AppError, TokenSetModel>> =>
+  async (_ctx: Context, req: AppRequest<unknown, unknown, TokenRefreshQueryParams>, _res: Response): Promise<Either<AppError, TokenSetModel>> =>
     Promise.resolve(queryValidator(req.query))
       .then(asyncBind(authenticationService.refreshTokens));

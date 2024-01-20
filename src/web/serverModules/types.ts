@@ -1,4 +1,5 @@
 import { Request, Router } from 'express';
+import { Query, ParamsDictionary } from "express-serve-static-core";
 import { PluginSdkService } from 'service/serviceFactory/serviceFactory.types';
 import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
 import { ModuleDef } from './configuration/routes/register/registerRoutes.types';
@@ -47,17 +48,15 @@ export interface JwtPayload {
   [JwtPayloadItemDev.VER]?: string;
 }
 
-export interface AppRequest<QT = unknown, BT = unknown, UT = unknown, IT = unknown> extends Request {
+export interface AppRequest<UT = unknown, IT = unknown, QT = Query, BT = any> extends Request<ParamsDictionary, any, BT, QT> {
   jwt: JwtPayload;
-  query: QT;
-  body: BT;
   ssoConfig?: ISSOConfig;
   implicits?: IT;
   currentUser?: UT;
 }
 
 export type ControllerFactory<CTL> = (service: PluginSdkService) => CTL;
-export type ContextFactory<CTX, RU = unknown> = (request?: AppRequest<unknown, unknown, RU>) => CTX;
+export type ContextFactory<CTX, RU = unknown> = (request?: AppRequest<RU>) => CTX;
 export type ModuleConfigFactory<CTX> = (config: ModuleConfig<CTX>) => ModuleConfig<CTX>;
 export interface ModuleConfig<CTX> {
   router: Router;

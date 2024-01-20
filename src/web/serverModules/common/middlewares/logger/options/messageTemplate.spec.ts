@@ -8,21 +8,21 @@ describe(`Test 'web' module`, () => {
     describe(`middlewares`, () => {
       describe(`logger options`, () => {
         describe(`logger message template`, () => {
-          let request: AppRequest<unknown, unknown, any> = {
+          let request: AppRequest<any> = {
             method: 'GET',
             url: '/api/v1/global/status'
-          } as AppRequest<unknown, unknown, any>;
+          } as AppRequest<any>;
           let response: Response = {
             statusCode: 200
           } as Response;
 
           it(`Should create exact log message`, () => {
-            const req: AppRequest<unknown, unknown, any> = {
+            const req: AppRequest<any> = {
               ...request,
               currentUser: {
                 email: 'joe.doe@company.com'
               }
-            } as AppRequest<unknown, unknown, any>;
+            } as AppRequest<any>;
 
             expectChai(messageTemplate(req, response))
               .to.be.an('string')
@@ -30,10 +30,10 @@ describe(`Test 'web' module`, () => {
           });
 
           it(`Should not log userName, if email does not exists on currentUser object`, () => {
-            const req: AppRequest<unknown, unknown, any> = {
+            const req: AppRequest<any> = {
               ...request,
               currentUser: {}
-            } as AppRequest<unknown, unknown, any>;
+            } as AppRequest<any>;
             expectChai(messageTemplate(req, response))
               .to.be.an('string')
               .which.is.equal('HTTP GET /api/v1/global/status 200');

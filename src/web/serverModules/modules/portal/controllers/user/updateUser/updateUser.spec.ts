@@ -12,7 +12,7 @@ import { AppRequest } from 'web/serverModules/types';
 import { RequestImplicits } from '../../../paramHandlers/paramHandlers.types';
 
 type BodyValidator = jest.Mock<Either<AppError, UserBody>, [UserBody]>;
-type AppReq = AppRequest<unknown, UserBody, User, RequestImplicits>;
+type AppReq = AppRequest<User, RequestImplicits, unknown, UserBody>;
 
 const USER_REQUIRED: UserRequired = {
   firstName: 'Joe',

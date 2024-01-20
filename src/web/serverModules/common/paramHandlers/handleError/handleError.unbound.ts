@@ -5,7 +5,7 @@ import { NextFunction } from 'express';
 import { AppRequest } from 'web/serverModules/types';
 
 export default (isMissing: Predicate<string>) =>
-  <UT>(_request: AppRequest<unknown, unknown, UT>, _response: Response, next: NextFunction, errMessage?: string) =>
+  <UT>(_request: AppRequest<UT>, _response: Response, next: NextFunction, errMessage?: string) =>
     (error: AppError) =>
       error instanceof NotFound && !isMissing(errMessage)
         ? next(new NotFound(errMessage))

@@ -28,7 +28,7 @@ describe('Web Server', () => {
           let nextFunction: jest.Mock<void, [any]>;
           let serviceExecutro: jest.Mock<Promise<Either<AppError, User>>, [string]>;
           let userService: UserService = {} as UserService;
-          let userParamHandler: Fcn<[AppRequest<unknown, unknown, User, RequestImplicits>, Response, NextFunction, string], Promise<void>>;
+          let userParamHandler: Fcn<[AppRequest<User, RequestImplicits>, Response, NextFunction, string], Promise<void>>;
 
           beforeAll(() => {
             nextFunction = jest.fn().mockReturnValue(null);
@@ -41,7 +41,7 @@ describe('Web Server', () => {
           });
 
           describe('Happy path', () => {
-            let req: AppRequest<unknown, unknown, User, RequestImplicits> = {} as AppRequest<unknown, unknown, User, RequestImplicits>;
+            let req: AppRequest<User, RequestImplicits> = {} as AppRequest<User, RequestImplicits>;
             beforeAll(async () => {
               jest.clearAllMocks();
               await userParamHandler(req, null, nextFunction, USER_ID);
