@@ -3,15 +3,16 @@ import { AxiosError } from 'axios';
 import { Maybe } from 'tsmonad';
 import { AppError } from 'common/error';
 import { Fcn } from 'common/types';
+import { AxiosErrorData } from './model.types';
 
 export default (logError: Fcn<[string], <E>(e: E) => E>) =>
-  (error: AxiosError): AppError =>
+  (error: AxiosError<AxiosErrorData, any>): AppError =>
     Maybe.just(error)
       .lift(logError(!!error.response && !!error.response.statusText && !!error.response.data.error_description
         ? error.response.statusText + '\n' + error.response.data.error_description
         : !!error.toJSON ? error.toJSON()['message'] : 'unknon error'
       ))
-      .lift((error: AxiosError): AppError => {
+      .lift((error: AxiosError<AxiosErrorData, any>): AppError => {
         if (!error.response) {
           return new AppError(error.code, error.message);
         }

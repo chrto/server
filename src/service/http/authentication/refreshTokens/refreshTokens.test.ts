@@ -14,6 +14,7 @@ import { TokenSet as TokenSetModel } from 'model/authentication/tokenSet.types';
 import { TokenSet } from '../types';
 import { AxiosStorage } from 'storage/http/axios/axios.types';
 import { TokenRefreshQueryParams } from 'web/serverModules/modules/authentication/controllers/authentication/refreshTokenSet/refreshTokenSet.types';
+import { AxiosErrorData } from 'storage/http/axios/errorHandler/model.types';
 
 const CONFIG: ISSOConfig = {
   ssoTokenEndpoint: 'http://token.endpoint.com',
@@ -31,7 +32,7 @@ const AXIOS_RESPONSE: AxiosResponse<TokenSet> = {
     refresh_token: 'refresh_token'
   }
 } as AxiosResponse<TokenSet>;
-let ERROR_RESPONSE: AxiosError = {
+let ERROR_RESPONSE: AxiosError<AxiosErrorData, any> = {
   response: {
     statusText: 'status',
     status: 400,

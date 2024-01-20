@@ -11,6 +11,7 @@ import { Either } from 'tsmonad';
 import { AppError } from 'common/error';
 import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
 import { AxiosStorage } from 'storage/http/axios/axios.types';
+import { AxiosErrorData } from 'storage/http/axios/errorHandler/model.types';
 
 const CONFIG: ISSOConfig = {
   ssoTokenEndpoint: 'http://token.endpoint.com',
@@ -21,7 +22,7 @@ const CONFIG: ISSOConfig = {
 const AXIOS_RESPONSE: AxiosResponse<any> = {
   data: {}
 } as AxiosResponse<any>;
-let ERROR_RESPONSE: AxiosError = {
+let ERROR_RESPONSE: AxiosError<AxiosErrorData, any> = {
   response: {
     statusText: 'status',
     status: 400,
