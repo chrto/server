@@ -1,6 +1,6 @@
 import { Factory } from 'common/types';
 import { ErrorRequestHandler, RequestHandler } from 'express';
-import { RequestHandler as JwtRequestHandler } from 'express-jwt';
+import { Request as JwtRequestHandler } from 'express-jwt';
 import { PluginSdkService } from 'service/serviceFactory/serviceFactory.types';
 import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
 import { BodyParser } from './bodyParser/bodyPartser.types';
