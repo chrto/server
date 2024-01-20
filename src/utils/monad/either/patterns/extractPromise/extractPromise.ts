@@ -1,7 +1,7 @@
 import valueOrError from '../valueOrError/valueOrError';
-import { InvalidInput } from 'common/httpErrors';
+import { InvalidInput } from 'common/error/collectorErrors';
 import { Either, EitherPatterns } from 'tsmonad';
-import { AppError } from 'common/error';
+import { AppError } from 'common/error/error';
 
 /**
  * For a right value extracts the promise from Either<Error, Promise<T>> and returns it with Either or

@@ -1,7 +1,7 @@
 import bind from './bind';
-import { AppError } from 'common/error';
+import { AppError } from 'common/error/error';
 import { Either } from 'tsmonad';
-import { InternalServerError } from 'common/httpErrors';
+import { InternalCollectorError } from 'common/error/collectorErrors';
 
 describe('utils', () => {
   describe('either', () => {
@@ -39,7 +39,7 @@ describe('utils', () => {
       });
 
       describe(`Left side`, () => {
-        const appError: AppError = new InternalServerError();
+        const appError: AppError = new InternalCollectorError();
 
         beforeAll(() => {
           jest.clearAllMocks();

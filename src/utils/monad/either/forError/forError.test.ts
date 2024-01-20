@@ -1,8 +1,8 @@
 import forError from './forError';
 import { expect as expectChai } from 'chai';
-import { AppError } from 'common/error';
+import { AppError } from 'common/error/error';
 import { Either } from 'tsmonad';
-import { InternalServerError } from 'common/httpErrors';
+import { InternalCollectorError } from 'common/error/collectorErrors';
 
 const func = (error: AppError): AppError => new AppError(error.code, `${error.message} - transformed`);
 
@@ -38,7 +38,7 @@ describe('utils', () => {
         });
 
         describe(`Left side`, () => {
-          const appError: AppError = new InternalServerError();
+          const appError: AppError = new InternalCollectorError();
           beforeAll(() => {
             either = Either.left<AppError, number>(appError);
             result = forError(func)

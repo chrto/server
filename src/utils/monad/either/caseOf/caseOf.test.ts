@@ -1,8 +1,8 @@
 import caseOf from './caseOf';
 import { expect as expectChai } from 'chai';
-import { AppError } from 'common/error';
+import { AppError } from 'common/error/error';
 import { Either, EitherPatterns } from 'tsmonad';
-import { InternalServerError } from 'common/httpErrors';
+import { InternalCollectorError } from 'common/error/collectorErrors';
 import { Fcn } from 'common/types';
 
 describe('utils', () => {
@@ -33,7 +33,7 @@ describe('utils', () => {
       });
 
       describe(`Left side`, () => {
-        const error: AppError = new InternalServerError();
+        const error: AppError = new InternalCollectorError();
         beforeAll(() => {
           either = Either.left<AppError, number>(error);
           result = caseOf(pattern)

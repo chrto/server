@@ -1,8 +1,8 @@
 import tapLeft from './tapLeft';
 import { expect as expectChai } from 'chai';
-import { AppError } from 'common/error';
+import { AppError } from 'common/error/error';
 import { Either } from 'tsmonad';
-import { InternalServerError } from 'common/httpErrors';
+import { InternalCollectorError } from 'common/error/collectorErrors';
 
 let globalV: AppError;
 const left_side_effect = (error: AppError): void => {
@@ -35,7 +35,7 @@ describe('utils', () => {
       });
 
       describe(`Left side`, () => {
-        const appError: AppError = new InternalServerError();
+        const appError: AppError = new InternalCollectorError();
 
         beforeAll(() => {
           globalV = undefined;

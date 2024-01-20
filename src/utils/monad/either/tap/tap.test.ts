@@ -1,8 +1,8 @@
 import tap from './tap';
 import { expect as expectChai } from 'chai';
-import { AppError } from 'common/error';
+import { AppError } from 'common/error/error';
 import { Either } from 'tsmonad';
-import { InternalServerError } from 'common/httpErrors';
+import { InternalCollectorError } from 'common/error/collectorErrors';
 
 let globalV: number;
 const side_effect = (v: number): void => {
@@ -36,7 +36,7 @@ describe('utils', () => {
       });
 
       describe(`Left side`, () => {
-        const appError: AppError = new InternalServerError();
+        const appError: AppError = new InternalCollectorError();
         beforeAll(() => {
           either = Either.left<AppError, number>(appError);
           result = tap(side_effect)

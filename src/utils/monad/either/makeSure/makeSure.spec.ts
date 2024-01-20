@@ -1,9 +1,9 @@
 import makeSure from './makeSure';
-import { AppError } from 'common/error';
+import { AppError } from 'common/error/error';
 import { Either } from 'tsmonad';
-import { InternalServerError } from 'common/httpErrors';
+import { InternalCollectorError } from 'common/error/collectorErrors';
 
-const ERROR: AppError = new InternalServerError();
+const ERROR: AppError = new InternalCollectorError();
 
 describe('utils', () => {
   describe('either', () => {

@@ -1,7 +1,7 @@
 import eitherify from './eitherify';
 import { expect as expectChai } from 'chai';
 import { Either } from 'tsmonad';
-import { AppError } from 'common/error';
+import { AppError } from 'common/error/error';
 
 const ERROR_MESSAGE: string = 'less then zero!';
 const func = (v: number) => {

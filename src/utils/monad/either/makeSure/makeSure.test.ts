@@ -1,10 +1,10 @@
 import makeSure from './makeSure';
 import { expect as expectChai } from 'chai';
-import { AppError } from 'common/error';
+import { AppError } from 'common/error/error';
 import { Either } from 'tsmonad';
-import { InternalServerError } from 'common/httpErrors';
+import { InternalCollectorError } from 'common/error/collectorErrors';
 
-const ERROR: AppError = new InternalServerError();
+const ERROR: AppError = new InternalCollectorError();
 const predicate = (v: number): boolean => v > 0 ? true : false;
 
 describe('utils', () => {

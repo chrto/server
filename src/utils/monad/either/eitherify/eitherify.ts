@@ -1,4 +1,4 @@
-import { AppError } from 'common/error';
+import { AppError } from 'common/error/error';
 import { Either } from 'tsmonad';
 
 export default <I extends any[], O> (f: (...args: I) => O) =>

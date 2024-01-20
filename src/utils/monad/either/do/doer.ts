@@ -1,4 +1,4 @@
-import { AppError } from 'common/error';
+import { AppError } from 'common/error/error';
 import { Either, OptionalEitherPatterns } from 'tsmonad';
 import { Doer } from '../either.types';
 

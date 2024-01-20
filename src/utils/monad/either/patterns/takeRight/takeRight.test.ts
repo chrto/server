@@ -1,6 +1,6 @@
 import takeRight from './takeRight';
 import { expect as expectChai } from 'chai';
-import { AppError } from 'common/error';
+import { AppError } from 'common/error/error';
 import { Either } from 'tsmonad';
 
 describe('utils', () => {

@@ -1,10 +1,10 @@
 import valueOrError from './valueOrError';
 import { expect as expectChai } from 'chai';
 import { Either } from 'tsmonad';
-import { AppError } from 'common/error';
-import { InternalServerError } from 'common/httpErrors';
+import { AppError } from 'common/error/error';
+import { InternalCollectorError } from 'common/error/collectorErrors';
 
-const ERROR: AppError = new InternalServerError();
+const ERROR: AppError = new InternalCollectorError();
 
 describe('utils', () => {
   describe('either', () => {

@@ -1,11 +1,11 @@
 import fTap from './fTap';
 import { expect as expectChai } from 'chai';
-import { AppError } from 'common/error';
+import { AppError } from 'common/error/error';
 import { Either } from 'tsmonad';
-import { InternalServerError } from 'common/httpErrors';
+import { InternalCollectorError } from 'common/error/collectorErrors';
 
 let globalV: number;
-const appError: AppError = new InternalServerError();
+const appError: AppError = new InternalCollectorError();
 const side_effect = (v: number): Either<AppError, void> =>
   v > 0 ? (globalV = v, Either.right<AppError, void>(null)) : Either.left<AppError, void>(appError);
 

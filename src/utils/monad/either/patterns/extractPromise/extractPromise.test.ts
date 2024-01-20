@@ -1,8 +1,8 @@
 import extractPromise from './extractPromise';
 import { expect as expectChai } from 'chai';
-import { AppError } from 'common/error';
+import { AppError } from 'common/error/error';
 import { Either } from 'tsmonad';
-import { InternalServerError } from 'common/httpErrors';
+import { InternalCollectorError } from 'common/error/collectorErrors';
 
 describe('utils', () => {
   describe('either', () => {
@@ -31,7 +31,7 @@ describe('utils', () => {
         });
 
         describe(`Left side`, () => {
-          const ERROR: AppError = new InternalServerError();
+          const ERROR: AppError = new InternalCollectorError();
           beforeAll(async () => {
             either = Either.left<AppError, Promise<number>>(ERROR);
             result = await either.caseOf(extractPromise());

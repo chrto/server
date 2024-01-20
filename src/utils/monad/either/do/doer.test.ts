@@ -1,8 +1,8 @@
 import doer from './doer';
 import { expect as expectChai } from 'chai';
-import { AppError } from 'common/error';
+import { AppError } from 'common/error/error';
 import { Either, OptionalEitherPatterns } from 'tsmonad';
-import { InternalServerError } from 'common/httpErrors';
+import { InternalCollectorError } from 'common/error/collectorErrors';
 import { Fcn } from 'common/types';
 
 let globalValue: number;
@@ -39,7 +39,7 @@ describe('utils', () => {
       });
 
       describe(`Left side`, () => {
-        const error: AppError = new InternalServerError();
+        const error: AppError = new InternalCollectorError();
         beforeAll(() => {
           either = Either.left<AppError, number>(error);
           result = doer(pattern)
