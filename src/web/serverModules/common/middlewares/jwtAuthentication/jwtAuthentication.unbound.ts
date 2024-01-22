@@ -1,6 +1,7 @@
 import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
 import { ExpressJwtOptions } from 'jwks-rsa';
-import { Request as JwtRequestHandler, GetVerificationKey, Params } from 'express-jwt';
+import { RequestHandler as JwtRequestHandler } from 'express';
+import { GetVerificationKey, Params } from 'express-jwt';
 import { Fcn } from 'common/types';
 import { MiddlewareFactory } from '../middlewares.types';
 
