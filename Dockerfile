@@ -1,5 +1,5 @@
 #---Build stage starting---
-FROM node:12.16.1-alpine
+FROM node:20.11.0-alpine
 
 ENV NPM_CONFIG_LOGLEVEL warn
 
