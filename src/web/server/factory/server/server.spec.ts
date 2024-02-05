@@ -1,5 +1,4 @@
 import Server from './server';
-import { expect as expectChai } from 'chai';
 import { ServerFactoryParams } from '../params/factoryParams.types';
 
 const PARAMS: ServerFactoryParams = {
@@ -14,7 +13,6 @@ const PARAMS: ServerFactoryParams = {
 
 describe('WebServer Class', () => {
   it(`Should create new WebServer instance`, () => {
-    expectChai(new Server(PARAMS))
-      .to.be.instanceOf(Server);
+    expect(new Server(PARAMS)).toBeInstanceOf(Server);
   });
 });
