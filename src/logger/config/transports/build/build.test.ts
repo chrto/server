@@ -1,5 +1,4 @@
 import transportsUnbound from './build.unbound';
-import { expect as expectChai } from 'chai';
 import { ConsoleTransportOptions, FileTransportOptions } from 'winston/lib/winston/transports';
 import { DailyRotateFileTransportOptions } from 'winston-daily-rotate-file';
 import { SplunkTransportOptions, TransportOptions } from '../options/options.types';
@@ -76,12 +75,9 @@ describe('Logger', () => {
             .apply(null, [{ ...CONFIG }])
             .apply(null, [OPTIONS]);
 
-          expectChai(result)
-            .to.be.an({}.constructor.name);
-          expectChai(result)
-            .has.ownProperty('logger');
-          expectChai(result)
-            .has.ownProperty('exception');
+          expect(result).toBeInstanceOf(Object);
+          expect(result).toHaveProperty('logger');
+          expect(result).toHaveProperty('exception');
         });
 
         it(`Should return list of exact 3 logger transports in logger item, if console log has been enabled`, () => {
@@ -95,10 +91,9 @@ describe('Logger', () => {
             .apply(null, [{ ...CONFIG, consoleEnable: true }])
             .apply(null, [OPTIONS]);
 
-          expectChai(result.logger)
-            .to.be.an([].constructor.name)
-            .which.has.length(3)
-            .and.has.deep.members(expected);
+          expect(result.logger).toBeInstanceOf(Array);
+          expect(result.logger).toHaveLength(3);
+          expect(result.logger).toEqual(expect.arrayContaining(expected));
         });
 
         it(`Should return list of exact 3 logger transports in logger item, if splunk log has been enabled`, () => {
@@ -112,10 +107,9 @@ describe('Logger', () => {
             .apply(null, [{ ...CONFIG, splunkEnable: true }])
             .apply(null, [OPTIONS]);
 
-          expectChai(result.logger)
-            .to.be.an([].constructor.name)
-            .which.has.length(3)
-            .and.has.deep.members(expected);
+          expect(result.logger).toBeInstanceOf(Array);
+          expect(result.logger).toHaveLength(3);
+          expect(result.logger).toEqual(expect.arrayContaining(expected));
         });
 
         it(`Should return list of exact 2 logger transports in logger item, if console and splunk log has been disabled `, () => {
@@ -128,10 +122,9 @@ describe('Logger', () => {
             .apply(null, [{ ...CONFIG, consoleEnable: false }])
             .apply(null, [OPTIONS]);
 
-          expectChai(result.logger)
-            .to.be.an([].constructor.name)
-            .which.has.length(2)
-            .and.has.deep.members(expected);
+          expect(result.logger).toBeInstanceOf(Array);
+          expect(result.logger).toHaveLength(2);
+          expect(result.logger).toEqual(expect.arrayContaining(expected));
         });
 
         it(`Should return list of exact 1 logger exception transports in exception item`, () => {
@@ -143,10 +136,9 @@ describe('Logger', () => {
             .apply(null, [{ ...CONFIG, consoleEnable: false }])
             .apply(null, [OPTIONS]);
 
-          expectChai(result.exception)
-            .to.be.an([].constructor.name)
-            .which.has.length(1)
-            .and.has.deep.members(expected);
+          expect(result.exception).toBeInstanceOf(Array);
+          expect(result.exception).toHaveLength(1);
+          expect(result.exception).toEqual(expect.arrayContaining(expected));
         });
       });
     });
