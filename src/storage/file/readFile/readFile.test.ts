@@ -33,7 +33,7 @@ describe(`storage`, () => {
         it(`Should resolve Either with exact content in right side`, () => {
           result.do({
             right: (content: string): void => {
-              expect(typeof content).toBe(''.constructor.name);
+              expect(typeof content).toBe('string')
               expect(content).toBe(CONTENT);
             },
             left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
