@@ -1,4 +1,4 @@
-import {assert} from 'chai';
+// import {assert} from 'chai';
 import {Conflict, InvalidInput} from 'common/httpErrors';
 
 import {parseJSON, parseNumber} from './parse';
@@ -9,25 +9,25 @@ describe('Test `Parse` module.', () => {
 
     it('should parse numeric input to number', () => {
       parseNumber('1').do({
-        right: (value) => assert.typeOf(value, 'number')
+        right: (value) => expect(typeof value).toBe('number')
       });
     });
 
     it('should correctly parse string \'3\' to number 3', () => {
       parseNumber('3').do({
-        right: (value) => assert.equal(value, 3)
+        right: (value) => expect(value).toBe(3)
       });
     });
 
     it('should return InvalidInput error by default, if input is not numeric', () => {
       parseNumber('notNumber').do({
-        left: (err) => assert.instanceOf(err, InvalidInput)
+        left: (err) => expect(err).toBeInstanceOf(InvalidInput)
       });
     });
 
     it('should return desired error, if input is not numeric', () => {
       parseNumber('notNumber', new Conflict('Desired error')).do({
-        left: (err) => assert.instanceOf(err, Conflict)
+        left: (err) => expect(err).toBeInstanceOf(Conflict)
       });
     });
   });
@@ -48,7 +48,7 @@ describe('Test `Parse` module.', () => {
       const TEST_OBJECT_STR = JSON.stringify(TEST_OBJECT);
 
       parseJSON(TEST_OBJECT_STR).do({
-        right: value => assert.deepEqual(value, TEST_OBJECT)
+        right: value => expect(value).toMatchObject(TEST_OBJECT)
       });
     });
 
@@ -56,7 +56,7 @@ describe('Test `Parse` module.', () => {
       const BAD_JSON = '#JSON DO NOT HAVE COMMENTS';
 
       parseJSON(BAD_JSON).do({
-        left: err => assert.instanceOf(err, InvalidInput)
+        left: err => expect(err).toBeInstanceOf(InvalidInput)
       });
     });
   });

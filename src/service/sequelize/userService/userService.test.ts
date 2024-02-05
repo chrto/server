@@ -1,5 +1,4 @@
 import userService from './userService';
-import { expect as expectChai } from 'chai';
 import { UserService } from './userService.types';
 
 describe('Service', () => {
@@ -13,20 +12,13 @@ describe('Service', () => {
       });
 
       it('Happy path', () => {
-        expectChai(service)
-          .to.be.an({}.constructor.name);
-        expectChai(service)
-          .which.haveOwnProperty('getUserById');
-        expectChai(service)
-          .which.haveOwnProperty('getUserByEmail');
-        expectChai(service)
-          .which.haveOwnProperty('getUsers');
-        expectChai(service)
-          .which.haveOwnProperty('createUser');
-        expectChai(service)
-          .which.haveOwnProperty('updateUser');
-        expectChai(service)
-          .which.haveOwnProperty('deleteUser');
+        expect(service).toBeInstanceOf(Object);
+        expect(service).toHaveProperty('getUserById');
+        expect(service).toHaveProperty('getUserByEmail');
+        expect(service).toHaveProperty('getUsers');
+        expect(service).toHaveProperty('createUser');
+        expect(service).toHaveProperty('updateUser');
+        expect(service).toHaveProperty('deleteUser');
       });
     });
   });
