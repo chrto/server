@@ -1,9 +1,5 @@
-import * as chai from 'chai';
-
 import retry from './retry';
 import { AppError } from 'common/error';
-
-const assert = chai.assert;
 
 describe('Test `retry` module', function () {
   const operationRejected = (): Promise<void> =>
@@ -43,9 +39,9 @@ describe('Test `retry` module', function () {
       )
       .catch(
         (err) => {
-          assert.equal(err.message, 'Promise is rejected');
-          assert.instanceOf(err, AppError);
-          assert.equal(err.code, 'app.error');
+          expect(err).toBeInstanceOf(AppError)
+          expect(err.code).toBe('app.error');
+          expect(err.message).toBe('Promise is rejected');
           done();
         }
       );
