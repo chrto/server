@@ -1,5 +1,4 @@
 import axiosUnbound from './axios.unbound';
-import { expect as expectChai } from 'chai';
 import { AxiosStorage } from './axios.types';
 import { AxiosInstance } from 'axios';
 
@@ -14,18 +13,12 @@ describe(`storage`, () => {
           .apply(null, [AXIOS]);
       });
       it('Should build axios storage object', () => {
-        expectChai(storage)
-          .to.be.an({}.constructor.name);
-        expectChai(storage)
-          .which.haveOwnProperty('getRequest');
-        expectChai(storage)
-          .which.haveOwnProperty('postRequest');
-        expectChai(storage)
-          .which.haveOwnProperty('patchRequest');
-        expectChai(storage)
-          .which.haveOwnProperty('putRequest');
-        expectChai(storage)
-          .which.haveOwnProperty('deleteRequest');
+        expect(storage).toBeInstanceOf(Object)
+        expect(storage).toHaveProperty('getRequest');
+        expect(storage).toHaveProperty('postRequest');
+        expect(storage).toHaveProperty('patchRequest');
+        expect(storage).toHaveProperty('putRequest');
+        expect(storage).toHaveProperty('deleteRequest');
       });
     });
   });
