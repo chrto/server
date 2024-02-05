@@ -1,6 +1,5 @@
 import tokenSetFactory from './tokenSet';
 import { TokenSet as TokenSetService } from 'service/http/authentication/types';
-import { expect as expectChai } from 'chai';
 import { TokenSet, TokenSetItems } from './tokenSet.types';
 
 describe('Model', () => {
@@ -23,9 +22,9 @@ describe('Model', () => {
         [TokenSetItems.refresh_token]: 'refresh_token'
       };
 
-      expectChai(tokenSetFactory(serviceResponse))
-        .to.be.an('object')
-        .which.is.deep.equal(expected);
+      const actual = tokenSetFactory(serviceResponse);
+      expect(actual).toBeInstanceOf(Object);
+      expect(actual).toMatchObject(expected);
     });
 
     it('Should be undefined, if no values', () => {
@@ -38,9 +37,9 @@ describe('Model', () => {
         [TokenSetItems.refresh_token]: undefined
       };
 
-      expectChai(tokenSetFactory({}))
-        .to.be.an('object')
-        .which.is.deep.equal(expected);
+      const actual = tokenSetFactory({});
+      expect(actual).toBeInstanceOf(Object);
+      expect(actual).toMatchObject(expected);
     });
   });
 });
