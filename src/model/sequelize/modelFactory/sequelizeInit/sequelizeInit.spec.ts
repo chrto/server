@@ -1,4 +1,3 @@
-import { expect as expectChai } from 'chai';
 import { Sequelize } from 'sequelize/types';
 import { InitModels } from './sequelizeInit.types';
 import sequelizeInitUnbound from './sequelizeInit.unbound';
@@ -24,8 +23,8 @@ describe('sequelize model', () => {
 
       it('Should return sequelize instance', () => {
         const result = sequelizeInit(sequelize);
-        expectChai(result)
-          .to.be.deep.equal(sequelize);
+        expect(result).toBeObject;
+        expect(result).toStrictEqual(sequelize);
       });
     });
   });

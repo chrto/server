@@ -1,5 +1,4 @@
 import { Fcn } from 'common/types';
-import { expect as expectChai } from 'chai';
 import { AxiosError, AxiosResponse } from 'axios';
 import { AppError } from 'common/error';
 import { InvalidInput, NotAuthenticated, NotFound } from 'common/httpErrors';
@@ -33,19 +32,13 @@ describe(`storage`, () => {
         });
 
         it('Should return AppError', () => {
-          expectChai(result)
-            .to.be.instanceOf(AppError);
-          expectChai(result)
-            .to.haveOwnProperty('code')
-            .which.is.equal(errorResp.response.statusText);
-          expectChai(result)
-            .to.haveOwnProperty('message')
-            .which.is.equal(errorResp.response.data.error_description);
+          expect(result).toBeInstanceOf(AppError);
+          expect(result).toHaveProperty('code', errorResp.response.statusText);
+          expect(result).toHaveProperty('message', errorResp.response.data.error_description);
         });
 
         it('Should log error', () => {
-          expect(logError)
-            .toBeCalled();
+          expect(logError).toHaveBeenCalled();
         });
 
         describe('Error types', () => {
@@ -54,20 +47,16 @@ describe(`storage`, () => {
           });
 
           it('Should return InvalidInput error, if status is set to 400', () => {
-            expectChai(errorHandler({ ...errorResp, response: { ...errorResp.response, status: 400 } }))
-              .to.be.instanceOf(InvalidInput);
+            expect(errorHandler({ ...errorResp, response: { ...errorResp.response, status: 400 } })).toBeInstanceOf(InvalidInput);
           });
           it('Should return NotAuthenticated error, if status is set to 401', () => {
-            expectChai(errorHandler({ ...errorResp, response: { ...errorResp.response, status: 401 } }))
-              .to.be.instanceOf(NotAuthenticated);
+            expect(errorHandler({ ...errorResp, response: { ...errorResp.response, status: 401 } })).toBeInstanceOf(NotAuthenticated);
           });
           it('Should return NotFound error, if status is set to 404', () => {
-            expectChai(errorHandler({ ...errorResp, response: { ...errorResp.response, status: 404 } }))
-              .to.be.instanceOf(NotFound);
+            expect(errorHandler({ ...errorResp, response: { ...errorResp.response, status: 404 } })).toBeInstanceOf(NotFound);
           });
           it('Should return AppError error, if no response in error object', () => {
-            expectChai(errorHandler({ ...errorResp, response: null }))
-              .to.be.instanceOf(AppError);
+            expect(errorHandler({ ...errorResp, response: null })).toBeInstanceOf(AppError);
           });
         });
       });

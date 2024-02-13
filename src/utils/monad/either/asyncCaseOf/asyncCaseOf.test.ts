@@ -1,5 +1,4 @@
 import asyncCaseOf from './asyncCaseOf';
-import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { Either, EitherPatterns } from 'tsmonad';
 import { InternalServerError } from 'common/httpErrors';
@@ -22,10 +21,8 @@ describe('utils', () => {
         });
 
         it(`Should resolve with unwrapped right side value`, () => {
-          expectChai(result)
-            .to.be.an('number');
-          expectChai(result)
-            .to.be.equal(value);
+          expect(result).toBeNumber;
+          expect(result).toEqual(value);
         });
       });
 
@@ -42,10 +39,8 @@ describe('utils', () => {
         });
 
         it(`Should reject with unwrapped left side value`, () => {
-          expectChai(result)
-            .to.be.instanceOf(AppError);
-          expectChai(result.message)
-            .to.be.equal(appError.message);
+          expect(result).toBeInstanceOf(AppError);
+          expect(result.message).toEqual(appError.message);
         });
       });
     });

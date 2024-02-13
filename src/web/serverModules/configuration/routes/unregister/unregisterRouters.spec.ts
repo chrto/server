@@ -31,7 +31,7 @@ const server: WebServer = {
     _router: {
       stack: EXPRESSAPP_STACK
     }
-  } as Express
+  } as unknown as Express
 } as WebServer;
 
 describe(`Test 'web' module`, () => {

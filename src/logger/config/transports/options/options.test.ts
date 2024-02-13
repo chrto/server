@@ -1,5 +1,4 @@
 import optionsUnbound from './options.unbound';
-import { expect as expectChai } from 'chai';
 import * as DailyRotateFile from 'winston-daily-rotate-file';
 import { ColorizeOptions, Colorizer, Format } from 'logform';
 import { ILoggerConfig } from 'web/server/configuration/loader/logger/loggerConfig.types';
@@ -56,9 +55,8 @@ describe('Logger', () => {
             maxFiles: CONFIG.fileMaxFiles,
             format: LOGFORM_FORMAT
           };
-          expectChai(result.file)
-            .to.be.an({}.constructor.name)
-            .which.is.deep.equal(expected);
+          expect(result.file).toBeObject;
+          expect(result.file).toStrictEqual(expected);
         });
 
         it(`Should create exact console transport options`, () => {
@@ -67,9 +65,8 @@ describe('Logger', () => {
             handleExceptions: true,
             format: LOGFORM_FORMAT
           };
-          expectChai(result.console)
-            .to.be.an({}.constructor.name)
-            .which.is.deep.equal(expected);
+          expect(result.console).toBeObject;
+          expect(result.console).toStrictEqual(expected);
         });
 
         it(`Should create exact exceptions transport options`, () => {
@@ -78,9 +75,8 @@ describe('Logger', () => {
             dirname: CONFIG.dir,
             format: LOGFORM_FORMAT
           };
-          expectChai(result.exceptions)
-            .to.be.an({}.constructor.name)
-            .which.is.deep.equal(expected);
+          expect(result.exceptions).toBeObject;
+          expect(result.exceptions).toStrictEqual(expected);
         });
 
         it(`Should create exact splunk transport options`, () => {
@@ -97,9 +93,8 @@ describe('Logger', () => {
               protocol: CONFIG.splunkProtocol
             }
           };
-          expectChai(result.splunk)
-            .to.be.an({}.constructor.name)
-            .which.is.deep.equal(expected);
+          expect(result.splunk).toBeObject;
+          expect(result.splunk).toStrictEqual(expected);
         });
 
         it(`Should create splunk transport options item, only if not null`, () => {
@@ -109,7 +104,8 @@ describe('Logger', () => {
               token: CONFIG.splunkToken,
             }
           };
-          expectChai(
+
+          expect(
             optionsUnbound
               .apply(null, [{ combine, colorize }])
               .apply(null, [{
@@ -125,8 +121,7 @@ describe('Logger', () => {
               .apply(null, [LOGFORM_FORMAT])
               .splunk
           )
-            .to.be.an({}.constructor.name)
-            .which.is.deep.equal(expected);
+            .toStrictEqual(expected);
         });
       });
     });

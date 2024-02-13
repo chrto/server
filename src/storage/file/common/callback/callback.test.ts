@@ -1,5 +1,4 @@
 import callbackUnbound from './callback.unbound';
-import { expect as expectChai } from 'chai';
 import { Either } from 'tsmonad';
 import { AppError } from 'common/error';
 import { isMissing } from 'utils/validation';
@@ -26,10 +25,8 @@ describe(`storage`, () => {
           it(`Should resolve Either with content in right side`, () => {
             result.do({
               right: (content: string): void => {
-                expectChai(content)
-                  .to.be.an(''.constructor.name);
-                expectChai(content)
-                  .to.be.equal(CONTENT);
+                expect(content).toBeString;
+                expect(content).toEqual(CONTENT);
               },
               left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
             });
@@ -51,8 +48,7 @@ describe(`storage`, () => {
           it(`Should resolve Either with content in right side`, () => {
             result.do({
               right: (content): void => {
-                expectChai(content)
-                  .to.be.null;
+                expect(content).toBeNull;
               },
               left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
             });
@@ -78,10 +74,8 @@ describe(`storage`, () => {
           result.do({
             right: (): void => fail(`Right side has not been expected`),
             left: (error: AppError) => {
-              expect(error)
-                .toBeInstanceOf(AppError);
-              expect(error.message)
-                .toEqual(ERROR_MESSAGE);
+              expect(error).toBeInstanceOf(AppError);
+              expect(error.message).toEqual(ERROR_MESSAGE);
             }
           });
         });

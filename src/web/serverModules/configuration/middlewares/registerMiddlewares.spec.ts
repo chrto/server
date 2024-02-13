@@ -1,5 +1,4 @@
 import registerMiddlewares from './registerMiddlewares';
-import { expect as expectChai } from 'chai';
 import { Middleware } from 'web/serverModules/common/middlewares/middlewares.types';
 import { ModuleConfig } from 'web/serverModules/types';
 
@@ -27,16 +26,13 @@ describe(`Test 'web' module`, () => {
 
         describe(`Happy Paty`, () => {
           it(`Should register all middlewares, which are specified in 'middlewares' list`, () => {
-            expect(moduleConfig.router.use)
-              .toHaveBeenCalledTimes(1);
-            expect(moduleConfig.router.use)
-              .toHaveBeenCalledWith(MIDDLEWARES);
+            expect(moduleConfig.router.use).toHaveBeenCalledTimes(1);
+            expect(moduleConfig.router.use).toHaveBeenCalledWith(MIDDLEWARES);
           });
 
           it(`Should return 'ModuleConfig' object , if everything has been executed successfully`, () => {
-            expectChai(result)
-              .to.be.an('object')
-              .which.is.deep.equal(moduleConfig);
+            expect(result).toBeObject;
+            expect(result).toStrictEqual(moduleConfig);
           });
         });
 
@@ -59,10 +55,8 @@ describe(`Test 'web' module`, () => {
           });
 
           it(`Should throw exact error, if error has been thrown`, () => {
-            expectChai(error)
-              .to.be.instanceOf(Error);
-            expectChai(error.message)
-              .to.be.equal(ERROR_MESSAGE);
+            expect(error).toBeInstanceOf(Error);
+            expect(error.message).toEqual(ERROR_MESSAGE);
           });
         });
       });

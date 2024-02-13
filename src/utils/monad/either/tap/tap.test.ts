@@ -1,5 +1,4 @@
 import tap from './tap';
-import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { Either } from 'tsmonad';
 import { InternalServerError } from 'common/httpErrors';
@@ -24,14 +23,12 @@ describe('utils', () => {
         });
 
         it(`Should return same Either`, () => {
-          expectChai(result)
-            .to.be.equals(either);
+          expect(result).toBe(either);
         });
 
         it(`Should set global variable with exact value`, () => {
-          expectChai(globalV)
-            .to.be.an('number')
-            .which.is.equal(value);
+          expect(globalV).toBeNumber;
+          expect(globalV).toEqual(value);
         });
       });
 
@@ -44,8 +41,7 @@ describe('utils', () => {
         });
 
         it(`Should return same Either`, () => {
-          expectChai(result)
-            .to.be.equals(either);
+          expect(result).toBe(either);
         });
       });
     });

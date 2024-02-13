@@ -1,5 +1,4 @@
 import serverFactoryUnbound from './serverFactory.unbound';
-import { expect as expectChai } from 'chai';
 import { Logger } from 'winston';
 import { ServerFactoryParams } from '../params/factoryParams.types';
 import { WebServer } from 'web/server/types';
@@ -47,15 +46,12 @@ describe('Server Factory', () => {
 
   describe('Happy path', () => {
     it(`Should call 'Server' constructor with exact parameters`, () => {
-      expect(Server)
-        .toHaveBeenCalledTimes(1);
-      expect(Server)
-        .toHaveBeenCalledWith(PARAMS);
+      expect(Server).toHaveBeenCalledTimes(1);
+      expect(Server).toHaveBeenCalledWith(PARAMS);
     });
 
     it(`Should create new instance of Server`, () => {
-      expectChai(webServer)
-        .to.be.instanceOf(Server);
+      expect(webServer).toBeInstanceOf(Server);
     });
   });
 });

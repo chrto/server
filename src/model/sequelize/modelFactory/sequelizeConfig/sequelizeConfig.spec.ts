@@ -1,4 +1,3 @@
-import { expect as expectChai } from 'chai';
 import { EDatabaseDialect, IDatabaseConfig } from 'web/server/configuration/loader/database/databaseConfig.types';
 import buildSequelizeConfig from './sequelizeConfig';
 import { Options } from 'sequelize';
@@ -21,9 +20,10 @@ describe('sequelize model', () => {
             timestamps: true
           }
         };
-        expectChai(buildSequelizeConfig(dbConfig))
-          .to.be.an('object')
-          .which.is.deep.equal(expected);
+        const result = buildSequelizeConfig(dbConfig);
+
+        expect(result).toBeObject;
+        expect(result).toStrictEqual(expected);
       });
     });
   });

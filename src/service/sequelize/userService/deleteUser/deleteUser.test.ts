@@ -1,5 +1,4 @@
 import deleteUserUnbound from './deleteUser.unbound';
-import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import initUserModel, { User } from 'model/sequelize/model/user/user';
 import { UserRole } from 'model/sequelize/model/user/user.types';
@@ -46,8 +45,7 @@ describe('Service', () => {
           it(`Should delete user from storage and return Either with count in right side`, () => {
             result.do({
               right: (count: number): void => {
-                expectChai(count)
-                  .to.be.equal(1);
+                expect(count).toBe(1);
               },
               left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
             });
@@ -68,10 +66,8 @@ describe('Service', () => {
             result.do({
               right: (): void => fail(`Right side has not been expected`),
               left: (error: AppError) => {
-                expect(error)
-                  .toBeInstanceOf(NotFound);
-                expect(error.message)
-                  .toEqual(appError.message);
+                expect(error).toBeInstanceOf(NotFound);
+                expect(error.message).toEqual(appError.message);
               }
             });
           });

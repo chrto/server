@@ -1,6 +1,5 @@
 import messageTemplate from './messageTemplate';
 import { ILoggerConfig } from 'web/server/configuration/loader/logger/loggerConfig.types';
-import { expect as expectChai } from 'chai';
 import { TransformableInfo } from 'logform';
 
 const CONFIG: ILoggerConfig = { label: 'server', consoleLevel: 'debug' } as ILoggerConfig;
@@ -25,9 +24,8 @@ describe('Logger', () => {
         });
 
         it(`Should log message in exact format`, () => {
-          expectChai(result)
-            .to.be.an(''.constructor.name)
-            .which.is.equal(`[${CONFIG.label}] ${TIME_STAMP} ${CONFIG.consoleLevel} ${MESSAGE}`);
+          expect(result).toBeString;
+          expect(result).toBe(`[${CONFIG.label}] ${TIME_STAMP} ${CONFIG.consoleLevel} ${MESSAGE}`);
         });
       });
     });

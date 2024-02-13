@@ -1,5 +1,4 @@
 import currentUserController from './currentUserController';
-import { expect as expectChai } from 'chai';
 import { CurrentUserController } from './currentUserController.types';
 
 describe('Web Server', () => {
@@ -15,10 +14,8 @@ describe('Web Server', () => {
           });
 
           it('Happy path', () => {
-            expectChai(controller)
-              .to.be.an('object');
-            expectChai(controller)
-              .which.haveOwnProperty('getLoggedInUser');
+            expect(controller).toBeInstanceOf(Object)
+            expect(controller).toHaveProperty('getLoggedInUser')
           });
         });
       });

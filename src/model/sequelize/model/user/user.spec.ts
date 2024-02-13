@@ -1,4 +1,3 @@
-import { expect as expectChai } from 'chai';
 import { Options, Sequelize } from 'sequelize';
 import { EDatabaseDialect } from 'web/server/configuration/loader/database/databaseConfig.types';
 import initUserModel, { User } from './user';
@@ -36,39 +35,33 @@ describe('sequelize model', () => {
     });
 
     it('after build it should have exact data', () => {
-      expectChai(user)
-        .to.have.property('id')
-        .which.is.equal(items.id);
-      expectChai(user)
-        .to.have.property('firstName')
-        .which.is.equal(items.firstName);
-      expectChai(user)
-        .to.have.property('lastName')
-        .which.is.equal(items.lastName);
-      expectChai(user)
-        .to.have.property('email')
-        .which.is.equal(items.email);
-      expectChai(user)
-        .to.have.property('active')
-        .which.is.equal(items.active);
-      expectChai(user)
-        .to.have.property('role')
-        .which.is.equal(items.role);
-      expectChai(user)
-        .to.have.property('createdAt');
-      expectChai(user)
-        .to.have.property('updatedAt');
-      expectChai(user)
-        .to.have.property('fullName');
-      expectChai(user)
-        .to.have.property('isAdmin');
+      expect(user).toHaveProperty('id');
+      expect(user.id).toBe(items.id);
+
+      expect(user).toHaveProperty('firstName');
+      expect(user.firstName).toBe(items.firstName);
+
+      expect(user).toHaveProperty('lastName');
+      expect(user.lastName).toBe(items.lastName);
+
+      expect(user).toHaveProperty('email');
+      expect(user.email).toBe(items.email);
+
+      expect(user).toHaveProperty('active');
+      expect(user.active).toBe(items.active);
+
+      expect(user).toHaveProperty('role');
+      expect(user.role).toBe(items.role);
+
+      expect(user).toHaveProperty('createdAt');
+      expect(user).toHaveProperty('updatedAt');
+      expect(user).toHaveProperty('fullName');
+      expect(user).toHaveProperty('isAdmin');
     });
 
     it('after build it should have helpers', () => {
-      expectChai(user.fullName)
-        .to.be.equal(`${items.firstName} ${items.lastName}`);
-      expectChai(user.isAdmin)
-        .to.be.equal(true);
+      expect(user.fullName).toBe(`${items.firstName} ${items.lastName}`);
+      expect(user.isAdmin).toBeTrue;
     });
 
     it('Should update user items', () => {
@@ -79,16 +72,13 @@ describe('sequelize model', () => {
         role: UserRole.User
       });
 
-      expectChai(user.fullName)
-        .to.be.equal('Jack Black');
-      expectChai(user.active)
-        .to.be.equal(false);
-      expectChai(user.role)
-        .to.be.equal(UserRole.User);
+      expect(user.fullName).toBe('Jack Black');
+      expect(user.active).toBe(false);
+      expect(user.role).toBe(UserRole.User);
     });
 
     it('should have exact table name', () => {
-      expectChai(User.getTableName()).to.be.equal('users');
+      expect(User.getTableName()).toBe('users');
     });
   });
 });

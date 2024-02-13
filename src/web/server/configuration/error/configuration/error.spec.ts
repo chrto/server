@@ -10,12 +10,12 @@ describe('', () => {
   });
 
   it('Should have proper code', () => {
-    expect(typeof err.code).toBe('string');
+    expect(err.code).toBeString;
     expect(err.code).toBe(ERROR_CODE);
   });
 
   it('Should have proper message', () => {
-    expect(typeof err.message).toBe('string');
+    expect(err.message).toBeString;
     expect(err.message).toBe(ERR_MESSAGE);
   });
 });

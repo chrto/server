@@ -1,5 +1,4 @@
 import moduleParamHandler from './moduleParamHandler';
-import { expect as expectChai } from 'chai';
 import { Router } from 'express';
 import { PluginSdkService } from 'service/serviceFactory/serviceFactory.types';
 import { ModuleConfig } from 'web/serverModules/types';
@@ -39,20 +38,15 @@ describe('Web Server', () => {
 
           });
           it(`Should make all calls with exact parameters and set required param handlers`, () => {
-            expect(router.param)
-              .toHaveBeenCalledTimes(1);
-            expect(router.param)
-              .toHaveBeenCalledWith('userId', handler);
+            expect(router.param).toHaveBeenCalledTimes(1);
+            expect(router.param).toHaveBeenCalledWith('userId', handler);
 
-            expect(handlers.userId)
-              .toHaveBeenCalledTimes(1);
-            expect(handlers.userId)
-              .toHaveBeenCalledWith(service);
+            expect(handlers.userId).toHaveBeenCalledTimes(1);
+            expect(handlers.userId).toHaveBeenCalledWith(service);
           });
 
           it('Should return ModuleConfig object', () => {
-            expectChai(result)
-              .to.be.deep.equal(MODULE_CONFIG);
+            expect(result).toStrictEqual(MODULE_CONFIG);
           });
         });
       });

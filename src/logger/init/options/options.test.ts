@@ -1,5 +1,4 @@
 import loggerOptions from './options';
-import { expect as expectChai } from 'chai';
 import { LoggerOptions } from 'winston';
 import { TransportsDefinition } from 'logger/config/transports/transports.types';
 
@@ -20,20 +19,19 @@ describe('Logger', () => {
         });
 
         it(`Should be 'LoggerOptions' object`, () => {
-          expectChai(result)
-            .to.be.an({}.constructor.name);
+          expect(result).toBeObject;
         });
 
         it(`Should have 'transports' item with exact transports`, () => {
-          expectChai(result)
-            .to.haveOwnProperty('transports')
-            .which.has.deep.members(TRANSPORT_DEFINITION.logger);
+          expect(result).toHaveProperty('transports');
+          expect(result.transports).toBeArray;
+          expect(result.transports).toStrictEqual(expect.arrayContaining(TRANSPORT_DEFINITION.logger));
         });
 
         it(`Should have 'exceptionHandlers' item with exact transport`, () => {
-          expectChai(result)
-            .and.haveOwnProperty('exceptionHandlers')
-            .which.has.deep.members(TRANSPORT_DEFINITION.exception);
+          expect(result).toHaveProperty('exceptionHandlers');
+          expect(result.transports).toBeArray;
+          expect(result.transports).toStrictEqual(expect.arrayContaining(TRANSPORT_DEFINITION.exception));
         });
       });
     });

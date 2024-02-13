@@ -4,7 +4,6 @@ import appLogger from 'logger/appLogger';
 import requestConfig from 'storage/http/axios/requestConfig/requestConfig';
 import sanitizeResponse from 'storage/http/axios/sanitizeResponse/sanitizeResponse';
 import tokenSetFactory from 'model/authentication/tokenSet';
-import { expect as expectChai } from 'chai';
 import { InvalidInput } from 'common/httpErrors';
 import { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { Either } from 'tsmonad';
@@ -67,10 +66,8 @@ describe(`service`, () => {
           it(`Should retsolved Either with TokenSet model in right side, if everything passed well`, () => {
             result.do({
               right: (tokenSet: TokenSetModel): void => {
-                expectChai(tokenSet)
-                  .to.be.an({}.constructor.name);
-                expectChai(tokenSet)
-                  .to.be.deep.equal(tokenSetFactory(AXIOS_RESPONSE.data));
+                expect(tokenSet).toBeObject
+                expect(tokenSet).toBe(tokenSetFactory(AXIOS_RESPONSE.data));
               },
               left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
             });

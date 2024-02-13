@@ -1,5 +1,4 @@
 import fTap from './fTap';
-import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { Either } from 'tsmonad';
 import { InternalServerError } from 'common/httpErrors';
@@ -26,14 +25,12 @@ describe('utils', () => {
               .apply(null, [either]);
           });
           it(`Should return same Either`, () => {
-            expectChai(result)
-              .to.be.equals(either);
+            expect(result).toBe(either);
           });
 
           it(`Should set global variable with exact value`, () => {
-            expectChai(globalV)
-              .to.be.an('number')
-              .which.is.equal(value);
+            expect(globalV).toBeNumber;
+            expect(globalV).toEqual(value);
           });
         });
 
@@ -46,23 +43,19 @@ describe('utils', () => {
               .apply(null, [either]);
           });
           it(`Should not return same Either`, () => {
-            expectChai(result)
-              .to.not.be.equals(either);
+            expect(result).not.toBe(either);
           });
 
           it(`Should not set global variable with exact value`, () => {
-            expectChai(globalV)
-              .to.be.an('undefined');
+            expect(globalV).toBeUndefined;
           });
 
           it(`Should return new Either with exact error in left side`, () => {
             result.do({
               right: (): void => fail(`Right side has not been expected`),
               left: (error: AppError) => {
-                expect(error)
-                  .toBeInstanceOf(AppError);
-                expect(error.message)
-                  .toEqual(appError.message);
+                expect(error).toBeInstanceOf(AppError);
+                expect(error.message).toEqual(appError.message);
               }
             });
           });
@@ -80,23 +73,19 @@ describe('utils', () => {
         });
 
         it(`Should not return same Either`, () => {
-          expectChai(result)
-            .to.not.be.equals(either);
+          expect(result).not.toBe(either);
         });
 
         it(`Should not set global variable with exact value`, () => {
-          expectChai(globalV)
-            .to.be.an('undefined');
+          expect(globalV).toBeUndefined;
         });
 
         it(`Should return new Either with original error in left side`, () => {
           result.do({
             right: (): void => fail(`Right side has not been expected`),
             left: (err: AppError) => {
-              expect(err)
-                .toBeInstanceOf(AppError);
-              expect(err.message)
-                .toEqual(ERROR_MESSAGE);
+              expect(err).toBeInstanceOf(AppError);
+              expect(err.message).toEqual(ERROR_MESSAGE);
             }
           });
         });

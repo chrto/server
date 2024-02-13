@@ -1,7 +1,7 @@
 // import {assert} from 'chai';
-import {Conflict, InvalidInput} from 'common/httpErrors';
+import { Conflict, InvalidInput } from 'common/httpErrors';
 
-import {parseJSON, parseNumber} from './parse';
+import { parseJSON, parseNumber } from './parse';
 
 describe('Test `Parse` module.', () => {
 
@@ -9,7 +9,7 @@ describe('Test `Parse` module.', () => {
 
     it('should parse numeric input to number', () => {
       parseNumber('1').do({
-        right: (value) => expect(typeof value).toBe('number')
+        right: (value) => expect(value).toBeNumber
       });
     });
 
@@ -41,14 +41,15 @@ describe('Test `Parse` module.', () => {
           'value': 'File',
           'popup': {
             'menuitem': [
-              {'value': 'Close', 'onclick': 'CloseDoc()'}
+              { 'value': 'Close', 'onclick': 'CloseDoc()' }
             ]
           }
-        }};
+        }
+      };
       const TEST_OBJECT_STR = JSON.stringify(TEST_OBJECT);
 
       parseJSON(TEST_OBJECT_STR).do({
-        right: value => expect(value).toMatchObject(TEST_OBJECT)
+        right: value => expect(value).toStrictEqual(TEST_OBJECT)
       });
     });
 

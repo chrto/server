@@ -3,7 +3,7 @@ module.exports = {
   testEnvironment: 'node',
   testRegex: '/src/.*\\.(test|spec)?\\.(ts)$',
   moduleFileExtensions: ['ts', 'js', 'json', 'node'],
-  setupFilesAfterEnv: ["jest-extended"],
+  setupFilesAfterEnv: ["jest-extended/all"],
   moduleNameMapper: {
     "^common/(.*)": "<rootDir>/src/common/$1",
     "^config/(.*)": "<rootDir>/src/config/$1",

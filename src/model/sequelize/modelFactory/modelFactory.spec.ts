@@ -1,4 +1,3 @@
-import { expect as expectChai } from 'chai';
 import { Options, Sequelize } from 'sequelize';
 import { EDatabaseDialect, IDatabaseConfig } from 'web/server/configuration/loader/database/databaseConfig.types';
 
@@ -45,12 +44,9 @@ describe('sequelize model', () => {
       });
 
       it('Should have exact properties', () => {
-        expectChai(sdkModel)
-          .to.haveOwnProperty('sequelize');
-        expectChai(sdkModel)
-          .to.haveOwnProperty('start');
-        expectChai(sdkModel)
-          .to.haveOwnProperty('stop');
+        expect(sdkModel).toHaveProperty('sequelize');
+        expect(sdkModel).toHaveProperty('start');
+        expect(sdkModel).toHaveProperty('stop');
       });
 
       it('Should call all function in chain with exact parameters', () => {

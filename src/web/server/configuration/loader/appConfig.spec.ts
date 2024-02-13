@@ -4,7 +4,6 @@ import databaseConfigUnbound from './database/databaseConfig.unbound';
 import serverConfigUnbound from './server/serverConfig.unbound';
 import ssoConfigUnbound from './sso/ssoConfig.unbound';
 import loggerConfigUnbound from './logger/loggerConfig.unbound';
-import { expect as expectChai } from 'chai';
 import { AppConfig, AppConfigLoader } from './appConfig.types';
 import { ENodeENV } from './nodeEnv/nodeEnvConfig.types';
 import { Either } from 'tsmonad';
@@ -36,28 +35,22 @@ describe('server configuration module', () => {
       .do({
         right: (appConfig: AppConfig) => {
           it(`should have 5 own properties`, () => {
-            expectChai(Object.keys(appConfig).length)
-              .to.be.equal(5);
+            expect(Object.keys(appConfig).length).toEqual(5);
           });
           it(`should have own property 'environment'`, () => {
-            expectChai(appConfig)
-              .haveOwnProperty('environment');
+            expect(appConfig).toHaveProperty('environment');
           });
           it(`should have own property 'server'`, () => {
-            expectChai(appConfig)
-              .haveOwnProperty('server');
+            expect(appConfig).toHaveProperty('server');
           });
           it(`should have own property 'database'`, () => {
-            expectChai(appConfig)
-              .haveOwnProperty('database');
+            expect(appConfig).toHaveProperty('database');
           });
           it(`should have own property 'sso'`, () => {
-            expectChai(appConfig)
-              .haveOwnProperty('sso');
+            expect(appConfig).toHaveProperty('sso');
           });
           it(`should have own property 'logger'`, () => {
-            expectChai(appConfig)
-              .haveOwnProperty('appLogger');
+            expect(appConfig).toHaveProperty('appLogger');
           });
         },
         left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)

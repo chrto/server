@@ -1,5 +1,4 @@
 import userController from './userController';
-import { expect as expectChai } from 'chai';
 import { UserController } from './userController.types';
 
 describe('Web Server', () => {
@@ -15,18 +14,12 @@ describe('Web Server', () => {
           });
 
           it('Happy path', () => {
-            expectChai(controller)
-              .to.be.an('object');
-            expectChai(controller)
-              .which.haveOwnProperty('getUserById');
-            expectChai(controller)
-              .which.haveOwnProperty('deleteUser');
-            expectChai(controller)
-              .which.haveOwnProperty('updateUser');
-            expectChai(controller)
-              .which.haveOwnProperty('getUsers');
-            expectChai(controller)
-              .which.haveOwnProperty('createUser');
+            expect(controller).toBeInstanceOf(Object);
+            expect(controller).toHaveProperty('getUserById');
+            expect(controller).toHaveProperty('deleteUser');
+            expect(controller).toHaveProperty('updateUser');
+            expect(controller).toHaveProperty('getUsers');
+            expect(controller).toHaveProperty('createUser');
           });
         });
       });

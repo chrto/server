@@ -12,7 +12,7 @@ describe('Test `Pick` module', function () {
         const expected = {
             b: 2
         };
-        expect(pickProperties(properties)(source)).toMatchObject(expected);
+        expect(pickProperties(properties)(source)).toStrictEqual(expected);
     });
 
     it('should return empty object when no matching fields', function () {
@@ -24,7 +24,7 @@ describe('Test `Pick` module', function () {
         };
         const expected = {};
 
-        expect(pickProperties(properties)(source)).toMatchObject(expected);
+        expect(pickProperties(properties)(source)).toStrictEqual(expected);
     });
 
     it('should return array, if field is array', function () {
@@ -38,7 +38,7 @@ describe('Test `Pick` module', function () {
           a: [1, 2, 3],
           b: 2
       };
-        expect(pickProperties(properties)(source)).toMatchObject(expected);
+        expect(pickProperties(properties)(source)).toStrictEqual(expected);
     });
 
     it('should return array, if field is array with objects and has not \'id\'', function () {
@@ -66,6 +66,6 @@ describe('Test `Pick` module', function () {
           ],
           b: 2
         };
-        expect(pickProperties(properties)(source)).toMatchObject(expected);
+        expect(pickProperties(properties)(source)).toStrictEqual(expected);
     });
 });

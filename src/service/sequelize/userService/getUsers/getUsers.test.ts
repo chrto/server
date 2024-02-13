@@ -1,5 +1,4 @@
 import getUsersUnbound from './getUsers.unbound';
-import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import initUserModel, { User } from 'model/sequelize/model/user/user';
 import { UserRole } from 'model/sequelize/model/user/user.types';
@@ -51,12 +50,9 @@ describe('Service', () => {
           it(`Should find users in storage and return Either with exact User array in right side`, () => {
             result.do({
               right: (users: User[]): void => {
-                expectChai(users)
-                  .to.be.an([].constructor.name);
-                expectChai(users[0])
-                  .to.be.instanceOf(User);
-                expectChai(users[0].get())
-                  .to.be.deep.equal(ITEMS);
+                expect(users).toBeArray;
+                expect(users[0]).toBeInstanceOf(User);
+                expect(users[0].get()).toStrictEqual(ITEMS);
               },
               left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
             });
@@ -78,10 +74,8 @@ describe('Service', () => {
             result.do({
               right: (): void => fail(`Right side has not been expected`),
               left: (error: AppError) => {
-                expect(error)
-                  .toBeInstanceOf(NotFound);
-                expect(error.message)
-                  .toEqual(appError.message);
+                expect(error).toBeInstanceOf(NotFound);
+                expect(error.message).toEqual(appError.message);
               }
             });
           });

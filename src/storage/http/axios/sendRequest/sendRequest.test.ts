@@ -1,6 +1,5 @@
 import sendRequest from './sendRequest';
 import appLogger from 'logger/appLogger';
-import { expect as expectChai } from 'chai';
 import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import { AppError } from 'common/error';
 import { Either } from 'tsmonad';
@@ -50,10 +49,9 @@ describe(`storage`, () => {
           it(`Should return either with exact data in right side, if everything passed well`, () => {
             result.do({
               right: (value: any): void => {
-                expectChai(value)
-                  .to.haveOwnProperty('data')
-                  .which.is.an({}.constructor.name)
-                  .which.is.equal(AXIOS_RESPONSE.data);
+                expect(value).toHaveProperty('data');
+                expect(value.data).toBeObject;
+                expect(value.data).toBe(AXIOS_RESPONSE.data);
               },
               left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
             });
@@ -83,14 +81,9 @@ describe(`storage`, () => {
             result.do({
               right: (): void => fail(`Right side has not been expected`),
               left: (error: AppError) => {
-                expectChai(error)
-                  .to.be.instanceOf(InvalidInput);
-                expectChai(error)
-                  .to.haveOwnProperty('message')
-                  .which.is.equal(ERROR_RESPONSE.response.data.error_description);
-                expectChai(error)
-                  .to.haveOwnProperty('code')
-                  .which.is.equal('invalid.input');
+                expect(error).toBeInstanceOf(InvalidInput);
+                expect(error.message).toBe(ERROR_RESPONSE.response.data.error_description);
+                expect(error.code).toBe('invalid.input');
               }
             });
           });

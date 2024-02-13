@@ -1,4 +1,3 @@
-import { expect as expectChai } from 'chai';
 import { Options } from 'sequelize/types';
 import { Sequelize } from 'sequelize';
 import { EDatabaseDialect } from 'web/server/configuration/loader/database/databaseConfig.types';
@@ -17,8 +16,7 @@ describe('sequelize model', () => {
       };
       it('Should create new sequelize class instance', () => {
         const sequelize: Sequelize = getSequelizeInstance(sequelizeConfig);
-        expectChai(sequelize)
-          .to.be.instanceOf(Sequelize);
+        expect(sequelize).toBeInstanceOf(Sequelize);
       });
     });
   });
