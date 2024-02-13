@@ -1,4 +1,3 @@
-import { expect as expectChai } from 'chai';
 import { NotAuthorized } from 'common/httpErrors';
 import { isEnum, isMissing, isNumber, isString } from 'utils/validation';
 import { Validator } from './properties.types';
@@ -41,10 +40,10 @@ describe('utils', () => {
           .apply(null, [PARAM_CHECKS])
           .apply(null, [OBJ])
           .do({
-            right: (obj: any) =>
-              expectChai(obj)
-                .is.an('object')
-                .which.is.deep.equal(OBJ),
+            right: (obj: any) => {
+              expect(obj).toBeObject;
+              expect(obj).toStrictEqual(OBJ);
+            },
             left: (error) => fail(`Left side has not been expected: ${error.message}`)
           });
       });
@@ -56,10 +55,8 @@ describe('utils', () => {
           .do({
             right: () => fail(`Right side has not been expected`),
             left: (error) => {
-              expectChai(error)
-                .to.be.instanceOf(NotAuthorized);
-              expectChai(error.message)
-                .to.be.equal(`Validation failed: ["bla is not valid value","must be an number","must be equal 5","is not from Enum"]`);
+              expect(error).toBeInstanceOf(NotAuthorized);
+              expect(error.message).toEqual(`Validation failed: ["bla is not valid value","must be an number","must be equal 5","is not from Enum"]`);
             }
           });
       });

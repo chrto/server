@@ -1,5 +1,4 @@
 import { AxiosResponse } from 'axios';
-import { expect as expectChai } from 'chai';
 
 import sanitizeResponse from './sanitizeResponse';
 
@@ -10,9 +9,9 @@ describe(`storage`, () => {
         it('happy path', () => {
           const data: number = 10;
           const mockResponse: AxiosResponse<number> = { data } as AxiosResponse<number>;
-          expectChai(sanitizeResponse(mockResponse))
-            .to.be.an('number')
-            .which.is.equal(data);
+          const result: number = sanitizeResponse(mockResponse);
+          expect(result).toBe('number');
+          expect(result).toBe(data);
         });
       });
     });

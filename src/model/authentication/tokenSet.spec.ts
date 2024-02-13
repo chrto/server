@@ -24,7 +24,7 @@ describe('Model', () => {
 
       const actual = tokenSetFactory(serviceResponse);
       expect(actual).toBeInstanceOf(Object);
-      expect(actual).toMatchObject(expected);
+      expect(actual).toStrictEqual(expected);
     });
 
     it('Should be undefined, if no values', () => {
@@ -39,7 +39,7 @@ describe('Model', () => {
 
       const actual = tokenSetFactory({});
       expect(actual).toBeInstanceOf(Object);
-      expect(actual).toMatchObject(expected);
+      expect(actual).toStrictEqual(expected);
     });
   });
 });

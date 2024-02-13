@@ -1,4 +1,3 @@
-import { expect as expectChai } from 'chai';
 import { AppConfig } from 'web/server/configuration/loader/appConfig.types';
 import { IDatabaseConfig } from 'web/server/configuration/loader/database/databaseConfig.types';
 import { ENodeENV } from 'web/server/configuration/loader/nodeEnv/nodeEnvConfig.types';
@@ -52,9 +51,8 @@ describe('server factory params module', () => {
         expressApp: expressApp,
         appConfig: APP_CONFIG
       };
-      expectChai(factoryParams(APP_CONFIG))
-        .to.be.an('object')
-        .which.is.deep.equal(expected);
+      expect(factoryParams(APP_CONFIG)).toBeObject;
+      expect(factoryParams(APP_CONFIG)).toStrictEqual(expected);
     });
   });
 });

@@ -1,5 +1,4 @@
 import tapLeft from './tapLeft';
-import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { Either } from 'tsmonad';
 import { InternalServerError } from 'common/httpErrors';
@@ -24,13 +23,11 @@ describe('utils', () => {
         });
 
         it(`Should return same Either`, () => {
-          expectChai(result)
-            .to.be.equals(either);
+          expect(result).toBe(either);
         });
 
         it(`Should not set global variable`, () => {
-          expectChai(globalV)
-            .to.be.an('undefined');
+          expect(globalV).toBeUndefined;
         });
       });
 
@@ -45,14 +42,12 @@ describe('utils', () => {
         });
 
         it(`Should return same Either`, () => {
-          expectChai(result)
-            .to.be.equals(either);
+          expect(result).toBe(either);
         });
 
         it(`Should set global variable with exact error`, () => {
-          expectChai(globalV)
-            .to.be.instanceOf(AppError)
-            .which.is.equal(appError);
+          expect(globalV).toBeInstanceOf(AppError);
+          expect(globalV.message).toEqual(appError.message);
         });
       });
     });

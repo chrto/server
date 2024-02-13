@@ -1,5 +1,4 @@
 import caseOf from './caseOf';
-import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { Either, EitherPatterns } from 'tsmonad';
 import { InternalServerError } from 'common/httpErrors';
@@ -27,8 +26,7 @@ describe('utils', () => {
         });
 
         it(`Should return unwraped rigt side value from either`, () => {
-          expectChai(result)
-            .to.be.equals(value);
+          expect(result).toEqual(value);
         });
       });
 
@@ -41,8 +39,8 @@ describe('utils', () => {
         });
 
         it(`Should return unwraped left side value from either`, () => {
-          expectChai(result)
-            .to.be.equals(error);
+          expect(result).toBeInstanceOf(AppError);
+          expect(result['message']).toEqual(error.message);
         });
       });
     });

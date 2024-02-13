@@ -1,5 +1,4 @@
 import eitherify from './eitherify';
-import { expect as expectChai } from 'chai';
 import { Either } from 'tsmonad';
 import { AppError } from 'common/error';
 
@@ -26,10 +25,8 @@ describe('utils', () => {
         it(`Should create new Either monad with value in right side, if value has been returned`, () => {
           result.do({
             right: (v: number): void => {
-              expectChai(v)
-                .to.be.an('number');
-              expectChai(v)
-                .to.be.equal(value);
+              expect(v).toBeNumber;
+              expect(v).toEqual(value);
             },
             left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
           });
@@ -48,10 +45,8 @@ describe('utils', () => {
           result.do({
             right: (): void => fail(`Right side has not been expected`),
             left: (error: AppError) => {
-              expect(error)
-                .toBeInstanceOf(AppError);
-              expect(error.message)
-                .toEqual(ERROR_MESSAGE);
+              expect(error).toBeInstanceOf(AppError);
+              expect(error.message).toEqual(ERROR_MESSAGE);
             }
           });
         });

@@ -1,4 +1,3 @@
-import { expect as expectChai } from 'chai';
 import context from './context';
 import { AppRequest } from 'web/serverModules/types';
 import { Context } from './context.types';
@@ -13,8 +12,8 @@ describe('Web Server', () => {
           authenticationContext = context.apply(null, [request]);
         });
         it(`Should create an object, which has 'Context' interface`, () => {
-          expectChai(authenticationContext)
-            .to.be.deep.equal({});
+          expect(authenticationContext).toBeInstanceOf(Object)
+          expect(authenticationContext).toStrictEqual({});
         });
       });
     });

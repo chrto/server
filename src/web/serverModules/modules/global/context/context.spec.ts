@@ -1,7 +1,6 @@
 import context from './context';
 import { AppRequest } from 'web/serverModules/types';
 import { Context } from './context.types';
-import exp = require('constants');
 
 describe('Web Server', () => {
   describe('Modules', () => {
@@ -15,7 +14,7 @@ describe('Web Server', () => {
         it(`Should create an object, which has 'Context' interface`, () => {
           expect(globalContext).toBeInstanceOf(Object);
           expect(globalContext).toEqual({})
-          expect(globalContext).toMatchObject({});
+          expect(globalContext).toStrictEqual({});
         });
       });
     });

@@ -17,7 +17,7 @@ describe('Test `Version` module.', () => {
   });
 
   it(`getVersion() should return string`, () => {
-    expect(typeof Version.getVersion()).toBe('string');
+    expect(Version.getVersion()).toBeString;
   });
 
   it(`getBuildNumber() should return correct Build Number when ENV is set`, () => {

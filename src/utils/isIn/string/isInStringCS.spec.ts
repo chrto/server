@@ -1,4 +1,3 @@
-import { expect as expectChai } from 'chai';
 import isInStringCS from './isInStringCS';
 
 const INPUT_STRING: string = 'random string for test';
@@ -7,19 +6,19 @@ describe('utils', () => {
   describe('isIn', () => {
     describe('string [Case Sensitive]', () => {
       it(`Should return 'true', if substring is in string`, () => {
-        expectChai(isInStringCS(INPUT_STRING, 'dom'))
-          .to.be.an('boolean')
-          .which.is.equal(true);
+        const result: boolean = isInStringCS(INPUT_STRING, 'dom');
+        expect(result).toBeBoolean;
+        expect(result).toBe(true);
       });
       it(`Should return 'false', if substring is not in string`, () => {
-        expectChai(isInStringCS(INPUT_STRING, 'aa'))
-          .to.be.an('boolean')
-          .which.is.equal(false);
+        const result: boolean = isInStringCS(INPUT_STRING, 'aa');
+        expect(result).toBeBoolean;
+        expect(result).toBe(false);
       });
       it(`Should be case sensitive`, () => {
-        expectChai(isInStringCS(INPUT_STRING, 'Dom'))
-          .to.be.an('boolean')
-          .which.is.equal(false);
+        const result: boolean = isInStringCS(INPUT_STRING, 'Dom');
+        expect(result).toBeBoolean;
+        expect(result).toBe(false);
       });
     });
   });
