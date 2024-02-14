@@ -1,4 +1,3 @@
-import { assert as assertChai, expect as expectChai } from 'chai';
 import nodeEnvConfigUnbound from './nodeEnvConfig.unbound';
 import { ENodeENV } from './nodeEnvConfig.types';
 import { AppConfig, AppConfigLoader } from '../appConfig.types';
@@ -13,21 +12,21 @@ describe('server configuration module', () => {
       const nodeEnvConfig: AppConfigLoader<Either<AppError, AppConfig>> = nodeEnvConfigUnbound.apply(null, [ENodeENV['production']]);
       nodeEnvConfig()
         .do({
-          right: (appConfig: AppConfig) => expectChai(appConfig)
-            .to.haveOwnProperty('environment')
-            .which.is.equal(ENodeENV.production),
-          left: (error: AppError) => assertChai
-            .fail(null, null, 'Left side was not expected.' + '\n' + error.code + '\n' + error.message)
+          right: (appConfig: AppConfig) =>
+            expect(appConfig)
+              .toHaveProperty('environment', ENodeENV.production),
+          left: (error: AppError) =>
+            fail('Left side has not been expected.' + '\n' + error.code + '\n' + error.message)
         });
     });
     it('Error path', () => {
       const nodeEnvConfig: AppConfigLoader<Either<AppError, AppConfig>> = nodeEnvConfigUnbound.apply(null, [null]);
       nodeEnvConfig()
         .do({
-          right: (_appConfig: AppConfig) => assertChai
-            .fail(null, null, 'Right side was not expected.'),
-          left: (error: AppError) => expectChai(error)
-            .to.be.instanceOf(InvalidConfiguraton)
+          right: (_appConfig: AppConfig) =>
+            fail('Right side was not expected.'),
+          left: (error: AppError) =>
+            expect(error).toBeInstanceOf(InvalidConfiguraton)
         });
     });
   });

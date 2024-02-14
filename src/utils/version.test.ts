@@ -3,9 +3,9 @@ import Version from './version';
 describe('Test `Version` module.', () => {
 
   it('default ENV should be `BUILD_NUMBER`', () => {
-    const DEFAULT_ENV_VAR = 'BUILD_NUMBDER';
+    const DEFAULT_ENV_VAR = 'BUILD_NUMBER';
 
-    expect(Version.getDefaultEnv()).toBe(DEFAULT_ENV_VAR);
+    expect(Version.getDefaultEnv()).toEqual(DEFAULT_ENV_VAR);
   });
 
   it('should set correctly custom ENV value', () => {

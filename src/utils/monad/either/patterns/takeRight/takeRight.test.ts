@@ -1,5 +1,4 @@
 import takeRight from './takeRight';
-import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { Either } from 'tsmonad';
 
@@ -18,9 +17,8 @@ describe('utils', () => {
           });
 
           it('Should return value, if right side.', () => {
-            expectChai(result)
-              .to.be.an('number')
-              .which.is.equal(value);
+            expect(result).toBeNumber;
+            expect(result).toEqual(value);
           });
         });
 
@@ -31,8 +29,7 @@ describe('utils', () => {
           });
 
           it('Should return null, if left side.', () => {
-            expectChai(result)
-              .to.be.null;
+            expect(result).toBeNull;
           });
         });
       });

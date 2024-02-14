@@ -1,5 +1,4 @@
 import loadUserJWTUnbound from './loadUserJWT.unbound';
-import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { Fcn } from 'common/types';
 import { NextFunction, RequestHandler } from 'express';
@@ -53,17 +52,12 @@ describe(`Test 'web' module`, () => {
               .apply(null, [{ userService }])
               .apply(null, [request, null, nextFcn])
               .then(() => {
-                expect(userService.getUserByEmail)
-                  .toHaveBeenCalledWith();
-                expect(getUserByEmail)
-                  .toHaveBeenCalledWith(USERNAME);
-                expect(nextFcn)
-                  .toHaveBeenCalledWith();
-                expect(logError)
-                  .not.toHaveBeenCalled();
-                expectChai(request)
-                  .to.haveOwnProperty('currentUser')
-                  .which.is.deep.equal(USER);
+                expect(userService.getUserByEmail).toHaveBeenCalledWith();
+                expect(getUserByEmail).toHaveBeenCalledWith(USERNAME);
+                expect(nextFcn).toHaveBeenCalledWith();
+                expect(logError).not.toHaveBeenCalled();
+                expect(request)
+                  .toHaveProperty('currentUser', USER);
               });
           });
         });
@@ -87,18 +81,13 @@ describe(`Test 'web' module`, () => {
                 .apply(null, [{ userService }])
                 .apply(null, [request, null, nextFcn])
                 .then(() => {
-                  expect(userService.getUserByEmail)
-                    .toHaveBeenCalledWith();
-                  expect(getUserByEmail)
-                    .toHaveBeenCalledWith(USERNAME);
-                  expect(nextFcn)
-                    .toHaveBeenCalledWith(expectedError);
-                  expect(logError)
-                    .toHaveBeenCalledWith('[AUTHORIZATION]:');
-                  expect(logger)
-                    .toHaveBeenCalledWith(expectedError);
-                  expectChai(request)
-                    .to.not.haveOwnProperty('currentUser');
+                  expect(userService.getUserByEmail).toHaveBeenCalledWith();
+                  expect(getUserByEmail).toHaveBeenCalledWith(USERNAME);
+                  expect(nextFcn).toHaveBeenCalledWith(expectedError);
+                  expect(logError).toHaveBeenCalledWith('[AUTHORIZATION]:');
+                  expect(logger).toHaveBeenCalledWith(expectedError);
+                  expect(request)
+                    .not.toHaveProperty('currentUser');
                 });
             });
           });
@@ -115,18 +104,13 @@ describe(`Test 'web' module`, () => {
                 .apply(null, [{ userService }])
                 .apply(null, [request, null, nextFcn])
                 .then(() => {
-                  expect(userService.getUserByEmail)
-                    .toHaveBeenCalledWith();
-                  expect(getUserByEmail)
-                    .toHaveBeenCalledWith(USERNAME);
-                  expect(nextFcn)
-                    .toHaveBeenCalledWith(ERROR);
-                  expect(logError)
-                    .toHaveBeenCalledWith('[AUTHORIZATION]:');
-                  expect(logger)
-                    .toHaveBeenCalledWith(ERROR);
-                  expectChai(request)
-                    .to.not.haveOwnProperty('currentUser');
+                  expect(userService.getUserByEmail).toHaveBeenCalledWith();
+                  expect(getUserByEmail).toHaveBeenCalledWith(USERNAME);
+                  expect(nextFcn).toHaveBeenCalledWith(ERROR);
+                  expect(logError).toHaveBeenCalledWith('[AUTHORIZATION]:');
+                  expect(logger).toHaveBeenCalledWith(ERROR);
+                  expect(request)
+                    .not.toHaveProperty('currentUser');
                 });
             });
           });

@@ -1,6 +1,5 @@
 
 import moduleDefinitionUnbound from './moduleDefinition.unbound';
-import { expect as expectChai } from 'chai';
 import { PluginSdkService } from 'service/serviceFactory/serviceFactory.types';
 import { AuthorizationHandlers } from 'web/serverModules/common/authorization/authorization.types';
 import { ModuleConfig } from 'web/serverModules/types';
@@ -24,6 +23,10 @@ const EXPECTED_MODULE_DEFINITION: ModuleDef<GlobalCOntext> = {
 };
 
 describe('Web Server', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('Modules', () => {
     describe('Global', () => {
       describe('Configuration', () => {
@@ -40,35 +43,27 @@ describe('Web Server', () => {
           });
 
           it(`Should build required controllers for global module`, () => {
-            expect(controllers.statusController)
-              .toHaveBeenCalledTimes(1);
-            expect(controllers.statusController)
-              .toHaveBeenCalledWith(SERVICE);
-            expectChai(controllers.statusController(SERVICE))
-              .to.be.an('object')
-              .which.is.deep.equal(CONTROLLER);
+            const controller = controllers.statusController(SERVICE);
+
+            expect(controllers.statusController).toHaveBeenCalledTimes(1);
+            expect(controllers.statusController).toHaveBeenCalledWith(SERVICE);
+            expect(controller).toBeObject;
+            expect(controller).toStrictEqual(CONTROLLER);
           });
 
           it(`Should set 'moduleDefinition' item in 'ModuleConfiguration' object, after controller has been builded`, () => {
-            expectChai(result)
-              .to.be.an('object');
-            expectChai(result)
-              .to.has.ownProperty('moduleDefinition')
-              .which.is.an('object');
-            expectChai(result.moduleDefinition)
-              .to.be.an('object')
-              .which.is.deep.equal(EXPECTED_MODULE_DEFINITION);
+            expect(result).toBeObject;
+            expect(result).toHaveProperty('moduleDefinition');
+            expect(result.moduleDefinition).toBeObject;
+            expect(result.moduleDefinition).toStrictEqual(EXPECTED_MODULE_DEFINITION);
           });
 
           it(`Should keep rest of items`, () => {
-            expectChai(result)
-              .to.be.an('object');
-            expectChai(result)
-              .to.has.ownProperty('router')
-              .which.is.equal(MODULE_CONFIG.router);
-            expectChai(result)
-              .to.has.ownProperty('contextFactory')
-              .which.is.equal(MODULE_CONFIG.contextFactory);
+            expect(result).toBeObject;
+            expect(result).toHaveProperty('router');
+            expect(result.router).toStrictEqual(MODULE_CONFIG.router);
+            expect(result).toHaveProperty('contextFactory');
+            expect(result.contextFactory).toStrictEqual(MODULE_CONFIG.contextFactory);
           });
         });
       });

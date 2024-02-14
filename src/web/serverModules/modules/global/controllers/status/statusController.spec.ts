@@ -1,5 +1,4 @@
 import statusController from './statusController';
-import { expect as expectChai } from 'chai';
 import { StatusController } from './statusController.types';
 import { AuthenticationService } from 'service/http/authentication/types';
 import { AsyncStartStop } from 'model/sequelize/modelFactory/modelFactory.types';
@@ -18,10 +17,8 @@ describe('Web Server', () => {
               .apply(null, [{ authenticationService, sdkStartStop }]);
           });
           it('Happy path', () => {
-            expectChai(controller)
-              .to.be.an('object');
-            expectChai(controller)
-              .which.haveOwnProperty('getStatus');
+            expect(controller).toBeObject;
+            expect(controller).toHaveProperty('getStatus');
           });
         });
       });

@@ -1,5 +1,4 @@
 import userParamHandlerUnbound from './userParamHandler.unbound';
-import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { NextFunction, Response } from 'express';
 import { User } from 'model/sequelize/model/user/user';
@@ -48,18 +47,14 @@ describe('Web Server', () => {
             });
 
             it(`Should handle Either right side branch`, () => {
-              expect(nextFunction)
-                .toHaveBeenCalledTimes(1);
-              expect(nextFunction)
-                .toHaveBeenCalledWith();
+              expect(nextFunction).toHaveBeenCalledTimes(1);
+              expect(nextFunction).toHaveBeenCalledWith();
             });
 
             it(`Should add user in to request implicits`, () => {
-              expectChai(req)
-                .to.haveOwnProperty('implicits');
-              expectChai(req.implicits)
-                .to.haveOwnProperty('user')
-                .which.is.deep.equal(USER);
+              expect(req).toHaveProperty('implicits');
+              expect(req.implicits).toHaveProperty('user');
+              expect(req.implicits.user).toStrictEqual(USER);
             });
           });
 
@@ -72,10 +67,8 @@ describe('Web Server', () => {
               });
 
               it(`Should handle Either left side branch and pass exact error in to next middleware`, () => {
-                expect(nextFunction)
-                  .toHaveBeenCalledTimes(1);
-                expect(nextFunction)
-                  .toHaveBeenCalledWith(new InvalidInput(`userId ${userId} is not valid uuid`));
+                expect(nextFunction).toHaveBeenCalledTimes(1);
+                expect(nextFunction).toHaveBeenCalledWith(new InvalidInput(`userId ${userId} is not valid uuid`));
               });
             });
 
@@ -93,10 +86,8 @@ describe('Web Server', () => {
               });
 
               it(`Should handle Either left side branch and pass exact error in to next middleware`, () => {
-                expect(nextFunction)
-                  .toHaveBeenCalledTimes(1);
-                expect(nextFunction)
-                  .toHaveBeenCalledWith(error);
+                expect(nextFunction).toHaveBeenCalledTimes(1);
+                expect(nextFunction).toHaveBeenCalledWith(error);
               });
             });
           });

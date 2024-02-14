@@ -1,5 +1,4 @@
 import getUserByIdUnbound from './getUserById.unbound';
-import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import userFactory from 'model/sequelize/model/user/factory/userFactory';
 import initUserModel, { User } from 'model/sequelize/model/user/user';
@@ -43,8 +42,7 @@ describe('Web Server', () => {
             it('Should return Either with user object in right side', () => {
               result.do({
                 right: (currentUser) => {
-                  expectChai(currentUser)
-                    .to.be.deep.equal(context.implicits.user.get({ plain: true }));
+                  expect(currentUser).toStrictEqual(context.implicits.user.get({ plain: true }));
                 }
               });
             });

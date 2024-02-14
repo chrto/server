@@ -66,8 +66,8 @@ describe(`service`, () => {
           it(`Should retsolved Either with TokenSet model in right side, if everything passed well`, () => {
             result.do({
               right: (tokenSet: TokenSetModel): void => {
-                expect(tokenSet).toBeObject
-                expect(tokenSet).toBe(tokenSetFactory(AXIOS_RESPONSE.data));
+                expect(tokenSet).toBeObject;
+                expect(tokenSet).toStrictEqual(tokenSetFactory(AXIOS_RESPONSE.data));
               },
               left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
             });
@@ -87,10 +87,8 @@ describe(`service`, () => {
             result.do({
               right: (): void => fail(`Right side has not been expected`),
               left: (error: AppError) => {
-                expect(error)
-                  .toBeInstanceOf(InvalidInput);
-                expect(error.message)
-                  .toEqual(ERROR_RESPONSE.response.data.error_description);
+                expect(error).toBeInstanceOf(InvalidInput);
+                expect(error.message).toEqual(ERROR_RESPONSE.response.data.error_description);
               }
             });
           });

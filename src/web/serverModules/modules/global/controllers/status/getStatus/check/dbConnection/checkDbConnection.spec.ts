@@ -1,5 +1,4 @@
 import checkDbConnection from './checkDbConnection';
-import { expect as expectChai } from 'chai';
 import { DatabaseState, ServerStatus } from 'model/global/serverStatus/serverStatus.types';
 
 const SERVER_STATUS: ServerStatus = Object.freeze({
@@ -38,18 +37,14 @@ describe('Web Server', () => {
                 });
 
                 it(`Should set 'db' item to 'true', if connection test has been executed successfully`, () => {
-                  expectChai(result.db)
-                    .to.be.an('string')
-                    .which.is.equal(DatabaseState.Up);
+                  expect(result.db).toEqual(DatabaseState.Up);
                 });
 
                 it(`Should keep existing items, after has been executed`, () => {
-                  expectChai(result)
-                    .to.be.an('object')
-                    .which.is.deep.equal({
-                      ...SERVER_STATUS,
-                      db: DatabaseState.Up
-                    });
+                  expect(result).toStrictEqual({
+                    ...SERVER_STATUS,
+                    db: DatabaseState.Up
+                  });
                 });
               });
 
@@ -63,15 +58,11 @@ describe('Web Server', () => {
                 });
 
                 it(`Should set 'db' item to 'false', if connection test has not been executed successfully`, () => {
-                  expectChai(result.db)
-                    .to.be.an('string')
-                    .which.is.equal(DatabaseState.Down);
+                  expect(result.db).toEqual(DatabaseState.Down);
                 });
 
                 it(`Should keep existing items, after has been executed`, () => {
-                  expectChai(result)
-                    .to.be.an('object')
-                    .which.is.deep.equal(SERVER_STATUS);
+                  expect(result).toStrictEqual(SERVER_STATUS);
                 });
               });
             });

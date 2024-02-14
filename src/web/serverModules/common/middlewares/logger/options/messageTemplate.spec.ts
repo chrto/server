@@ -1,7 +1,6 @@
 import messageTemplate from './messageTemplate';
 import { AppRequest } from 'web/serverModules/types';
 import { Response } from 'express';
-import { expect as expectChai } from 'chai';
 
 describe(`Test 'web' module`, () => {
   describe(`common`, () => {
@@ -24,9 +23,7 @@ describe(`Test 'web' module`, () => {
               }
             } as AppRequest<any>;
 
-            expectChai(messageTemplate(req, response))
-              .to.be.an('string')
-              .which.is.equal('[joe.doe@company.com] HTTP GET /api/v1/global/status 200');
+            expect(messageTemplate(req, response)).toEqual('[joe.doe@company.com] HTTP GET /api/v1/global/status 200');
           });
 
           it(`Should not log userName, if email does not exists on currentUser object`, () => {
@@ -34,14 +31,10 @@ describe(`Test 'web' module`, () => {
               ...request,
               currentUser: {}
             } as AppRequest<any>;
-            expectChai(messageTemplate(req, response))
-              .to.be.an('string')
-              .which.is.equal('HTTP GET /api/v1/global/status 200');
+            expect(messageTemplate(req, response)).toEqual('HTTP GET /api/v1/global/status 200');
           });
           it(`Should not log userName, if currentUser object is not exists`, () => {
-            expectChai(messageTemplate(request, response))
-              .to.be.an('string')
-              .which.is.equal('HTTP GET /api/v1/global/status 200');
+            expect(messageTemplate(request, response)).toEqual('HTTP GET /api/v1/global/status 200');
           });
 
           it(`Should log response time, if 'responseTime' item exists on response object`, () => {
@@ -49,18 +42,14 @@ describe(`Test 'web' module`, () => {
               ...response,
               responseTime: 54
             } as unknown as Response;
-            expectChai(messageTemplate(request, res))
-              .to.be.an('string')
-              .which.is.equal('HTTP GET /api/v1/global/status 200 54ms');
+            expect(messageTemplate(request, res)).toEqual('HTTP GET /api/v1/global/status 200 54ms');
           });
           it(`Should log response time, if 'responseTime' item exists on response object`, () => {
             const res: Response = {
               ...response,
               responseTime: 54
             } as unknown as Response;
-            expectChai(messageTemplate(request, res))
-              .to.be.an('string')
-              .which.is.equal('HTTP GET /api/v1/global/status 200 54ms');
+            expect(messageTemplate(request, res)).toEqual('HTTP GET /api/v1/global/status 200 54ms');
           });
         });
       });

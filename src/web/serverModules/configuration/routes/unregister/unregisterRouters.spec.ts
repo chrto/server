@@ -1,5 +1,4 @@
 import unregisterRoutes from './unregisterRouters';
-import { expect as expectChai } from 'chai';
 import { WebServer } from 'web/server/types';
 import { Express } from 'express';
 
@@ -44,15 +43,15 @@ describe(`Test 'web' module`, () => {
         });
 
         it(`Should remove all router layers from server stack`, () => {
-          expectChai(unregisteredServer.expressApp._router.stack)
-            .to.be.an('array')
-            .which.has.deep.members([{ name: 'query' }, { name: 'expressInit' }]);
+          const result = unregisteredServer.expressApp._router.stack;
+          expect(result).toBeArray;
+          expect(result).toHaveLength(EXPRESSAPP_STACK.length - 3);
+          expect(result).toStrictEqual([{ name: 'query' }, { name: 'expressInit' }]);
         });
         it(`Should keep all server items`, () => {
-          expectChai(unregisteredServer.expressApp)
-            .to.be.an('object')
-            .which.haveOwnProperty('locals')
-            .which.is.deep.equal(server.expressApp.locals);
+          const result = unregisteredServer.expressApp;
+          expect(result).toBeObject;
+          expect(result).toHaveProperty('locals', server.expressApp.locals);
         });
       });
     });

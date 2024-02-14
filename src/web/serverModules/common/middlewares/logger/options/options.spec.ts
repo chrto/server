@@ -1,5 +1,4 @@
 import optionsUnbound from './options.unbound';
-import { expect as expectChai } from 'chai';
 import * as Transport from 'winston-transport';
 import { AppConfig } from 'web/server/configuration/loader/appConfig.types';
 import { LoggerOptions } from 'express-winston';
@@ -34,21 +33,17 @@ describe(`Test 'web' module`, () => {
             maybeOptions
               .do({
                 just: (loggerOptions: LoggerOptions): void => {
-                  expectChai(loggerOptions)
-                    .to.be.an('object');
-                  expectChai(loggerOptions)
-                    .has.ownProperty('expressFormat')
-                    .which.is.equal(false);
-                  expectChai(loggerOptions)
-                    .has.ownProperty('msg')
-                    .which.is.an('function')
-                    .which.is.equal(messageTemplate);
-                  expectChai(loggerOptions)
-                    .has.ownProperty('transports')
-                    .which.is.an('array');
+                  expect(loggerOptions).toBeObject;
+                  expect(loggerOptions).toHaveProperty('expressFormat');
+                  expect(loggerOptions.expressFormat).toBeFalse;
+                  expect(loggerOptions).toHaveProperty('msg');
+                  expect(loggerOptions.msg).toBeFunction;
+                  expect(loggerOptions.msg).toEqual(messageTemplate);
+                  expect(loggerOptions).toHaveProperty('transports');
+                  expect(loggerOptions['transports']).toBeArray;
+
                   loggerOptions['transports'].forEach((t) => {
-                    expectChai(t)
-                      .to.be.instanceOf(Transport);
+                    expect(t).toBeInstanceOf(Transport);
                   });
                 },
                 nothing: () => fail(`Maybe nothing has not been expected.`)

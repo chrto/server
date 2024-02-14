@@ -3,7 +3,6 @@ import bodyValidator from './bodyValidator';
 import { UserBody } from '../createUser.types';
 import { AppError } from 'common/error';
 import { UserRole } from 'model/sequelize/model/user/user.types';
-import { expect as expectChai } from 'chai';
 import { InvalidInput } from 'common/httpErrors';
 
 const BODY: UserBody = {
@@ -24,10 +23,10 @@ describe('Web Server', () => {
               it(`Should return Either with body object in right side`, () => {
                 bodyValidator(BODY)
                   .do({
-                    right: (body: UserBody) =>
-                      expectChai(body)
-                        .to.be.an({}.constructor.name)
-                        .which.is.deep.equal(BODY),
+                    right: (body: UserBody) => {
+                      expect(body).toBeObject;
+                      expect(body).toStrictEqual(BODY);
+                    },
                     left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
                   });
               });
@@ -36,10 +35,10 @@ describe('Web Server', () => {
                 const mandatory: UserBody = { email: BODY.email, firstName: BODY.firstName, lastName: BODY.lastName };
                 bodyValidator(mandatory)
                   .do({
-                    right: (body: UserBody) =>
-                      expectChai(body)
-                        .to.be.an('object')
-                        .which.is.deep.equal(mandatory),
+                    right: (body: UserBody) => {
+                      expect(body).toBeObject;
+                      expect(body).toStrictEqual(mandatory);
+                    },
                     left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
                   });
               });
@@ -50,8 +49,7 @@ describe('Web Server', () => {
                   .do({
                     right: (): void => fail(`Right side has not been expected`),
                     left: (error: AppError) => {
-                      expect(error)
-                        .toBeInstanceOf(InvalidInput);
+                      expect(error).toBeInstanceOf(InvalidInput);
                       expect(error.message)
                         .toEqual(ERROR_MESSAGE);
                     }
@@ -136,8 +134,7 @@ describe('Web Server', () => {
                     left: (error: AppError) => {
                       expect(error)
                         .toBeInstanceOf(InvalidInput);
-                      expect(error.message)
-                        .toEqual(ERROR_MESSAGE);
+                      expect(error.message).toEqual(ERROR_MESSAGE);
                     }
                   });
               });

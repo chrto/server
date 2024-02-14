@@ -1,6 +1,5 @@
 import bodyValidator from './bodyValidator';
 import { UserBody } from '../updateUser.types';
-import { expect as expectChai } from 'chai';
 import { InvalidInput } from 'common/httpErrors';
 import { AppError } from 'common/error';
 import { UserRole } from 'model/sequelize/model/user/user.types';
@@ -15,10 +14,10 @@ describe(`Test 'userBodyValidatorPATCH' module`, () => {
     it(`should return body object, if everithing pass well`, () => {
       bodyValidator(body)
         .do({
-          right: (result: UserBody) =>
-            expectChai(result)
-              .to.be.an('object')
-              .which.is.deep.equal(body),
+          right: (result: UserBody) => {
+            expect(result).toBeObject;
+            expect(result).toStrictEqual(body);
+          },
           left: (error: AppError) => fail('Left side has not been expected.' + '\n' + error.code + '\n' + error.message)
         });
     });
@@ -26,10 +25,10 @@ describe(`Test 'userBodyValidatorPATCH' module`, () => {
     it(`body may be empty object`, () => {
       bodyValidator({})
         .do({
-          right: (result: UserBody) =>
-            expectChai(result)
-              .to.be.an('object')
-              .which.is.deep.equal({}),
+          right: (result: UserBody) => {
+            expect(result).toBeObject;
+            expect(result).toStrictEqual({});
+          },
           left: (error: AppError) => fail('Left side has not been expected.' + '\n' + error.code + '\n' + error.message)
         });
     });
@@ -41,9 +40,7 @@ describe(`Test 'userBodyValidatorPATCH' module`, () => {
         .do({
           right: () => fail('Error \'InvalidInput\' has been expected.'),
           left: (error: AppError) =>
-            expectChai(error)
-              .to.be.an('error')
-              .that.is.instanceOf(InvalidInput)
+            expect(error).toBeInstanceOf(InvalidInput)
         });
     });
 
@@ -52,9 +49,7 @@ describe(`Test 'userBodyValidatorPATCH' module`, () => {
         .do({
           right: () => fail('Error \'InvalidInput\' has been expected.'),
           left: (error: AppError) =>
-            expectChai(error)
-              .to.be.an('error')
-              .that.is.instanceOf(InvalidInput)
+            expect(error).toBeInstanceOf(InvalidInput)
         });
     });
 
@@ -63,10 +58,7 @@ describe(`Test 'userBodyValidatorPATCH' module`, () => {
         .do({
           right: () => fail('Error \'InvalidInput\' has been expected.'),
           left: (error: AppError) =>
-            expectChai(error.message)
-              .to.be.an('string')
-              .which.is.equal(`Validation failed: ["Invalid user role","'active' parameter must be boolean"]`)
-
+            expect(error.message).toEqual(`Validation failed: ["Invalid user role","'active' parameter must be boolean"]`)
         });
     });
   });

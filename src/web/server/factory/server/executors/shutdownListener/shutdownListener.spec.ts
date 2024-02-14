@@ -94,8 +94,7 @@ describe('Server Factory', () => {
             .toHaveBeenCalledTimes(1);
           expect(listening)
             .toHaveBeenCalledWith();
-          expect(listening())
-            .toBe(true)();
+          expect(listening()).toBeTrue;
         });
 
         it(`Should log exact message, if server is listening`, () => {
@@ -149,8 +148,7 @@ describe('Server Factory', () => {
             .toHaveBeenCalledTimes(1);
           expect(listening)
             .toHaveBeenCalledWith();
-          expect(listening())
-            .toBe(false)();
+          expect(listening()).toBeFalse;
         });
 
         it(`Should log exact message, if server is listening`, () => {

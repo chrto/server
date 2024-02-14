@@ -1,5 +1,4 @@
 import moduleDefinitionUnbound from './moduleDefinition.unbound';
-import { expect as expectChai } from 'chai';
 import { PluginSdkService } from 'service/serviceFactory/serviceFactory.types';
 import { AuthorizationHandlers } from 'web/serverModules/common/authorization/authorization.types';
 import { ModuleConfig } from 'web/serverModules/types';
@@ -66,45 +65,30 @@ describe('Web Server', () => {
           });
 
           it(`Should build user controller for portal module`, () => {
-            expect(controllers.userController)
-              .toHaveBeenCalledTimes(1);
-            expect(controllers.userController)
-              .toHaveBeenCalledWith(SERVICE);
-            expectChai(controllers.userController(SERVICE))
-              .to.be.an('object')
-              .which.is.deep.equal(USER_CONTROLLER);
+            expect(controllers.userController).toHaveBeenCalledTimes(1);
+            expect(controllers.userController).toHaveBeenCalledWith(SERVICE);
+            expect(controllers.userController(SERVICE)).toStrictEqual(USER_CONTROLLER);
           });
 
           it(`Should build current user controller for portal module`, () => {
-            expect(controllers.currentUserController)
-              .toHaveBeenCalledTimes(1);
-            expect(controllers.currentUserController)
-              .toHaveBeenCalledWith(SERVICE);
-            expectChai(controllers.currentUserController(SERVICE))
-              .to.be.an('object')
-              .which.is.deep.equal(CURR_USER_CONTROLLER);
+            expect(controllers.currentUserController).toHaveBeenCalledTimes(1);
+            expect(controllers.currentUserController).toHaveBeenCalledWith(SERVICE);
+            expect(controllers.currentUserController(SERVICE)).toStrictEqual(CURR_USER_CONTROLLER);
           });
 
           it(`Should set 'moduleDefinition' item in 'ModuleConfiguration' object, after controller has been builded`, () => {
-            expectChai(result)
-              .to.be.an('object');
-            expectChai(result)
-              .to.has.ownProperty('moduleDefinition')
-              .which.is.an('object');
-            expectChai(result.moduleDefinition)
-              .to.be.an('object')
-              .which.is.deep.equal(EXPECTED_MODULE_DEFINITION);
+            expect(result).toBeObject;
+            expect(result).toHaveProperty('moduleDefinition');
+            expect(result.moduleDefinition).toBeObject;
+            expect(result.moduleDefinition).toStrictEqual(EXPECTED_MODULE_DEFINITION);
           });
 
           it(`Should keep rest of items`, () => {
-            expectChai(result)
-              .to.be.an('object');
-            expectChai(result)
-              .to.has.ownProperty('router')
-              .which.is.equal(MODULE_CONFIG.router);
-            expectChai(result)
-              .to.has.ownProperty('contextFactory')
-              .which.is.equal(MODULE_CONFIG.contextFactory);
+            expect(result).toBeObject;
+            expect(result).toHaveProperty('router');
+            expect(result.router).toStrictEqual(MODULE_CONFIG.router);
+            expect(result).toHaveProperty('contextFactory');
+            expect(result.contextFactory).toStrictEqual(MODULE_CONFIG.contextFactory);
           });
         });
       });

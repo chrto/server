@@ -14,7 +14,6 @@ import { AppError } from 'common/error';
 import { Either } from 'tsmonad';
 import { AppRequest } from 'web/serverModules/types';
 import { RequestImplicits } from '../../../paramHandlers/paramHandlers.types';
-import { expect as expectChai } from 'chai';
 import { InvalidInput, NotAuthorized } from 'common/httpErrors';
 import sanitizeModel from 'model/sequelize/sanitizeModel/sanitizeModel';
 
@@ -81,10 +80,10 @@ describe('Web Server', () => {
 
               it(`Should resolve with exact Either right side`, () => {
                 result.do({
-                  right: (user: User) =>
-                    expectChai(user)
-                      .to.be.an({}.constructor.name)
-                      .which.is.deep.equal({ ...user, ...body }),
+                  right: (user: User) => {
+                    expect(user).toBeObject;
+                    expect(user).toStrictEqual({ ...user, ...body });
+                  },
                   left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
                 });
               });
@@ -113,10 +112,8 @@ describe('Web Server', () => {
                 result.do({
                   right: (): void => fail(`Right side has not been expected`),
                   left: (error: AppError) => {
-                    expect(error)
-                      .toBeInstanceOf(InvalidInput);
-                    expect(error.message)
-                      .toEqual(ERROR_MESSAGE);
+                    expect(error).toBeInstanceOf(InvalidInput);
+                    expect(error.message).toEqual(ERROR_MESSAGE);
                   }
                 });
               });
@@ -145,10 +142,8 @@ describe('Web Server', () => {
                 result.do({
                   right: (): void => fail(`Right side has not been expected`),
                   left: (error: AppError) => {
-                    expect(error)
-                      .toBeInstanceOf(NotAuthorized);
-                    expect(error.message)
-                      .toEqual(ERROR_MESSAGE);
+                    expect(error).toBeInstanceOf(NotAuthorized);
+                    expect(error.message).toEqual(ERROR_MESSAGE);
                   }
                 });
               });

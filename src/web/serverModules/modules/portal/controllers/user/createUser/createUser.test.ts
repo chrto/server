@@ -15,7 +15,6 @@ import { Conflict, InvalidInput } from 'common/httpErrors';
 import bodyValidator from './validator/bodyValidator';
 import emailNotExists from './validator/emailNotExists';
 import userFactory from 'model/sequelize/model/user/factory/userFactory';
-import { expect as expectChai } from 'chai';
 import sanitizeModel from 'model/sequelize/sanitizeModel/sanitizeModel';
 
 type AppReq = AppRequest<User, RequestImplicits, unknown, UserBody>;
@@ -75,10 +74,11 @@ describe('Web Server', () => {
                 createUser
                   .apply(null, [null, req, res])
                   .then(doer({
-                    right: (result: User) =>
-                      expectChai(result)
-                        .to.be.an({}.constructor.name)
-                        .which.is.deep.equal(user.get({})),
+                    right: (result: User) => {
+                      expect(result).toBeObject;
+                      expect(result).toStrictEqual(user.get({}));
+
+                    },
                     left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
                   }));
               });
@@ -98,10 +98,8 @@ describe('Web Server', () => {
                     .then(doer({
                       right: (): void => fail(`Right side has not been expected`),
                       left: (error: AppError) => {
-                        expect(error)
-                          .toBeInstanceOf(InvalidInput);
-                        expect(error.message)
-                          .toEqual(ERROR_MESSAGE);
+                        expect(error).toBeInstanceOf(InvalidInput);
+                        expect(error.message).toEqual(ERROR_MESSAGE);
                       }
                     }));
                 });
@@ -121,10 +119,8 @@ describe('Web Server', () => {
                     .then(doer({
                       right: (): void => fail(`Right side has not been expected`),
                       left: (error: AppError) => {
-                        expect(error)
-                          .toBeInstanceOf(Conflict);
-                        expect(error.message)
-                          .toEqual(ERROR_MESSAGE);
+                        expect(error).toBeInstanceOf(Conflict);
+                        expect(error.message).toEqual(ERROR_MESSAGE);
                       }
                     }));
                 });
@@ -145,10 +141,8 @@ describe('Web Server', () => {
                     .then(doer({
                       right: (): void => fail(`Right side has not been expected`),
                       left: (error: AppError) => {
-                        expect(error)
-                          .toBeInstanceOf(Conflict);
-                        expect(error.message)
-                          .toEqual(`message: ${ERROR_MESSAGE}${'\n'}`);
+                        expect(error).toBeInstanceOf(Conflict);
+                        expect(error.message).toEqual(`message: ${ERROR_MESSAGE}${'\n'}`);
                       }
                     }));
                 });
