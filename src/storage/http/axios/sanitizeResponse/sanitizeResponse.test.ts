@@ -10,7 +10,7 @@ describe(`storage`, () => {
           const data: number = 10;
           const mockResponse: AxiosResponse<number> = { data } as AxiosResponse<number>;
           const result: number = sanitizeResponse(mockResponse);
-          expect(result).toBe('number');
+          expect(result).toBeNumber;
           expect(result).toBe(data);
         });
       });

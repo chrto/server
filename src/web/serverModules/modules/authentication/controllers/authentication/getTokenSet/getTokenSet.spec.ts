@@ -1,4 +1,3 @@
-import { assert as assertChai, expect as expectChai } from 'chai';
 import { AppRequest } from 'web/serverModules/types';
 import { TokenSet as TokenSetModel } from 'model/authentication/tokenSet.types';
 
@@ -67,12 +66,11 @@ describe('Web Server', () => {
               it(`Should return either with 'TokenSet' model in right side, after has been executed`, () => {
                 tokenSetOrError
                   .do({
-                    right: (tokenSet: TokenSetModel) =>
-                      expectChai(tokenSet)
-                        .to.be.an('object')
-                        .which.is.deep.equal(TOKEN_SET),
-                    left: (error: AppError) => assertChai
-                      .fail(null, null, 'Left side was not expected.' + '\n' + error.code + '\n' + error.message)
+                    right: (tokenSet: TokenSetModel) => {
+                      expect(tokenSet).toBeObject;
+                      expect(tokenSet).toStrictEqual(TOKEN_SET);
+                    },
+                    left: (error: AppError) => fail('Left side was not expected.' + '\n' + error.code + '\n' + error.message)
                   });
               });
             });
@@ -112,18 +110,11 @@ describe('Web Server', () => {
               it(`Should return either with exact error in left side, after service has been failed`, () => {
                 tokenSetOrError
                   .do({
-                    right: () =>
-                      assertChai
-                        .fail(null, null, 'Right side was not expected.'),
+                    right: () => fail('Right side was not expected.'),
                     left: (error: AppError) => {
-                      expectChai(error)
-                        .to.be.instanceOf(InternalServerError);
-                      expectChai(error)
-                        .to.haveOwnProperty('message')
-                        .which.is.equal('Internal Server Error');
-                      expectChai(error)
-                        .to.haveOwnProperty('code')
-                        .which.is.equal('server.error');
+                      expect(error).toBeInstanceOf(InternalServerError);
+                      expect(error).toHaveProperty('message', 'Internal Server Error');
+                      expect(error).toHaveProperty('code', 'server.error');
                     }
                   });
               });
@@ -158,18 +149,11 @@ describe('Web Server', () => {
               it(`Should return either with exact error in left side, after validation has been failed`, () => {
                 tokenSetOrError
                   .do({
-                    right: () =>
-                      assertChai
-                        .fail(null, null, 'Right side was not expected.'),
+                    right: () => fail('Right side was not expected.'),
                     left: (error: AppError) => {
-                      expectChai(error)
-                        .to.be.instanceOf(InvalidInput);
-                      expectChai(error)
-                        .to.haveOwnProperty('message')
-                        .which.is.equal('Validation failed: ["Missing mandatory query parameter: auth_code"]');
-                      expectChai(error)
-                        .to.haveOwnProperty('code')
-                        .which.is.equal('invalid.input');
+                      expect(error).toBeInstanceOf(InvalidInput);
+                      expect(error).toHaveProperty('message', 'Validation failed: ["Missing mandatory query parameter: auth_code"]');
+                      expect(error).toHaveProperty('code', 'invalid.input');
                     }
                   });
               });

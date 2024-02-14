@@ -3,28 +3,29 @@ import compareStrings, { SensitivityOptions } from './compareStrings';
 describe('utils', () => {
   describe('comare', () => {
     describe('string', () => {
-      it(`Should test 'a = a'`, () => {
-        const result: boolean = compareStrings('a', 'a', SensitivityOptions.base);
-        expect(result).toBeBoolean;
-        expect(result).toBe(true);
-      });
       describe('base', () => {
+        it(`Should test 'a = a'`, () => {
+          const result: boolean = compareStrings('a', 'a', SensitivityOptions.base);
+          expect(result).toBeBoolean;
+          expect(result).toBeTrue;
+        });
+
         it(`Should test 'a ≠ b'`, () => {
           const result: boolean = compareStrings('a', 'b', SensitivityOptions.base);
           expect(result).toBeBoolean;
-          expect(result).toBe(false);
+          expect(result).toBeTrue;
         });
 
         it(`Should test 'a = á'`, () => {
           const result: boolean = compareStrings('a', 'á', SensitivityOptions.base);
           expect(result).toBeBoolean;
-          expect(result).toBe(true);
+          expect(result).toBeTrue;
         });
 
         it(`Should test 'a = A'`, () => {
           const result: boolean = compareStrings('a', 'A', SensitivityOptions.base);
           expect(result).toBeBoolean;
-          expect(result).toBe(true);
+          expect(result).toBeTrue;
         });
       });
 
@@ -32,40 +33,39 @@ describe('utils', () => {
         it(`Should test 'a ≠ b'`, () => {
           const result: boolean = compareStrings('a', 'b', SensitivityOptions.accent);
           expect(result).toBeBoolean;
-          expect(result).toBe(false);
+          expect(result).toBeTrue;
         });
 
         it(`Should test 'a ≠ á'`, () => {
           const result: boolean = compareStrings('a', 'á', SensitivityOptions.accent);
           expect(result).toBeBoolean;
-          expect(result).toBe(false);
+          expect(result).toBeTrue;
         });
 
         it(`Should test 'a = A'`, () => {
           const result: boolean = compareStrings('a', 'A', SensitivityOptions.accent);
           expect(result).toBeBoolean;
-          expect(result).toBe(false);  // ???????? TRUE
+          expect(result).toBeTrue;
         });
       });
 
       describe('case', () => {
         it(`Should test 'a ≠ b'`, () => {
-          const result: boolean = compareStrings('a', 'b', SensitivityOptions.case); // ?
+          const result: boolean = compareStrings('a', 'b', SensitivityOptions.case);
           expect(result).toBeBoolean;
-          expect(result).toBe(true); // ??? FALSE
-
+          expect(result).toBeFalse;
         });
 
         it(`Should test 'a = á'`, () => {
           const result: boolean = compareStrings('a', 'á', SensitivityOptions.case);
           expect(result).toBeBoolean;
-          expect(result).toBe(true);
+          expect(result).toBeTrue;
         });
 
         it(`Should test 'a ≠ A'`, () => {
           const result: boolean = compareStrings('a', 'A', SensitivityOptions.case);
           expect(result).toBeBoolean;
-          expect(result).toBe(false);
+          expect(result).toBeFalse;
         });
       });
 
@@ -73,19 +73,19 @@ describe('utils', () => {
         it(`Should test 'a ≠ b'`, () => {
           const result: boolean = compareStrings('a', 'b', SensitivityOptions.variant);
           expect(result).toBeBoolean;
-          expect(result).toBe(false);
+          expect(result).toBeFalse;
         });
 
         it(`Should test 'a ≠ á'`, () => {
           const result: boolean = compareStrings('a', 'á', SensitivityOptions.variant);
           expect(result).toBeBoolean;
-          expect(result).toBe(false);
+          expect(result).toBeFalse;
         });
 
         it(`Should test 'a ≠ A'`, () => {
           const result: boolean = compareStrings('a', 'A', SensitivityOptions.variant);
           expect(result).toBeBoolean;
-          expect(result).toBe(false);
+          expect(result).toBeFalse;
         });
       });
     });

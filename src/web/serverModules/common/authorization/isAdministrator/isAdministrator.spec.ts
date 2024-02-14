@@ -1,11 +1,11 @@
 import isAdministrator from './isAdministrator';
-import { assert as assertChai, expect as expectChai } from 'chai';
 import { Options, Sequelize } from 'sequelize';
 import { EDatabaseDialect } from 'web/server/configuration/loader/database/databaseConfig.types';
 import initUserModel, { User } from 'model/sequelize/model/user/user';
 import { UserItems, UserRole } from 'model/sequelize/model/user/user.types';
 import * as IsAdmin from '../validators/isAdmin/isAdmin';
 import { Maybe } from 'tsmonad';
+import { pass } from 'jest-extended';
 
 const CTX: any = {
   loggedInUser: null
@@ -50,20 +50,15 @@ describe(`Test 'web' module`, () => {
           });
 
           it(`Should check, if user is administrator`, () => {
-            expect(spiedIsAdmin)
-              .toHaveBeenCalledTimes(1);
-            expect(spiedIsAdmin)
-              .toHaveBeenCalledWith(loggedInUser);
+            expect(spiedIsAdmin).toHaveBeenCalledTimes(1);
+            expect(spiedIsAdmin).toHaveBeenCalledWith(loggedInUser);
           });
 
           it(`Should allow access to the user, which has admin role`, () => {
             result
               .do({
-                just: () =>
-                  assertChai
-                    .fail(null, null, 'Nothing has been expected'),
-                nothing: () =>
-                  assertChai.ok
+                just: () => fail('Nothing has been expected'),
+                nothing: () => pass('Nothing has not been expected')
               });
           });
         });
@@ -78,13 +73,11 @@ describe(`Test 'web' module`, () => {
           it(`Should reject access to the user, which has not admin role`, () => {
             isAdministrator({ ...CTX, loggedInUser })
               .do({
-                just: (message: string) =>
-                  expectChai(message)
-                    .to.be.an('string')
-                    .which.is.equal('Only an administator is authorized to fulfill this action'),
-                nothing: () =>
-                  assertChai
-                    .fail(null, null, 'Nothing has not been expected')
+                just: (message: string) => {
+                  expect(message).toBeString;
+                  expect(message).toEqual('Only an administator is authorized to fulfill this action');
+                },
+                nothing: () => fail('Nothing has not been expected')
               });
           });
         });
@@ -99,13 +92,11 @@ describe(`Test 'web' module`, () => {
           it(`Should reject access if user is unknown object`, () => {
             isAdministrator({ ...CTX, loggedInUser })
               .do({
-                just: (message: string) =>
-                  expectChai(message)
-                    .to.be.an('string')
-                    .which.is.equal('Only an administator is authorized to fulfill this action'),
-                nothing: () =>
-                  assertChai
-                    .fail(null, null, 'Nothing has not been expected')
+                just: (message: string) => {
+                  expect(message).toBeString;
+                  expect(message).toEqual('Only an administator is authorized to fulfill this action');
+                },
+                nothing: () => fail('Nothing has not been expected')
               });
           });
         });
@@ -120,13 +111,11 @@ describe(`Test 'web' module`, () => {
           it(`Should reject access if user is null`, () => {
             isAdministrator({ ...CTX, loggedInUser })
               .do({
-                just: (message: string) =>
-                  expectChai(message)
-                    .to.be.an('string')
-                    .which.is.equal('Only an administator is authorized to fulfill this action'),
-                nothing: () =>
-                  assertChai
-                    .fail(null, null, 'Nothing has not been expected')
+                just: (message: string) => {
+                  expect(message).toBeString;
+                  expect(message).toEqual('Only an administator is authorized to fulfill this action');
+                },
+                nothing: () => fail('Nothing has not been expected')
               });
           });
         });

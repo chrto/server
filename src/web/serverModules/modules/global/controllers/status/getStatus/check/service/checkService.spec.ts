@@ -1,5 +1,4 @@
 import checkService from './checkService';
-import { expect as expectChai } from 'chai';
 import { Either } from 'tsmonad';
 import { AppError } from 'common/error';
 import { DatabaseState, ServerStatus, ServiceItem } from 'model/global/serverStatus/serverStatus.types';
@@ -41,22 +40,19 @@ describe('Web Server', () => {
                 });
 
                 it(`Should set exact item in 'services' object to 'true', if ping() has been executed successfully`, () => {
-                  expectChai(result.services)
-                    .to.be.an('object')
-                    .which.haveOwnProperty(ServiceItem.sso)
-                    .which.is.equal(true);
+                  expect(result.services).toBeObject;
+                  expect(result.services).toHaveProperty(ServiceItem.sso, true);
                 });
 
                 it(`Should keep existing items, after has been executed`, () => {
-                  expectChai(result)
-                    .to.be.an('object')
-                    .which.is.deep.equal({
-                      ...SERVER_STATUS,
-                      services: {
-                        ...SERVER_STATUS.services,
-                        [ServiceItem.sso]: true
-                      }
-                    });
+                  expect(result).toBeObject;
+                  expect(result).toStrictEqual({
+                    ...SERVER_STATUS,
+                    services: {
+                      ...SERVER_STATUS.services,
+                      [ServiceItem.sso]: true
+                    }
+                  });
                 });
               });
 
@@ -72,22 +68,19 @@ describe('Web Server', () => {
                 });
 
                 it(`Should set exact item in 'services' object to 'false', if ping() has not been executed successfully`, () => {
-                  expectChai(result.services)
-                    .to.be.an('object')
-                    .which.haveOwnProperty(ServiceItem.sso)
-                    .which.is.equal(false);
+                  expect(result.services).toBeObject;
+                  expect(result.services).toHaveProperty(ServiceItem.sso, false);
                 });
 
                 it(`Should keep existing items, after has been executed`, () => {
-                  expectChai(result)
-                    .to.be.an('object')
-                    .which.is.deep.equal({
-                      ...SERVER_STATUS,
-                      services: {
-                        ...SERVER_STATUS.services,
-                        [ServiceItem.sso]: false
-                      }
-                    });
+                  expect(result).toBeObject;
+                  expect(result).toStrictEqual({
+                    ...SERVER_STATUS,
+                    services: {
+                      ...SERVER_STATUS.services,
+                      [ServiceItem.sso]: false
+                    }
+                  });
                 });
               });
             });

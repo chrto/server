@@ -1,6 +1,5 @@
 import emailNotExists from './emailNotExists';
 import doer from 'utils/monad/either/do/doer';
-import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { User } from 'model/sequelize/model/user/user';
 import { Either } from 'tsmonad';
@@ -41,10 +40,8 @@ describe('Web Server', () => {
                   .then(doer({
                     right: (): void => fail(`Right side has not been expected`),
                     left: (error: AppError) => {
-                      expect(error)
-                        .toBeInstanceOf(Conflict);
-                      expect(error.message)
-                        .toEqual(ERROR_MESSAGE);
+                      expect(error).toBeInstanceOf(Conflict);
+                      expect(error.message).toEqual(ERROR_MESSAGE);
                     }
                   }));
               });
@@ -58,10 +55,8 @@ describe('Web Server', () => {
                   .then(doer({
                     right: (): void => fail(`Right side has not been expected`),
                     left: (error: AppError) => {
-                      expect(error)
-                        .toBeInstanceOf(AppError);
-                      expect(error.message)
-                        .toEqual(ERROR_MESSAGE);
+                      expect(error).toBeInstanceOf(AppError);
+                      expect(error.message).toEqual(ERROR_MESSAGE);
                     }
                   }));
               });
@@ -72,10 +67,10 @@ describe('Web Server', () => {
                   .apply(null, [userService])
                   .apply(null, [BODY])
                   .then(doer({
-                    right: (body: UserBody) =>
-                      expectChai(body)
-                        .to.be.an({}.constructor.name)
-                        .which.is.deep.equal(BODY),
+                    right: (body: UserBody) => {
+                      expect(body).toBeObject;
+                      expect(body).toStrictEqual(BODY);
+                    },
                     left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
                   }));
               });

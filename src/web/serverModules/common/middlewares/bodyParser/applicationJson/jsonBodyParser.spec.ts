@@ -2,7 +2,6 @@ import jsonBodyParserUnbound from './jsonBodyParser.unbound';
 import { NextFunction, RequestHandler, Response } from 'express';
 import { OptionsJson } from 'body-parser';
 import { AppRequest } from 'web/serverModules/types';
-import { expect as expectChai } from 'chai';
 import { MiddlewareFactory } from '../../middlewares.types';
 
 const REQUEST_HANDLER: RequestHandler = (_req: AppRequest, _res: Response, _next: NextFunction) => null;
@@ -25,16 +24,13 @@ describe(`Test 'web' module`, () => {
           });
 
           it(`Should call jsonBodyParser with exact options`, () => {
-            expect(jsonBodyParser)
-              .toHaveBeenCalledTimes(1);
-            expect(jsonBodyParser)
-              .toHaveBeenCalledWith(OPTIONS_JSON);
+            expect(jsonBodyParser).toHaveBeenCalledTimes(1);
+            expect(jsonBodyParser).toHaveBeenCalledWith(OPTIONS_JSON);
           });
 
           it(`Should return middleware function 'RequestHandler'`, () => {
-            expectChai(result)
-              .to.be.an('function')
-              .which.is.equal(REQUEST_HANDLER);
+            expect(result).toBeFunction;
+            expect(result).toEqual(REQUEST_HANDLER);
           });
         });
       });

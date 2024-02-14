@@ -1,6 +1,5 @@
 import authorizationValidator from './authorizationValidator';
 import { UserBody } from '../updateUser.types';
-import { expect as expectChai } from 'chai';
 import { NotAuthorized } from 'common/httpErrors';
 import { AppError } from 'common/error';
 import { UserRole } from 'model/sequelize/model/user/user.types';
@@ -33,10 +32,10 @@ describe('Web Server', () => {
               it(`Should return Either with body object in right side, if authorization has passed successfully`, () => {
                 authorizationValidator(USER, CURRENT_USER)(BODY)
                   .do({
-                    right: (result: UserBody) =>
-                      expectChai(result)
-                        .to.be.an('object')
-                        .which.is.deep.equal(BODY),
+                    right: (result: UserBody) => {
+                      expect(result).toBeObject;
+                      expect(result).toStrictEqual(BODY);
+                    },
                     left: (error: AppError) => fail('Left side has not been expected.' + '\n' + error.code + '\n' + error.message)
                   });
               });
@@ -44,10 +43,10 @@ describe('Web Server', () => {
               it(`Should return Either with body object in right side, if body has not fields, which has to be authorized`, () => {
                 authorizationValidator(USER, CURRENT_USER)({})
                   .do({
-                    right: (result: UserBody) =>
-                      expectChai(result)
-                        .to.be.an('object')
-                        .which.is.deep.equal({}),
+                    right: (result: UserBody) => {
+                      expect(result).toBeObject;
+                      expect(result).toStrictEqual({});
+                    },
                     left: (error: AppError) => fail('Left side has not been expected.' + '\n' + error.code + '\n' + error.message)
                   });
               });
@@ -56,10 +55,10 @@ describe('Web Server', () => {
             it(`Should return Either with body object in right side, if user tried change his name`, () => {
               authorizationValidator(USER, USER)({ firstName: 'Jack', lastName: 'Black' })
                 .do({
-                  right: (result: UserBody) =>
-                    expectChai(result)
-                      .to.be.an('object')
-                      .which.is.deep.equal({ firstName: 'Jack', lastName: 'Black' }),
+                  right: (result: UserBody) => {
+                    expect(result).toBeObject;
+                    expect(result).toStrictEqual({ firstName: 'Jack', lastName: 'Black' });
+                  },
                   left: (error: AppError) => fail('Left side has not been expected.' + '\n' + error.code + '\n' + error.message)
                 });
             });
@@ -71,9 +70,7 @@ describe('Web Server', () => {
                 .do({
                   right: () => fail('Error \'InvalidInput\' has been expected.'),
                   left: (error: AppError) =>
-                    expectChai(error)
-                      .to.be.an('error')
-                      .that.is.instanceOf(NotAuthorized)
+                    expect(error).toBeInstanceOf(NotAuthorized)
                 });
             });
 
@@ -82,9 +79,7 @@ describe('Web Server', () => {
                 .do({
                   right: () => fail('Error \'InvalidInput\' has been expected.'),
                   left: (error: AppError) =>
-                    expectChai(error)
-                      .to.be.an('error')
-                      .that.is.instanceOf(NotAuthorized)
+                    expect(error).toBeInstanceOf(NotAuthorized)
                 });
             });
 
@@ -93,9 +88,7 @@ describe('Web Server', () => {
                 .do({
                   right: () => fail('Error \'InvalidInput\' has been expected.'),
                   left: (error: AppError) =>
-                    expectChai(error.message)
-                      .to.be.an('string')
-                      .which.is.equal(`Validation failed: ["User cannot activate/deactivate himself","User cannot change his role"]`)
+                    expect(error.message).toEqual(`Validation failed: ["User cannot activate/deactivate himself","User cannot change his role"]`)
                 });
             });
           });

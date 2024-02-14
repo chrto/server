@@ -1,4 +1,3 @@
-import { assert as assertChai, expect as expectChai } from 'chai';
 import ssoConfigUnbound, { getHashAlg } from './ssoConfig.unbound';
 import { ISSOConfig } from './ssoConfig.types';
 import { DEFAULT_SSO_HASH_ALG } from 'src/defaults';
@@ -39,11 +38,9 @@ describe('server configuration module', () => {
       ssoConfig()
         .do({
           right: (appConfig: AppConfig) =>
-            expectChai(appConfig)
-              .to.haveOwnProperty('sso')
-              .which.is.deep.equal(expected),
-          left: (error: AppError) => assertChai
-            .fail(null, null, 'Left side was not expected.' + '\n' + error.code + '\n' + error.message)
+            expect(appConfig)
+              .toHaveProperty('sso', expected),
+          left: (error: AppError) => ('Left side was not expected.' + '\n' + error.code + '\n' + error.message)
         });
     });
 
@@ -52,11 +49,9 @@ describe('server configuration module', () => {
       ssoConfig()
         .do({
           right: (appConfig: AppConfig) =>
-            expectChai(appConfig)
-              .to.haveOwnProperty('sso')
-              .which.is.deep.equal({ ...expected, ssoHashAlg: DEFAULT_SSO_HASH_ALG }),
-          left: (error: AppError) => assertChai
-            .fail(null, null, 'Left side was not expected.' + '\n' + error.code + '\n' + error.message)
+            expect(appConfig)
+              .toHaveProperty('sso', { ...expected, ssoHashAlg: DEFAULT_SSO_HASH_ALG }),
+          left: (error: AppError) => fail('Left side was not expected.' + '\n' + error.code + '\n' + error.message)
         });
     });
 
@@ -64,10 +59,8 @@ describe('server configuration module', () => {
       const ssoConfig: AppConfigLoader<Either<AppError, AppConfig>> = ssoConfigUnbound.apply(null, [{}]);
       ssoConfig()
         .do({
-          right: (_appConfig: AppConfig) => assertChai
-            .fail(null, null, 'Right side was not expected.'),
-          left: (error: AppError) => expectChai(error)
-            .to.be.instanceOf(InvalidConfiguraton)
+          right: (_appConfig: AppConfig) => fail('Right side was not expected.'),
+          left: (error: AppError) => expect(error).toBeInstanceOf(InvalidConfiguraton)
         });
     });
   });

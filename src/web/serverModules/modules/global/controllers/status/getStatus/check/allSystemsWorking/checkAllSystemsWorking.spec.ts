@@ -1,5 +1,4 @@
 import checkAllSystemsWorking from './checkAllSystemsWorking';
-import { expect as expectChai } from 'chai';
 import { DatabaseState, ServerStatus, ServiceItem } from 'model/global/serverStatus/serverStatus.types';
 
 const SERVER_STATUS: ServerStatus = Object.freeze({
@@ -28,16 +27,13 @@ describe('Web Server', () => {
                 });
 
                 it(`Should set 'allSystemsWorking' item to true, if all services are up and connection to db has been established`, () => {
-                  expectChai(result)
-                    .to.be.an('object')
-                    .which.haveOwnProperty('allSystemsWorking')
-                    .which.is.equal(true);
+                  expect(result).toBeObject;
+                  expect(result).toHaveProperty('allSystemsWorking', true);
                 });
 
                 it(`Should keep existing items, after has been executed`, () => {
-                  expectChai(result)
-                    .to.be.an('object')
-                    .which.is.deep.equal({ ...SERVER_STATUS, allSystemsWorking: true });
+                  expect(result).toBeObject;
+                  expect(result).toStrictEqual({ ...SERVER_STATUS, allSystemsWorking: true });
                 });
               });
 
@@ -49,10 +45,8 @@ describe('Web Server', () => {
                   });
 
                   it(`Should set 'allSystemsWorking' item to false, if all services are up and connection to db has not been established`, () => {
-                    expectChai(result)
-                      .to.be.an('object')
-                      .which.haveOwnProperty('allSystemsWorking')
-                      .which.is.equal(false);
+                    expect(result).toBeObject;
+                    expect(result).toHaveProperty('allSystemsWorking', false);
                   });
                 });
                 describe('Service down', () => {
@@ -62,10 +56,8 @@ describe('Web Server', () => {
                   });
 
                   it(`Should set 'allSystemsWorking' item to false, if any service is down and connection to db has been established`, () => {
-                    expectChai(result)
-                      .to.be.an('object')
-                      .which.haveOwnProperty('allSystemsWorking')
-                      .which.is.equal(false);
+                    expect(result).toBeObject;
+                    expect(result).toHaveProperty('allSystemsWorking', false);
                   });
                 });
               });

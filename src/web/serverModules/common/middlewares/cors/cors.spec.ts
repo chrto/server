@@ -1,5 +1,4 @@
 import corsUnbound from './cors.unbound';
-import { expect as expectChai } from 'chai';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { MiddlewareFactory } from '../middlewares.types';
 
@@ -18,16 +17,13 @@ describe(`Test 'web' module`, () => {
         });
 
         it(`Should call 'cors' function to create cors middleware.`, () => {
-          expect(cors)
-            .toBeCalledTimes(1);
-          expect(cors)
-            .toBeCalledWith();
+          expect(cors).toHaveBeenCalledTimes(1);
+          expect(cors).toHaveBeenCalledWith();
         });
 
         it(`Should return middleware function.`, () => {
-          expectChai(middleware)
-            .to.be.an('function')
-            .which.is.equal(MIDDLEWARE);
+          expect(middleware).toBeFunction;
+          expect(middleware).toEqual(MIDDLEWARE);
         });
       });
     });
