@@ -1,6 +1,5 @@
 import { AppError } from 'common/error';
 import userFactoryUnbound from './userFactory.unbound';
-import { assert as assertChai, expect as expectChai } from 'chai';
 import { Factory } from 'common/types';
 import { Either } from 'tsmonad';
 import { UserRequired, UserItems, UserRole } from '../user.types';
@@ -27,30 +26,30 @@ describe('sequelize model', () => {
         };
         userFactory({ ...userRequired, role: UserRole.Admin, active: false })
           .do({
-            right: (items: UserItems) => expectChai(items)
-              .to.be.deep.equal(expected),
-            left: (error: AppError) => assertChai
-              .fail(null, null, 'Left side was not expected.' + '\n' + error.code + '\n' + error.message)
+            right: (items: UserItems) =>
+              expect(items).toStrictEqual(expected),
+            left: (error: AppError) =>
+              fail(`Left side has not been expected: ${error.message}`)
           });
       });
 
       it(`Default role should by 'User'`, () => {
         userFactory(userRequired)
           .do({
-            right: (items: UserItems) => expectChai(items.role)
-              .to.be.equal(UserRole.User),
-            left: (error: AppError) => assertChai
-              .fail(null, null, 'Left side was not expected.' + '\n' + error.code + '\n' + error.message)
+            right: (items: UserItems) =>
+              expect(items.role).toEqual(UserRole.User),
+            left: (error: AppError) =>
+              fail(`Left side has not been expected: ${error.message}`)
           });
       });
 
       it(`Default active should by true`, () => {
         userFactory(userRequired)
           .do({
-            right: (items: UserItems) => expectChai(items.active)
-              .to.be.equal(true),
-            left: (error: AppError) => assertChai
-              .fail(null, null, 'Left side was not expected.' + '\n' + error.code + '\n' + error.message)
+            right: (items: UserItems) =>
+              expect(items.active).toBeTrue,
+            left: (error: AppError) =>
+              fail(`Left side has not been expected: ${error.message}`)
           });
       });
     });
