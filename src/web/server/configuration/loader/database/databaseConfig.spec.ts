@@ -1,4 +1,3 @@
-import { expect as expectChai } from 'chai';
 import { DEFAULT_DB_ALLOW_LOGGING, DEFAULT_DB_ALLOW_SYNC, DEFAULT_DB_DIALECT, DEFAULT_DB_URL } from 'src/defaults';
 import { AppConfig, AppConfigLoader } from '../appConfig.types';
 import { EDatabaseDialect, IDatabaseConfig } from './databaseConfig.types';
@@ -27,9 +26,8 @@ describe('server configuration module', () => {
       };
       const databaseConfig: AppConfigLoader<AppConfig> = databaseConfigUnbound.apply(null, [env]);
 
-      expectChai(databaseConfig())
-        .to.haveOwnProperty('database')
-        .which.is.deep.equal(expected);
+      expect(databaseConfig())
+        .toHaveProperty('database', expected);
     });
 
     it(`Should use values from 'defaults.ts', if does not find in environment.`, () => {
@@ -41,9 +39,8 @@ describe('server configuration module', () => {
       };
       const databaseConfig: AppConfigLoader<AppConfig> = databaseConfigUnbound.apply(null, [{}]);
 
-      expectChai(databaseConfig())
-        .to.haveOwnProperty('database')
-        .which.is.deep.equal(expected);
+      expect(databaseConfig())
+        .toHaveProperty('database', expected);
     });
   });
 });

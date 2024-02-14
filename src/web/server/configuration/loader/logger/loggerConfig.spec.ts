@@ -1,5 +1,4 @@
 import loggerConfigUnbound from './loggerConfig.unbound';
-import { expect as expectChai } from 'chai';
 import { AppConfig, AppConfigLoader } from '../appConfig.types';
 import { ILoggerConfig } from './loggerConfig.types';
 import { DEFAULT_LOG_CONSOLE_ENABLE, DEFAULT_LOG_CONSOLE_LEVEL, DEFAULT_LOG_DIR, DEFAULT_LOG_FILE_DATE_PATTERN, DEFAULT_LOG_FILE_LEVEL, DEFAULT_LOG_FILE_MAX_FILES, DEFAULT_LOG_FILE_MAX_SIZE, DEFAULT_LOG_FILE_NAME_ERROR, DEFAULT_LOG_FILE_NAME_EXCEPTIONS, DEFAULT_LOG_FILE_NAME_INFO, DEFAULT_LOG_FILE_ZIP_ARCH, DEFAULT_LOG_LABEL, DEFAULT_LOG_SPLUNK_ENABLE, DEFAULT_LOG_SPLUNK_INDEX, DEFAULT_LOG_SPLUNK_LEVEL } from 'src/defaults';
@@ -58,9 +57,8 @@ describe('server configuration module', () => {
       };
       const loggerConfig: AppConfigLoader<AppConfig> = loggerConfigUnbound.apply(null, [env]);
 
-      expectChai(loggerConfig())
-        .to.haveOwnProperty('appLogger')
-        .which.is.deep.equal(expected);
+      expect(loggerConfig())
+        .toHaveProperty('appLogger', expected);
     });
 
     it(`Should use values from 'defaults.ts', if does not find in environment.`, () => {
@@ -91,46 +89,35 @@ describe('server configuration module', () => {
       };
       const loggerConfig: AppConfigLoader<AppConfig> = loggerConfigUnbound.apply(null, [{}]);
 
-      expectChai(loggerConfig())
-        .to.haveOwnProperty('appLogger')
-        .which.is.deep.equal(expected);
+      expect(loggerConfig())
+        .toHaveProperty('appLogger', expected);
     });
 
     it(`Should use values from 'defaults.ts', if 'LOG_CONSOLE_ENABLE' and 'LOG_FILE_ZIP_ARCH' is not a number`, () => {
       const loggerConfig: AppConfigLoader<AppConfig> = loggerConfigUnbound.apply(null, [{ LOG_CONSOLE_ENABLE: 'aa', LOG_FILE_ZIP_ARCH: 'aa' }]);
       const config: ILoggerConfig = loggerConfig().appLogger;
-      expectChai(config)
-        .to.haveOwnProperty('fileZipArchive')
-        .which.is.equal(DEFAULT_LOG_FILE_ZIP_ARCH);
-      expectChai(config)
-        .to.haveOwnProperty('consoleEnable')
-        .which.is.equal(DEFAULT_LOG_CONSOLE_ENABLE);
+      expect(config)
+        .toHaveProperty('fileZipArchive', DEFAULT_LOG_FILE_ZIP_ARCH);
+      expect(config)
+        .toHaveProperty('consoleEnable', DEFAULT_LOG_CONSOLE_ENABLE);
     });
 
     it(`Should set 'fileMaxSize' and 'fileMaxFiles' as number`, () => {
       const loggerConfig: AppConfigLoader<AppConfig> = loggerConfigUnbound.apply(null, [{ LOG_FILE_MAX_SIZE: '1024', LOG_FILE_MAX_FILES: '14' }]);
       const config: ILoggerConfig = loggerConfig().appLogger;
-      expectChai(config)
-        .to.haveOwnProperty('fileMaxSize')
-        .which.is.an('number')
-        .and.is.equal(1024);
-      expectChai(config)
-        .to.haveOwnProperty('fileMaxFiles')
-        .which.is.an('number')
-        .and.is.equal(14);
+      expect(config)
+        .toHaveProperty('fileMaxSize', 1024);
+      expect(config)
+        .toHaveProperty('fileMaxFiles', 14);
     });
 
     it(`Should set 'fileMaxSize' and 'fileMaxFiles' as string`, () => {
       const loggerConfig: AppConfigLoader<AppConfig> = loggerConfigUnbound.apply(null, [{ LOG_FILE_MAX_SIZE: '5m', LOG_FILE_MAX_FILES: '14d' }]);
       const config: ILoggerConfig = loggerConfig().appLogger;
-      expectChai(config)
-        .to.haveOwnProperty('fileMaxSize')
-        .which.is.an('string')
-        .and.is.equal('5m');
-      expectChai(config)
-        .to.haveOwnProperty('fileMaxFiles')
-        .which.is.an('string')
-        .and.is.equal('14d');
+      expect(config)
+        .toHaveProperty('fileMaxSize', '5m');
+      expect(config)
+        .toHaveProperty('fileMaxFiles', '14d');
     });
   });
 });
