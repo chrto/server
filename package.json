@@ -22,7 +22,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "copy:web.config": "shx cp web.config ./dist",
-    "docker:build": "npm run build && docker build -f ./deployment/server/Dockerfile -t demo/server .",
+    "docker:build": "npm run build && docker build -f ./Dockerfile -t demo/server .",
     "docker:start:api": "npm run docker:build && docker run --rm -it -v $PWD/etc:/home/node/app/etc -v $PWD/storage:/home/node/app/storage -p 8180:8000 -p 8181:8001 --name \"server\" -d demo/server",
     "docker:stop:api": "(docker stop server || echo .) && (docker rm server || echo .) && docker rmi demo/server",
     "docker:splunk": "docker-compose up --detach splunk",
@@ -35,14 +35,12 @@
     "keycloak:export": "docker exec -it keycloak /opt/jboss/keycloak/bin/standalone.sh -Djboss.socket.binding.port-offset=100 -Dkeycloak.migration.action=export -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.realmName=demo -Dkeycloak.migration.usersExportStrategy=REALM_FILE -Dkeycloak.migration.file=/tmp/realm-demo.json"
   },
   "devDependencies": {
-    "@types/chai": "^4.3.11",
     "@types/express": "^4.17.21",
     "@types/fs-extra": "^11.0.4",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.11.5",
     "@types/ramda": "^0.29.9",
     "@types/validator": "^13.11.8",
-    "chai": "^5.0.0",
     "clean-webpack-plugin": "^4.0.0",
     "eslint": "^8.56.0",
     "jest": "^29.7.0",

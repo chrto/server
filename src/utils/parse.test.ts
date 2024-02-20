@@ -1,4 +1,3 @@
-// import {assert} from 'chai';
 import { Conflict, InvalidInput } from 'common/httpErrors';
 
 import { parseJSON, parseNumber } from './parse';
