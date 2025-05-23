@@ -1,11 +1,12 @@
 import { AppError } from 'common/error';
-import { Model, UpdateOptions } from 'sequelize/types';
+import { Attributes, Model, ModelStatic, UpdateOptions } from 'sequelize';
+import { Col, Fn, Literal } from 'sequelize/types/utils';
 import { Either } from 'tsmonad';
 import { Fcn } from 'common/types';
 
 export default (errorHandler: Fcn<[Error, string], AppError>) =>
-  <T extends Model> (model: { new(): T; } & typeof Model) =>
-    async (object: any, options: UpdateOptions): Promise<Either<AppError, number>> =>
-      model.update<T>(object, options)
-        .then(([numRowsChanged]: [number]): number => numRowsChanged)
+  <T extends Model> (model: ModelStatic<T>) =>
+    async (values: { [key in keyof Attributes<T>]?: Attributes<T>[key] | Fn | Col | Literal; }, options: UpdateOptions): Promise<Either<AppError, number>> =>
+      model.update<T>(values, options)
+        .then(([numRowsChanged]: [number]): Either<AppError, number> => Either.right(numRowsChanged))
         .catch((error: Error): Either<AppError, number> => Either.left<AppError, number>(errorHandler(error, `while trying to update ${model.name}`)));

@@ -22,7 +22,7 @@ export class User extends Model implements UserItems {
   }
 }
 
-export default (sequelize: Sequelize): void =>
+export default (sequelize: Sequelize): typeof User =>
   User.init(
     {
       id: {
