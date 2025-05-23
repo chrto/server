@@ -1,5 +1,4 @@
 import asyncTap from './asyncTap';
-import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { Either } from 'tsmonad';
 import { Fcn } from 'common/types';
@@ -29,10 +28,8 @@ describe('utils', () => {
         });
 
         it(`Should return the original value, so is meant for running functions with side-effects`, () => {
-          expectChai(result)
-            .to.be.equals(either);
-          expectChai(globalValue)
-            .to.be.equals(value);
+          expect(result).toBe(either);
+          expect(globalValue).toEqual(value);
         });
       });
     });
