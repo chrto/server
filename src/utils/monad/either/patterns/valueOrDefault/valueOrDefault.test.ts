@@ -1,7 +1,6 @@
+import { AppError } from 'common/error';
 import valueOrDefault from './valueOrDefault';
-import { expect as expectChai } from 'chai';
 import { Either } from 'tsmonad';
-import { AppError } from 'common/error/error';
 
 const DEFAULT: number = 100;
 
@@ -20,9 +19,8 @@ describe('utils', () => {
           it('Should be Either with value in right side', () => {
             result.do({
               right: (val: number): void => {
-                expectChai(val)
-                  .to.be.an('number')
-                  .which.is.equal(value);
+                expect(val).toBeNumber;
+                expect(val).toEqual(value);
               },
               left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
             });
@@ -39,9 +37,8 @@ describe('utils', () => {
           it('Should be Either with default value in right side', () => {
             result.do({
               right: (val: number): void => {
-                expectChai(val)
-                  .to.be.an('number')
-                  .which.is.equal(DEFAULT);
+                expect(val).toBeNumber;
+                expect(val).toEqual(DEFAULT);
               },
               left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
             });

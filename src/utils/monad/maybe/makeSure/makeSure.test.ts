@@ -1,5 +1,4 @@
 import makeSure from './makeSure';
-import { expect as expectChai } from 'chai';
 import { Maybe } from 'tsmonad';
 
 const predicate = (v: number): boolean => v > 0 ? true : false;
@@ -20,9 +19,8 @@ describe('abstractons', () => {
         it(`Should return Maybe with value`, () => {
           result.do({
             just: (v: number): void => {
-              expectChai(v)
-                .to.be.an('number')
-                .which.is.equal(value);
+              expect(v).toBeNumber;
+              expect(v).toEqual(value);
             },
             nothing: () => fail(`Nothing has not been expected.`)
           });

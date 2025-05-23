@@ -1,5 +1,4 @@
 import caseOf from './caseOf';
-import { expect as expectChai } from 'chai';
 import { Fcn } from 'common/types';
 import { Maybe, MaybePatterns } from 'tsmonad';
 
@@ -27,8 +26,7 @@ describe('abstractions', () => {
         });
 
         it(`Should return unwraped value from maybe`, () => {
-          expectChai(result)
-            .to.be.equals(value);
+          expect(result).toEqual(value);
         });
       });
 
@@ -40,8 +38,7 @@ describe('abstractions', () => {
         });
 
         it(`Should return null`, () => {
-          expectChai(result)
-            .to.be.equals(null);
+          expect(result).toBeNull;
         });
       });
     });

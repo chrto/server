@@ -1,5 +1,4 @@
 import extractPromiseMaybe from './extractPromiseMaybe';
-import { expect as expectChai } from 'chai';
 import { Maybe } from 'tsmonad';
 
 describe('abstraction', () => {
@@ -19,9 +18,8 @@ describe('abstraction', () => {
           it('Should resolve Maybe with value in just side.', () => {
             result.do({
               just: (val: number): void => {
-                expectChai(val)
-                  .to.be.an('number')
-                  .which.is.equal(value);
+                expect(val).toBeNumber;
+                expect(val).toEqual(value);
               },
               nothing: () => fail(`Nothing has not been expected`)
             });

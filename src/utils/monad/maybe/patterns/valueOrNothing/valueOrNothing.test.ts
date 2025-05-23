@@ -1,5 +1,4 @@
 import valueOrNothing from './valueOrNothing';
-import { expect as expectChai } from 'chai';
 import { Maybe } from 'tsmonad';
 
 describe('utils', () => {
@@ -17,9 +16,8 @@ describe('utils', () => {
           it('Should be Maybe with value', () => {
             result.do({
               just: (val: number): void => {
-                expectChai(val)
-                  .to.be.an('number')
-                  .which.is.equal(value);
+                expect(val).toBeNumber;
+                expect(val).toEqual(value);
               },
               nothing: () => fail(`Nothing has not been expected`)
             });

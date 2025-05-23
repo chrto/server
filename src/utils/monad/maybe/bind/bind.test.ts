@@ -1,5 +1,4 @@
 import bind from './bind';
-import { expect as expectChai } from 'chai';
 import { Maybe } from 'tsmonad';
 
 const func = (v: number): Maybe<number> => Maybe.just<number>(v);
@@ -19,17 +18,14 @@ describe('abstractions', () => {
         });
 
         it(`Should return new Maybe`, () => {
-          expectChai(result)
-            .to.not.be.equals(maybe);
+          expect(result).not.toBe(maybe);
         });
 
         it(`Should return result of the function func wrapped inside an Maybe object.`, () => {
           result.do({
             just: (v: number): void => {
-              expectChai(v)
-                .to.be.an('number');
-              expectChai(v)
-                .to.be.equals(value);
+              expect(v).toBeNumber;
+              expect(v).toEqual(value);
             },
             nothing: () => fail(`Nothing has not been expected`)
           });
@@ -44,8 +40,7 @@ describe('abstractions', () => {
         });
 
         it(`Should return new Maybe`, () => {
-          expectChai(result)
-            .to.not.be.equals(maybe);
+          expect(result).not.toBe(maybe);
         });
 
         it(`Should return Maybe with nothing.`, () => {

@@ -1,5 +1,4 @@
 import maybeValue from './maybeValue';
-import { expect as expectChai } from 'chai';
 import { Maybe } from 'tsmonad';
 
 describe('abstractions', () => {
@@ -17,9 +16,8 @@ describe('abstractions', () => {
           it('Should be Maybe with value', () => {
             result.do({
               just: (val: number): void => {
-                expectChai(val)
-                  .to.be.an('number')
-                  .which.is.equal(value);
+                expect(val).toBeNumber;
+                expect(val).toEqual(value);
               },
               nothing: () => fail(`Maybe nothing has not been expected`)
             });

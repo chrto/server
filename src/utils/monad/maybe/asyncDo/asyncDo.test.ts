@@ -1,5 +1,4 @@
 import asyncDoer from './asyncDoer';
-import { expect as expectChai } from 'chai';
 import { Fcn } from 'common/types';
 import { Maybe, OptionalMaybePatterns } from 'tsmonad';
 
@@ -34,10 +33,8 @@ describe('abstractions', () => {
         });
 
         it(`Should return the original value, so is meant for running functions with side-effects`, () => {
-          expectChai(result)
-            .to.be.equals(maybe);
-          expectChai(globalValue)
-            .to.be.equals(value);
+          expect(result).toBe(maybe);
+          expect(globalValue).toEqual(value);
         });
       });
 
@@ -52,10 +49,8 @@ describe('abstractions', () => {
         });
 
         it(`Should return the original value, so is meant for running functions with side-effects`, () => {
-          expectChai(result)
-            .to.be.equals(maybe);
-          expectChai(globalValue)
-            .to.be.equals(null);
+          expect(result).toBe(maybe);
+          expect(globalValue).toBeNull;
         });
       });
 
@@ -68,10 +63,8 @@ describe('abstractions', () => {
         });
 
         it(`Should return the original value, so is meant for running functions with side-effects`, () => {
-          expectChai(result)
-            .to.be.equals(maybe);
-          expectChai(globalValue)
-            .to.be.equals(null);
+          expect(result).toBe(maybe);
+          expect(globalValue).toBeNull;
         });
       });
 
@@ -84,10 +77,8 @@ describe('abstractions', () => {
         });
 
         it(`Should return the original value, so is meant for running functions with side-effects`, () => {
-          expectChai(result)
-            .to.be.equals(maybe);
-          expectChai(globalValue)
-            .to.be.equals(null);
+          expect(result).toBe(maybe);
+          expect(globalValue).toBeNull;
         });
       });
     });
