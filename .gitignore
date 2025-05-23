@@ -4,6 +4,7 @@ dist
 .env
 .vscode
 .editorconfig
+.temp
 
 logs
 

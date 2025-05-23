@@ -13,7 +13,7 @@ describe('Web Server', () => {
         });
         it(`Should create an object, which has 'Context' interface`, () => {
           expect(globalContext).toBeInstanceOf(Object);
-          expect(globalContext).toEqual({})
+          expect(globalContext).toEqual({});
           expect(globalContext).toStrictEqual({});
         });
       });

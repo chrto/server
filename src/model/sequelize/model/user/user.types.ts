@@ -1,11 +1,13 @@
 import { Mandatory } from 'common/types';
+import { CreationAttributes } from 'sequelize';
+import { User } from './user';
 
 export enum UserRole {
   Admin = 'Admin',
   User = 'User'
 }
 
-export interface UserRequired {
+export interface UserRequired extends CreationAttributes<User> {
   firstName: string;
   lastName: string;
   email: string;

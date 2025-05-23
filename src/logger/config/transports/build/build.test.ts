@@ -10,24 +10,24 @@ function File (opt: FileTransportOptions): void {
   this.handleExceptions = opt.handleExceptions;
   this.dirname = opt.dirname;
   // ...
-};
+}
 
 function DailyRotateFile (opt: DailyRotateFileTransportOptions): void {
   this.filename = opt.filename;
   this.dirname = opt.dirname;
   // ...
-};
+}
 
 function Console (opt: ConsoleTransportOptions): void {
   this.level = opt.level;
   this.handleExceptions = opt.handleExceptions;
   // ...
-};
+}
 
 function SplunkStreamEvent (opt: SplunkTransportOptions): void {
   this.level = opt.level;
   // ...
-};
+}
 
 const OPTIONS: TransportOptions = {
   file: {
@@ -129,7 +129,7 @@ describe('Logger', () => {
 
         it(`Should return list of exact 1 logger exception transports in exception item`, () => {
           const expected = [
-            new File(OPTIONS.exceptions),
+            new File(OPTIONS.exceptions)
           ];
 
           const result: TransportsDefinition = transports

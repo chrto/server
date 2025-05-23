@@ -19,7 +19,7 @@ const env = {
   SSO_HASH_ALG: 'RS256',
   SSO_CLIENT_ID: 'client_id',
   SSO_CLIENT_SECRET: 'client_secret',
-  SSO_REDIRECT_URI: '= http://localhost:8080/callback',
+  SSO_REDIRECT_URI: '= http://localhost:8080/callback'
 };
 
 describe('server configuration module', () => {

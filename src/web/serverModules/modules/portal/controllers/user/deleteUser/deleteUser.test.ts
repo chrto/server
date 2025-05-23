@@ -12,7 +12,6 @@ import differentEntity from 'web/serverModules/common/authorization/validators/d
 import userService from 'service/sequelize/userService/userService';
 import { NotAuthorized } from 'common/httpErrors';
 
-
 const USER_REQUIRED: UserItems = {
   id: '3a2cffc9-1fc5-4a05-87d8-8411cd4f920c',
   firstName: 'Joe',

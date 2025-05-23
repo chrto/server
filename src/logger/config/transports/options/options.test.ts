@@ -101,7 +101,7 @@ describe('Logger', () => {
           const expected: SplunkTransportOptions = {
             level: CONFIG.splunkLevel,
             splunk: {
-              token: CONFIG.splunkToken,
+              token: CONFIG.splunkToken
             }
           };
 

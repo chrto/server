@@ -1,15 +1,15 @@
 import valueOrError from 'utils/monad/either/patterns/valueOrError/valueOrError';
 import { AppError } from 'common/error';
-import { Model, UpdateOptions } from 'sequelize/types';
+import { Attributes, Model, ModelStatic, UpdateOptions } from 'sequelize';
+import { Col, Fn, Literal } from 'sequelize/types/utils';
 import { Either } from 'tsmonad';
 import { SequelizeIncludes } from 'service/sequelize/types';
-import { Entity } from 'model/sequelize/modelFactory/modelFactory.types';
 import { RowsAndCount } from '../sequelizeStorage.types';
 import { Fcn } from 'common/types';
 
 export default (errorHandler: Fcn<[Error, string], AppError>) =>
-  <T extends Model> (model: { new(): T; } & typeof Model) =>
-    async (values: Entity<string>, options: Omit<UpdateOptions, 'where'>, includes: SequelizeIncludes, error: AppError): Promise<Either<AppError, T>> =>
+  <T extends Model> (model: ModelStatic<T>) =>
+    async (values: { [key in keyof Attributes<T>]?: Attributes<T>[key] | Fn | Col | Literal; }, options: UpdateOptions, includes: SequelizeIncludes, error: AppError): Promise<Either<AppError, T>> =>
       model.update<T>(values, { where: { id: values.id }, ...options })
         .then(
           async ([numRowsChanged]: [number]): Promise<RowsAndCount<T>> =>

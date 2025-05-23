@@ -7,10 +7,10 @@ import update from './update/update';
 import create from './create/create';
 import bulkCreate from './bulkCreate/bulkCreate';
 import destroy from './destroy/destroy';
-import { Model } from 'sequelize/types';
+import { Model, ModelStatic } from 'sequelize/types';
 import { SequelizeStorage } from './sequelizeStorage.types';
 
-export default <T extends Model> (model: { new(): T; } & typeof Model): SequelizeStorage<T> => ({
+export default <T extends Model> (model: ModelStatic<T>): SequelizeStorage<T> => ({
   findAll: findAll<T>(model),
   findOne: findOne<T>(model),
   findAndCountAll: findAndCountAll<T>(model),

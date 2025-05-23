@@ -9,7 +9,7 @@ const CONFIG: ILoggerConfig = {
   dir: './logs',
   fileMaxSize: 1024,
   fileMaxFiles: '14d',
-  consoleLevel: 'debug',
+  consoleLevel: 'debug'
 } as ILoggerConfig;
 
 describe('Logger', () => {
