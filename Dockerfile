@@ -1,7 +1,7 @@
 #---Build stage starting---
-FROM node:20.11.0-alpine
+FROM node:23.11.1-alpine
 
-ENV NPM_CONFIG_LOGLEVEL warn
+ENV NPM_CONFIG_LOGLEVEL=warn
 
 WORKDIR /home/node/app
 RUN chown -R node:node /home/node/app
