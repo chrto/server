@@ -14,8 +14,8 @@ describe('Web Server', () => {
           });
 
           it('Happy path', () => {
-            expect(controller).toBeInstanceOf(Object)
-            expect(controller).toHaveProperty('getLoggedInUser')
+            expect(controller).toBeInstanceOf(Object);
+            expect(controller).toHaveProperty('getLoggedInUser');
           });
         });
       });

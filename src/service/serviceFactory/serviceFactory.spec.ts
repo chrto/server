@@ -24,12 +24,12 @@ describe(`service`, () => {
     });
 
     it(`Should return 'PluginSdkService'`, () => {
-      expect(pluginSdkService).toBeObject
+      expect(pluginSdkService).toBeObject;
 
-      expect(pluginSdkService).toHaveProperty('sdkStartStop')
-      expect(pluginSdkService).toHaveProperty('sdkTransaction')
-      expect(pluginSdkService).toHaveProperty('authenticationService')
-      expect(pluginSdkService).toHaveProperty('userService')
+      expect(pluginSdkService).toHaveProperty('sdkStartStop');
+      expect(pluginSdkService).toHaveProperty('sdkTransaction');
+      expect(pluginSdkService).toHaveProperty('authenticationService');
+      expect(pluginSdkService).toHaveProperty('userService');
     });
   });
 });

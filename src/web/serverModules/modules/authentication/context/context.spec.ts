@@ -12,7 +12,7 @@ describe('Web Server', () => {
           authenticationContext = context.apply(null, [request]);
         });
         it(`Should create an object, which has 'Context' interface`, () => {
-          expect(authenticationContext).toBeInstanceOf(Object)
+          expect(authenticationContext).toBeInstanceOf(Object);
           expect(authenticationContext).toStrictEqual({});
         });
       });

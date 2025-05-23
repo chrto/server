@@ -13,7 +13,7 @@ describe('Common/Types tests', () => {
   it('NotFound extends Error', () => {
     let err = new NotFound('Not Found');
 
-    expect(err).toBeInstanceOf(NotFound)
+    expect(err).toBeInstanceOf(NotFound);
     expect(err.message).toBe('Not Found');
     expect(err.code).toBe('not.found');
   });

@@ -39,7 +39,7 @@ describe('Test `retry` module', function () {
       )
       .catch(
         (err) => {
-          expect(err).toBeInstanceOf(AppError)
+          expect(err).toBeInstanceOf(AppError);
           expect(err.code).toBe('app.error');
           expect(err.message).toBe('Promise is rejected');
           done();

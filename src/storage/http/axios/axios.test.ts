@@ -13,7 +13,7 @@ describe(`storage`, () => {
           .apply(null, [AXIOS]);
       });
       it('Should build axios storage object', () => {
-        expect(storage).toBeInstanceOf(Object)
+        expect(storage).toBeInstanceOf(Object);
         expect(storage).toHaveProperty('getRequest');
         expect(storage).toHaveProperty('postRequest');
         expect(storage).toHaveProperty('patchRequest');
