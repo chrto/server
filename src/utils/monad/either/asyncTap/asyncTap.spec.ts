@@ -1,7 +1,7 @@
 import asyncTap from './asyncTap';
 import { AppError } from 'common/error';
+import { InternalServerError } from 'common/httpErrors';
 import { Either } from 'tsmonad';
-import { InternalCollectorError } from 'common/error/collectorErrors';
 
 describe('utils', () => {
   describe('either', () => {
@@ -38,7 +38,7 @@ describe('utils', () => {
       });
 
       describe(`Left side`, () => {
-        const appError: AppError = new InternalCollectorError();
+        const appError: AppError = new InternalServerError();
 
         beforeAll(() => {
           jest.clearAllMocks();
