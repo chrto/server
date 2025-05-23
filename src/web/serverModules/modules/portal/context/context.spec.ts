@@ -1,5 +1,4 @@
 import context from './context';
-import { expect as expectChai } from 'chai';
 import { User as PortalUser } from 'model/sequelize/model/user/user';
 
 import { AppRequest } from 'web/serverModules/types';
@@ -19,22 +18,21 @@ describe('Web Server', () => {
   describe('Modules', () => {
     describe('Global', () => {
       describe('context', () => {
-        let request: AppRequest<unknown, unknown, PortalUser> = {
+        let request: AppRequest<PortalUser> = {
           currentUser,
           implicits: { user }
-        } as AppRequest<unknown, unknown, PortalUser>;
+        } as AppRequest<PortalUser>;
         let portalContext: Context;
 
         beforeAll(() => {
           portalContext = context.apply(null, [request]);
         });
         it(`Should create an exact object, which has 'Context' interface`, () => {
-          expectChai(portalContext)
-            .to.be.an('object')
-            .which.is.deep.equal({
-              loggedInUser: currentUser,
-              implicits: { user }
-            });
+          expect(portalContext).toBeObject;
+          expect(portalContext).toStrictEqual({
+            loggedInUser: currentUser,
+            implicits: { user }
+          });
         });
       });
     });

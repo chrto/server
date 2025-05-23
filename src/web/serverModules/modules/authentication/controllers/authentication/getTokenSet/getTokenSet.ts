@@ -10,6 +10,6 @@ import { AuthenticationService } from 'service/http/authentication/types';
 import { TokenQueryParams } from './getTokenSet.types';
 
 export default (authenticationService: AuthenticationService) =>
-  async (_ctx: Context, req: AppRequest<TokenQueryParams, unknown, unknown>, _res: Response): Promise<Either<AppError, TokenSetModel>> =>
+  async (_ctx: Context, req: AppRequest<unknown, unknown, TokenQueryParams>, _res: Response): Promise<Either<AppError, TokenSetModel>> =>
     Promise.resolve(queryValidator(req.query))
       .then(asyncBind(authenticationService.getTokensSet));

@@ -1,6 +1,5 @@
 import initUnbound from './init.unbound';
 
-import * as cluster from 'cluster';
 import fileStorage from 'storage/file/file';
 import { addColors } from 'winston';
 
@@ -9,6 +8,6 @@ import loggerOptions from './options/options';
 import buildLogger from './buildLogger/buildLogger';
 
 export default initUnbound
-  .apply(null, [fileStorage, cluster.isMaster])
+  .apply(null, [fileStorage, true])
   .apply(null, [addColors])
   .apply(null, [transports, loggerOptions, buildLogger]);

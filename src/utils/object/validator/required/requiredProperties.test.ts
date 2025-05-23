@@ -1,5 +1,4 @@
 import hasRequiredFieldsUnbound from './requiredProperties.unbound';
-import { expect as expectChai } from 'chai';
 import { isNotInArray } from 'utils/validation';
 import { InvalidInput, NotAuthorized } from 'common/httpErrors';
 
@@ -24,9 +23,10 @@ describe('utils', () => {
           .apply(null, [REQUIRED_FIELDS])
           .apply(null, [obj])
           .do({
-            right: (obj: any) =>
-              expectChai(obj)
-                .to.be.deep.equal(obj),
+            right: (result: any) => {
+              expect(result).toBeObject;
+              expect(result).toStrictEqual(obj);
+            },
             left: (error) => fail(`Left side has not been expected: ${error.message}`)
           });
       });
@@ -38,10 +38,8 @@ describe('utils', () => {
           .do({
             right: () => fail(`Right side has not been expected`),
             left: (error) => {
-              expectChai(error)
-                .to.be.instanceOf(NotAuthorized);
-              expectChai(error.message)
-                .to.be.equal('following required properties are missing in request: b');
+              expect(error).toBeInstanceOf(NotAuthorized);
+              expect(error.message).toEqual('following required properties are missing in request: b');
             }
           });
       });
@@ -53,10 +51,8 @@ describe('utils', () => {
           .do({
             right: () => fail(`Right side has not been expected`),
             left: (error) => {
-              expectChai(error)
-                .to.be.instanceOf(InvalidInput);
-              expectChai(error.message)
-                .to.be.equal('following required properties are missing in request: b');
+              expect(error).toBeInstanceOf(InvalidInput);
+              expect(error.message).toEqual('following required properties are missing in request: b');
             }
           });
       });

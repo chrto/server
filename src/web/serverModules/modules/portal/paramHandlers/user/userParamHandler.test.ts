@@ -1,5 +1,4 @@
 import userParamHandlerUnbound from './userParamHandler.unbound';
-import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { NextFunction, Response } from 'express';
 import { User } from 'model/sequelize/model/user/user';
@@ -28,7 +27,7 @@ describe('Web Server', () => {
           let nextFunction: jest.Mock<void, [any]>;
           let serviceExecutro: jest.Mock<Promise<Either<AppError, User>>, [string]>;
           let userService: UserService = {} as UserService;
-          let userParamHandler: Fcn<[AppRequest<unknown, unknown, User, RequestImplicits>, Response, NextFunction, string], Promise<void>>;
+          let userParamHandler: Fcn<[AppRequest<User, RequestImplicits>, Response, NextFunction, string], Promise<void>>;
 
           beforeAll(() => {
             nextFunction = jest.fn().mockReturnValue(null);
@@ -41,25 +40,21 @@ describe('Web Server', () => {
           });
 
           describe('Happy path', () => {
-            let req: AppRequest<unknown, unknown, User, RequestImplicits> = {} as AppRequest<unknown, unknown, User, RequestImplicits>;
+            let req: AppRequest<User, RequestImplicits> = {} as AppRequest<User, RequestImplicits>;
             beforeAll(async () => {
               jest.clearAllMocks();
               await userParamHandler(req, null, nextFunction, USER_ID);
             });
 
             it(`Should handle Either right side branch`, () => {
-              expect(nextFunction)
-                .toHaveBeenCalledTimes(1);
-              expect(nextFunction)
-                .toHaveBeenCalledWith();
+              expect(nextFunction).toHaveBeenCalledTimes(1);
+              expect(nextFunction).toHaveBeenCalledWith();
             });
 
             it(`Should add user in to request implicits`, () => {
-              expectChai(req)
-                .to.haveOwnProperty('implicits');
-              expectChai(req.implicits)
-                .to.haveOwnProperty('user')
-                .which.is.deep.equal(USER);
+              expect(req).toHaveProperty('implicits');
+              expect(req.implicits).toHaveProperty('user');
+              expect(req.implicits.user).toStrictEqual(USER);
             });
           });
 
@@ -72,10 +67,8 @@ describe('Web Server', () => {
               });
 
               it(`Should handle Either left side branch and pass exact error in to next middleware`, () => {
-                expect(nextFunction)
-                  .toHaveBeenCalledTimes(1);
-                expect(nextFunction)
-                  .toHaveBeenCalledWith(new InvalidInput(`userId ${userId} is not valid uuid`));
+                expect(nextFunction).toHaveBeenCalledTimes(1);
+                expect(nextFunction).toHaveBeenCalledWith(new InvalidInput(`userId ${userId} is not valid uuid`));
               });
             });
 
@@ -93,10 +86,8 @@ describe('Web Server', () => {
               });
 
               it(`Should handle Either left side branch and pass exact error in to next middleware`, () => {
-                expect(nextFunction)
-                  .toHaveBeenCalledTimes(1);
-                expect(nextFunction)
-                  .toHaveBeenCalledWith(error);
+                expect(nextFunction).toHaveBeenCalledTimes(1);
+                expect(nextFunction).toHaveBeenCalledWith(error);
               });
             });
           });

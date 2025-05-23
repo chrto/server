@@ -1,4 +1,3 @@
-import { assert } from 'chai';
 import { pickProperties } from './pick';
 
 describe('Test `Pick` module', function () {
@@ -13,8 +12,7 @@ describe('Test `Pick` module', function () {
         const expected = {
             b: 2
         };
-
-        assert.deepEqual(pickProperties(properties)(source), expected);
+        expect(pickProperties(properties)(source)).toStrictEqual(expected);
     });
 
     it('should return empty object when no matching fields', function () {
@@ -26,7 +24,7 @@ describe('Test `Pick` module', function () {
         };
         const expected = {};
 
-        assert.deepEqual(pickProperties(properties)(source), expected);
+        expect(pickProperties(properties)(source)).toStrictEqual(expected);
     });
 
     it('should return array, if field is array', function () {
@@ -40,8 +38,7 @@ describe('Test `Pick` module', function () {
           a: [1, 2, 3],
           b: 2
       };
-
-        assert.deepEqual(pickProperties(properties)(source), expected);
+        expect(pickProperties(properties)(source)).toStrictEqual(expected);
     });
 
     it('should return array, if field is array with objects and has not \'id\'', function () {
@@ -69,7 +66,6 @@ describe('Test `Pick` module', function () {
           ],
           b: 2
         };
-
-        assert.deepEqual(pickProperties(properties)(source), expected);
+        expect(pickProperties(properties)(source)).toStrictEqual(expected);
     });
 });

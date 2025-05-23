@@ -1,5 +1,4 @@
 import loadUserJWTUnbound from './loadUserJWT.unbound';
-import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import { Fcn } from 'common/types';
 import { NextFunction, RequestHandler } from 'express';
@@ -38,11 +37,11 @@ describe(`Test 'web' module`, () => {
 
         describe('Happy path', () => {
           const USER: UserModel = {} as UserModel;
-          let request: AppRequest<unknown, unknown, UserModel> = {
+          let request: AppRequest<UserModel> = {
             jwt: {
               preferred_username: USERNAME
             }
-          } as AppRequest<unknown, unknown, UserModel>;
+          } as AppRequest<UserModel>;
 
           beforeAll(() => {
             getUserByEmail = jest.fn().mockResolvedValue(Either.right<AppError, UserModel>(USER));
@@ -53,27 +52,22 @@ describe(`Test 'web' module`, () => {
               .apply(null, [{ userService }])
               .apply(null, [request, null, nextFcn])
               .then(() => {
-                expect(userService.getUserByEmail)
-                  .toHaveBeenCalledWith();
-                expect(getUserByEmail)
-                  .toHaveBeenCalledWith(USERNAME);
-                expect(nextFcn)
-                  .toHaveBeenCalledWith();
-                expect(logError)
-                  .not.toHaveBeenCalled();
-                expectChai(request)
-                  .to.haveOwnProperty('currentUser')
-                  .which.is.deep.equal(USER);
+                expect(userService.getUserByEmail).toHaveBeenCalledWith();
+                expect(getUserByEmail).toHaveBeenCalledWith(USERNAME);
+                expect(nextFcn).toHaveBeenCalledWith();
+                expect(logError).not.toHaveBeenCalled();
+                expect(request)
+                  .toHaveProperty('currentUser', USER);
               });
           });
         });
 
         describe('Error path', () => {
-          let request: AppRequest<unknown, unknown, UserModel> = {
+          let request: AppRequest<UserModel> = {
             jwt: {
               preferred_username: USERNAME
             }
-          } as AppRequest<unknown, unknown, UserModel>;
+          } as AppRequest<UserModel>;
           describe('User not found', () => {
             const ERROR_NOT_FOUND: NotFound = new NotFound('user not found');
             beforeAll(() => {
@@ -87,18 +81,13 @@ describe(`Test 'web' module`, () => {
                 .apply(null, [{ userService }])
                 .apply(null, [request, null, nextFcn])
                 .then(() => {
-                  expect(userService.getUserByEmail)
-                    .toHaveBeenCalledWith();
-                  expect(getUserByEmail)
-                    .toHaveBeenCalledWith(USERNAME);
-                  expect(nextFcn)
-                    .toHaveBeenCalledWith(expectedError);
-                  expect(logError)
-                    .toHaveBeenCalledWith('[AUTHORIZATION]:');
-                  expect(logger)
-                    .toHaveBeenCalledWith(expectedError);
-                  expectChai(request)
-                    .to.not.haveOwnProperty('currentUser');
+                  expect(userService.getUserByEmail).toHaveBeenCalledWith();
+                  expect(getUserByEmail).toHaveBeenCalledWith(USERNAME);
+                  expect(nextFcn).toHaveBeenCalledWith(expectedError);
+                  expect(logError).toHaveBeenCalledWith('[AUTHORIZATION]:');
+                  expect(logger).toHaveBeenCalledWith(expectedError);
+                  expect(request)
+                    .not.toHaveProperty('currentUser');
                 });
             });
           });
@@ -115,18 +104,13 @@ describe(`Test 'web' module`, () => {
                 .apply(null, [{ userService }])
                 .apply(null, [request, null, nextFcn])
                 .then(() => {
-                  expect(userService.getUserByEmail)
-                    .toHaveBeenCalledWith();
-                  expect(getUserByEmail)
-                    .toHaveBeenCalledWith(USERNAME);
-                  expect(nextFcn)
-                    .toHaveBeenCalledWith(ERROR);
-                  expect(logError)
-                    .toHaveBeenCalledWith('[AUTHORIZATION]:');
-                  expect(logger)
-                    .toHaveBeenCalledWith(ERROR);
-                  expectChai(request)
-                    .to.not.haveOwnProperty('currentUser');
+                  expect(userService.getUserByEmail).toHaveBeenCalledWith();
+                  expect(getUserByEmail).toHaveBeenCalledWith(USERNAME);
+                  expect(nextFcn).toHaveBeenCalledWith(ERROR);
+                  expect(logError).toHaveBeenCalledWith('[AUTHORIZATION]:');
+                  expect(logger).toHaveBeenCalledWith(ERROR);
+                  expect(request)
+                    .not.toHaveProperty('currentUser');
                 });
             });
           });

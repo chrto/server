@@ -1,5 +1,4 @@
 import updateUserUnbound from './updateUser.unbound';
-import { expect as expectChai } from 'chai';
 import { AppError } from 'common/error';
 import initUserModel, { User } from 'model/sequelize/model/user/user';
 import { UserRole } from 'model/sequelize/model/user/user.types';
@@ -51,10 +50,8 @@ describe('Service', () => {
           it(`Should update user in storage and return Either with exact User in right side`, () => {
             result.do({
               right: (user: User): void => {
-                expectChai(user)
-                  .to.be.instanceOf(User);
-                expectChai(user.get())
-                  .to.be.deep.equal(ITEMS);
+                expect(user).toBeInstanceOf(User);
+                expect(user.get()).toStrictEqual(ITEMS);
               },
               left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
             });
@@ -76,10 +73,8 @@ describe('Service', () => {
             result.do({
               right: (): void => fail(`Right side has not been expected`),
               left: (error: AppError) => {
-                expect(error)
-                  .toBeInstanceOf(NotFound);
-                expect(error.message)
-                  .toEqual(appError.message);
+                expect(error).toBeInstanceOf(NotFound);
+                expect(error.message).toEqual(appError.message);
               }
             });
           });

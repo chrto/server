@@ -3,7 +3,7 @@ import { InvalidInput } from 'common/httpErrors';
 import { Fcn, Predicate } from 'common/types';
 import { Either } from 'tsmonad';
 import { ObjectValidatorError } from '../objectValidator.types';
-import { pipe, Pred } from 'ramda';
+import { pipe } from 'ramda';
 import { Validator } from './properties.types';
 
 export const check = <T>(constraint: Predicate<T>, msg: string | string[] | ((input: T) => string | string[])): Validator<T> =>
@@ -22,7 +22,7 @@ const errorCollector = <T>(paramChecks: Validator<T>[]) =>
   (input: T): string[] =>
     paramChecks.reduce((errors: string[], paramCheck: Validator<T>) => paramCheck(input, errors), []);
 
-const validateWith = <T>(isMissing: Pred) =>
+const validateWith = <T>(isMissing: Predicate<string[]>) =>
   (errorCollector: (input: T) => string[]) =>
     (errorClass: ObjectValidatorError) =>
       (input: T): Either<AppError, T> =>
@@ -34,7 +34,7 @@ const validateWith = <T>(isMissing: Pred) =>
               Either.left(new errorClass(`Validation failed: ${JSON.stringify(errors)}`))
         )(input);
 
-export default (isMissing: Pred) =>
+export default (isMissing: Predicate<string[]>) =>
   <T>(paramChecks: Validator<T>[], errorClass: ObjectValidatorError = InvalidInput): Fcn<[T], Either<AppError, T>> =>
     pipe(
       errorCollector,

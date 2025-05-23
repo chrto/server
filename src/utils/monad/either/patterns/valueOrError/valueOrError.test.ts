@@ -1,5 +1,4 @@
 import valueOrError from './valueOrError';
-import { expect as expectChai } from 'chai';
 import { Either } from 'tsmonad';
 import { AppError } from 'common/error';
 import { InternalServerError } from 'common/httpErrors';
@@ -21,9 +20,8 @@ describe('utils', () => {
           it('Should be Either with value in right side', () => {
             result.do({
               right: (val: number): void => {
-                expectChai(val)
-                  .to.be.an('number')
-                  .which.is.equal(value);
+                expect(val).toBeNumber;
+                expect(val).toEqual(value);
               },
               left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
             });
@@ -41,10 +39,8 @@ describe('utils', () => {
             result.do({
               right: (): void => fail(`Right side has not been expected`),
               left: (error: AppError) => {
-                expect(error)
-                  .toBeInstanceOf(AppError);
-                expect(error.message)
-                  .toEqual(ERROR.message);
+                expect(error).toBeInstanceOf(AppError);
+                expect(error.message).toEqual(ERROR.message);
               }
             });
           });

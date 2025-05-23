@@ -1,5 +1,6 @@
 import jwtAuthenticationUnbound from './jwtAuthentication.unbound';
-import { RequestHandler as JwtRequestHandler, SecretCallbackLong, Options } from 'express-jwt';
+import { RequestHandler as JwtRequestHandler } from 'express';
+import { GetVerificationKey, Params } from 'express-jwt';
 import { Fcn } from 'common/types';
 import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
 import { DEFAULT_SSO_HASH_ALG } from 'src/defaults';
@@ -10,9 +11,9 @@ describe(`Test 'web' module`, () => {
   describe(`common`, () => {
     describe(`middlewares`, () => {
       describe(`jwt authentication`, () => {
-        let jwt: MiddlewareFactory<Options, JwtRequestHandler>;
+        let jwt: MiddlewareFactory<Params, JwtRequestHandler>;
         let jwtAuthentication: MiddlewareFactory<ISSOConfig, JwtRequestHandler>;
-        let expressJwtSecret: Fcn<[ExpressJwtOptions], SecretCallbackLong>;
+        let expressJwtSecret: Fcn<[ExpressJwtOptions], GetVerificationKey>;
 
         const ssoConfig: ISSOConfig = {
           ssoJwksUri: 'http://jwt.uri.com',

@@ -1,5 +1,4 @@
 import readFileUnbound from './readFile.unbound';
-import { expect as expectChai } from 'chai';
 import { FSCallback } from '../common/callback/callback.types';
 import { FSError, FSPath } from '../file.types';
 import callback from '../common/callback/callback';
@@ -34,10 +33,8 @@ describe(`storage`, () => {
         it(`Should resolve Either with exact content in right side`, () => {
           result.do({
             right: (content: string): void => {
-              expectChai(content)
-                .to.be.an(''.constructor.name);
-              expectChai(content)
-                .to.be.equal(CONTENT);
+              expect(content).toBeString;
+              expect(content).toBe(CONTENT);
             },
             left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
           });

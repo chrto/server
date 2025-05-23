@@ -6,5 +6,5 @@ import { AppRequest } from 'web/serverModules/types';
 import { Context } from '../../context/context.types';
 
 export interface StatusController {
-  getStatus: (ctx: Context, req: AppRequest<unknown, unknown, unknown>, res: Response) => Promise<Either<AppError, ServerStatus>>;
+  getStatus: (ctx: Context, req: AppRequest, res: Response) => Promise<Either<AppError, ServerStatus>>;
 }

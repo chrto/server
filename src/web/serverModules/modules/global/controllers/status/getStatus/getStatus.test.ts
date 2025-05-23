@@ -4,7 +4,6 @@ import checkService from './check/service/checkService';
 import checkAllSystemsWorking from './check/allSystemsWorking/checkAllSystemsWorking';
 import doer from 'utils/monad/either/do/doer';
 
-import { expect as expectChai } from 'chai';
 import { Either } from 'tsmonad';
 import { Response } from 'express';
 import { AppError } from 'common/error';
@@ -54,9 +53,8 @@ describe('Web Server', () => {
                 callCTRL({ ping }, { start: sdkStart })
                   .then(doer({
                     right: (serverStatus: ServerStatus) => {
-                      expectChai(serverStatus)
-                        .to.be.an('object')
-                        .which.is.deep.equal({ ...SERVER_STATUS, db: DatabaseState.Up, services: { [ServiceItem.sso]: true }, allSystemsWorking: true });
+                      expect(serverStatus).toBeObject;
+                      expect(serverStatus).toStrictEqual({ ...SERVER_STATUS, db: DatabaseState.Up, services: { [ServiceItem.sso]: true }, allSystemsWorking: true });
                     }
                   }));
               });
@@ -74,9 +72,8 @@ describe('Web Server', () => {
                   callCTRL({ ping }, { start: sdkStart })
                     .then(doer({
                       right: (serverStatus: ServerStatus) => {
-                        expectChai(serverStatus)
-                          .to.be.an('object')
-                          .which.is.deep.equal({ ...SERVER_STATUS, db: DatabaseState.Up, services: { [ServiceItem.sso]: false }, allSystemsWorking: false });
+                        expect(serverStatus).toBeObject;
+                        expect(serverStatus).toStrictEqual({ ...SERVER_STATUS, db: DatabaseState.Up, services: { [ServiceItem.sso]: false }, allSystemsWorking: false });
                       }
                     }));
                 });
@@ -93,9 +90,8 @@ describe('Web Server', () => {
                   callCTRL({ ping }, { start: sdkStart })
                     .then(doer({
                       right: (serverStatus: ServerStatus) => {
-                        expectChai(serverStatus)
-                          .to.be.an('object')
-                          .which.is.deep.equal({ ...SERVER_STATUS, db: DatabaseState.Down, services: { [ServiceItem.sso]: true }, allSystemsWorking: false });
+                        expect(serverStatus).toBeObject;
+                        expect(serverStatus).toStrictEqual({ ...SERVER_STATUS, db: DatabaseState.Down, services: { [ServiceItem.sso]: true }, allSystemsWorking: false });
                       }
                     }));
                 });

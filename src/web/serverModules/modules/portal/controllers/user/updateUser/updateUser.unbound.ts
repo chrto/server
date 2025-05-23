@@ -21,7 +21,7 @@ export default (
   sanitizeEntity: Fcn<[PortalUser], any>
 ) =>
   ({ updateUser }: UserService) =>
-    async (ctx: PortalContext, req: AppRequest<unknown, UserBody, PortalUser, RequestImplicits>, _res: Response): Promise<Either<AppError, PortalUser>> =>
+    async (ctx: PortalContext, req: AppRequest<PortalUser, RequestImplicits, unknown, UserBody>, _res: Response): Promise<Either<AppError, PortalUser>> =>
       Promise.resolve(Either.right<AppError, UserBody>(req.body))
         .then(bind<UserBody, UserBody>(bodyValidator))
         .then(bind<UserBody, UserBody>(authorizationValidator(ctx.implicits.user, ctx.loggedInUser)))

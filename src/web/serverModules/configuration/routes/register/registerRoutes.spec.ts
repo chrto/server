@@ -1,5 +1,4 @@
 import registerRoutesUnbound from './registerRoutes.unbound';
-import { expect as expectChai } from 'chai';
 import { Fcn } from 'common/types';
 import { Router, Response } from 'express';
 import { ContextCreator, Handler, HandlerDef, ModuleDef } from './registerRoutes.types';
@@ -62,8 +61,7 @@ describe(`Test 'web' module`, () => {
         });
 
         it('Should return ModuleConfig object', () => {
-          expectChai(result)
-            .to.be.deep.equal(MODULE_CONFIG);
+          expect(result).toStrictEqual(MODULE_CONFIG);
         });
       });
     });

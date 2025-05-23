@@ -1,5 +1,4 @@
 import isAdmin from './isAdmin';
-import { expect as expectChai } from 'chai';
 import initUserModel, { User } from 'model/sequelize/model/user/user';
 import { UserItems, UserRole } from 'model/sequelize/model/user/user.types';
 import { Options, Sequelize } from 'sequelize';
@@ -36,27 +35,31 @@ describe(`Test 'web' module`, () => {
         });
 
         it(`Should return 'true', if user is admin`, () => {
-          expectChai(isAdmin(admin))
-            .to.be.an('boolean')
-            .which.is.equal(true);
+          const result = isAdmin(admin);
+
+          expect(result).toBeBoolean;
+          expect(result).toBeTrue;
         });
 
         it(`Should return 'false', if user is not admin`, () => {
-          expectChai(isAdmin(user))
-            .to.be.an('boolean')
-            .which.is.equal(false);
+          const result = isAdmin(user);
+
+          expect(result).toBeBoolean;
+          expect(result).toBeFalse;
         });
 
         it(`Should return 'false', if user is null`, () => {
-          expectChai(isAdmin(null))
-            .to.be.an('boolean')
-            .which.is.equal(false);
+          const result = isAdmin(null);
+
+          expect(result).toBeBoolean;
+          expect(result).toBeFalse;
         });
 
         it(`Should return 'false', if user is unknown object`, () => {
-          expectChai(isAdmin({} as User))
-            .to.be.an('boolean')
-            .which.is.equal(false);
+          const result = isAdmin({} as User);
+
+          expect(result).toBeBoolean;
+          expect(result).toBeFalse;
         });
       });
     });

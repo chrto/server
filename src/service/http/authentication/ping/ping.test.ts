@@ -4,13 +4,13 @@ import appLogger from 'logger/appLogger';
 import requestConfig from 'storage/http/axios/requestConfig/requestConfig';
 import sanitizeResponse from 'storage/http/axios/sanitizeResponse/sanitizeResponse';
 import tokenSetFactory from 'model/authentication/tokenSet';
-import { expect as expectChai } from 'chai';
 import { InvalidInput } from 'common/httpErrors';
 import { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { Either } from 'tsmonad';
 import { AppError } from 'common/error';
 import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
 import { AxiosStorage } from 'storage/http/axios/axios.types';
+import { AxiosErrorData } from 'storage/http/axios/errorHandler/model.types';
 
 const CONFIG: ISSOConfig = {
   ssoTokenEndpoint: 'http://token.endpoint.com',
@@ -21,7 +21,7 @@ const CONFIG: ISSOConfig = {
 const AXIOS_RESPONSE: AxiosResponse<any> = {
   data: {}
 } as AxiosResponse<any>;
-let ERROR_RESPONSE: AxiosError = {
+let ERROR_RESPONSE: AxiosError<AxiosErrorData, any> = {
   response: {
     statusText: 'status',
     status: 400,
@@ -56,10 +56,8 @@ describe(`service`, () => {
           it(`Should retsolved Either with right side, if everything passed well`, () => {
             result.do({
               right: (model: any): void => {
-                expectChai(model)
-                  .to.be.an({}.constructor.name);
-                expectChai(model)
-                  .to.be.deep.equal({});
+                expect(model).toBeObject;
+                expect(model).toStrictEqual({});
               },
               left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
             });
@@ -79,10 +77,8 @@ describe(`service`, () => {
             result.do({
               right: (): void => fail(`Right side has not been expected`),
               left: (error: AppError) => {
-                expect(error)
-                  .toBeInstanceOf(InvalidInput);
-                expect(error.message)
-                  .toEqual(ERROR_RESPONSE.response.data.error_description);
+                expect(error).toBeInstanceOf(InvalidInput);
+                expect(error.message).toEqual(ERROR_RESPONSE.response.data.error_description);
               }
             });
           });

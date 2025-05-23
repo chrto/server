@@ -1,5 +1,4 @@
 import authenticationController from './authenticationController';
-import { expect as expectChai } from 'chai';
 import { AuthenticationService } from 'service/http/authentication/types';
 import { AuthenticationController } from './authenticationController.types';
 
@@ -15,12 +14,9 @@ describe('Web Server', () => {
               .apply(null, [{ authenticationService }]);
           });
           it('Happy path', () => {
-            expectChai(controller)
-              .to.be.an('object');
-            expectChai(controller)
-              .which.haveOwnProperty('token');
-            expectChai(controller)
-              .which.haveOwnProperty('refreshToken');
+            expect(controller).toBeObject;
+            expect(controller).toHaveProperty('token');
+            expect(controller).toHaveProperty('refreshToken');
           });
         });
       });

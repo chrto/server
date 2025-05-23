@@ -4,7 +4,6 @@ import appLogger from 'logger/appLogger';
 import requestConfig from 'storage/http/axios/requestConfig/requestConfig';
 import sanitizeResponse from 'storage/http/axios/sanitizeResponse/sanitizeResponse';
 import tokenSetFactory from 'model/authentication/tokenSet';
-import { expect as expectChai } from 'chai';
 import { InvalidInput } from 'common/httpErrors';
 import { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { Either } from 'tsmonad';
@@ -14,6 +13,7 @@ import { TokenSet as TokenSetModel } from 'model/authentication/tokenSet.types';
 import { TokenSet } from '../types';
 import { AxiosStorage } from 'storage/http/axios/axios.types';
 import { TokenRefreshQueryParams } from 'web/serverModules/modules/authentication/controllers/authentication/refreshTokenSet/refreshTokenSet.types';
+import { AxiosErrorData } from 'storage/http/axios/errorHandler/model.types';
 
 const CONFIG: ISSOConfig = {
   ssoTokenEndpoint: 'http://token.endpoint.com',
@@ -31,7 +31,7 @@ const AXIOS_RESPONSE: AxiosResponse<TokenSet> = {
     refresh_token: 'refresh_token'
   }
 } as AxiosResponse<TokenSet>;
-let ERROR_RESPONSE: AxiosError = {
+let ERROR_RESPONSE: AxiosError<AxiosErrorData, any> = {
   response: {
     statusText: 'status',
     status: 400,
@@ -66,10 +66,8 @@ describe(`service`, () => {
           it(`Should retsolved Either with TokenSet model in right side, if everything passed well`, () => {
             result.do({
               right: (tokenSet: TokenSetModel): void => {
-                expectChai(tokenSet)
-                  .to.be.an({}.constructor.name);
-                expectChai(tokenSet)
-                  .to.be.deep.equal(tokenSetFactory(AXIOS_RESPONSE.data));
+                expect(tokenSet).toBeObject;
+                expect(tokenSet).toStrictEqual(tokenSetFactory(AXIOS_RESPONSE.data));
               },
               left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
             });
@@ -89,10 +87,8 @@ describe(`service`, () => {
             result.do({
               right: (): void => fail(`Right side has not been expected`),
               left: (error: AppError) => {
-                expect(error)
-                  .toBeInstanceOf(InvalidInput);
-                expect(error.message)
-                  .toEqual(ERROR_RESPONSE.response.data.error_description);
+                expect(error).toBeInstanceOf(InvalidInput);
+                expect(error.message).toEqual(ERROR_RESPONSE.response.data.error_description);
               }
             });
           });

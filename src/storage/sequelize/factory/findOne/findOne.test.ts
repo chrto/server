@@ -1,10 +1,10 @@
 import findOneUnbound from './findOne.unbound';
-import { expect as expectChai } from 'chai';
 import { DataTypes, FindOptions, Model, Options, Sequelize } from 'sequelize';
 import { EDatabaseDialect } from 'web/server/configuration/loader/database/databaseConfig.types';
 import { AppError } from 'common/error';
 import { NotFound } from 'common/httpErrors';
 import { Either } from 'tsmonad';
+import exp = require('constants');
 
 class MyModel extends Model {
   public readonly id!: string;
@@ -59,10 +59,9 @@ describe('Storage', () => {
           it(`Should return Either with exact model in right side, if record has been found in DB`, () => {
             result.do({
               right: (myModel: MyModel): void => {
-                expectChai(myModel)
-                  .to.be.an({}.constructor.name);
-                expectChai(myModel)
-                  .to.be.deep.equal(model);
+                exp;
+                expect(myModel).toBeObject;
+                expect(myModel).toStrictEqual(model);
               },
               left: (error: AppError) => fail(`Left side has not been expected: ${error.message}`)
             });
@@ -84,10 +83,8 @@ describe('Storage', () => {
             result.do({
               right: (): void => fail(`Right side has not been expected`),
               left: (error: AppError) => {
-                expect(error)
-                  .toBeInstanceOf(NotFound);
-                expect(error.message)
-                  .toEqual(NOT_FOUND_MSG);
+                expect(error).toBeInstanceOf(NotFound);
+                expect(error.message).toEqual(NOT_FOUND_MSG);
               }
             });
           });
@@ -110,10 +107,8 @@ describe('Storage', () => {
             result.do({
               right: (): void => fail(`Right side has not been expected`),
               left: (error: AppError) => {
-                expect(error)
-                  .toBeInstanceOf(AppError);
-                expect(error.message)
-                  .toEqual('Internal Server Error');
+                expect(error).toBeInstanceOf(AppError);
+                expect(error.message).toEqual('Internal Server Error');
               }
             });
           });

@@ -1,4 +1,3 @@
-import { expect as expectChai } from 'chai';
 import filterResponse from './filterResponse';
 
 interface Entity {
@@ -40,10 +39,9 @@ const entity_05: Entity = {
 const entities: Entity[] = [entity_01, entity_02, entity_03, entity_04, entity_05];
 
 const checkTest = (result: Entity[], expected: Entity[]) => {
-  expectChai(result).to.be.an('array')
-    .which.have.deep.members(expected);
-  expectChai(result.length)
-    .to.be.equal(expected.length);
+  expect(result).toBeArray;
+  expect(result.length).toBe(expected.length);
+  expect(result).toStrictEqual(expect.arrayContaining(expected));
 };
 
 describe(`Test 'web' module`, () => {

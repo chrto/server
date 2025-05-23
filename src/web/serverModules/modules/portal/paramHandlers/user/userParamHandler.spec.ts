@@ -24,9 +24,9 @@ describe('Web Server', () => {
       describe('Request parameter handlers', () => {
         describe('User', () => {
           let leftSideExecutor: LeftSideExecutor;
-          let handleError: jest.Mock<LeftSideExecutor, [AppRequest<unknown, unknown, User, RequestImplicits>, Response, NextFunction, string]>;
+          let handleError: jest.Mock<LeftSideExecutor, [AppRequest<User, RequestImplicits>, Response, NextFunction, string]>;
           let rightSideExecutor: RightSideExecutor;
-          let addEntityInToRequestImplicits: jest.Mock<RightSideExecutor, [AppRequest<unknown, unknown, User, RequestImplicits>, Response, NextFunction, string]>;
+          let addEntityInToRequestImplicits: jest.Mock<RightSideExecutor, [AppRequest<User, RequestImplicits>, Response, NextFunction, string]>;
           let isUuid: jest.Mock<boolean, [any]>;
 
           let serviceExecutro: jest.Mock<Promise<Either<AppError, User>>, [string]>;

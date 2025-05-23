@@ -1,4 +1,3 @@
-import { expect as expectChai } from 'chai';
 import { DEFAULT_SERVER_API_PORT, DEFAULT_SERVER_RETRY_COUNT, DEFAULT_SERVER_SHUTDOWN_PORT, DEFAULT_SERVER_SHUTDOWN_TIMEOUT, DEFAULT_SERVER_STARTUP_DELAY } from 'src/defaults';
 import { AppConfig, AppConfigLoader } from '../appConfig.types';
 import { IServerConfig } from './serverConfig.types';
@@ -24,9 +23,8 @@ describe('server configuration module', () => {
       };
       const serverConfig: AppConfigLoader<AppConfig> = serverConfigUnbound.apply(null, [env]);
 
-      expectChai(serverConfig())
-        .to.haveOwnProperty('server')
-        .which.is.deep.equal(expected);
+      expect(serverConfig())
+        .toHaveProperty('server', expected);
     });
 
     it(`Should use values from 'defaults.ts', if does not find in environment.`, () => {
@@ -39,9 +37,8 @@ describe('server configuration module', () => {
       };
       const serverConfig: AppConfigLoader<AppConfig> = serverConfigUnbound.apply(null, [{}]);
 
-      expectChai(serverConfig())
-        .to.haveOwnProperty('server')
-        .which.is.deep.equal(expected);
+      expect(serverConfig())
+        .toHaveProperty ('server', expected);
     });
   });
 });

@@ -1,5 +1,4 @@
 import sequelizeModelFactoryUnbound from 'model/sequelize/modelFactory/sequelizeModelFactory/sequelizeModelFactory.unbound';
-import { assert as assertChai, expect as expectChai } from 'chai';
 import { PluginSdkSequelize, SdkTransaction } from 'model/sequelize/modelFactory/modelFactory.types';
 import { Sequelize, Transaction } from 'sequelize';
 import { Fcn } from 'common/types';
@@ -46,8 +45,8 @@ describe(`service`, () => {
         it(`Should return 'Transaction' object`, () => {
           sdkTransaction.begin()
             .then((sequelizeTransaction: Transaction) => {
-              expectChai(sequelizeTransaction)
-                .to.be.deep.equal(transaction);
+              expect(sequelizeTransaction).toBeObject;
+              expect(sequelizeTransaction).toBe(transaction);
             });
         });
       });
@@ -57,12 +56,11 @@ describe(`service`, () => {
           sdkTransaction.commitOrRollback
             .apply(null, [transaction])
             .apply(null, [Either.right({})])
-            .then(<T>(dataOrError: Either<AppError, T>) => {
+            .then(<T> (dataOrError: Either<AppError, T>) => {
               dataOrError.do({
                 right: () => expect(transaction.commit)
                   .toHaveBeenCalledWith(),
-                left: (error: AppError) => assertChai
-                  .fail(null, null, 'Left side was not expected.' + '\n' + error.code + '\n' + error.message)
+                left: (error: AppError) => fail('Left side was not expected.' + '\n' + error.code + '\n' + error.message)
               });
             });
         });
@@ -71,15 +69,14 @@ describe(`service`, () => {
           sdkTransaction.commitOrRollback
             .apply(null, [transaction])
             .apply(null, [Either.right(value)])
-            .then(<T>(dataOrError: Either<AppError, T>) => {
+            .then(<T> (dataOrError: Either<AppError, T>) => {
               dataOrError.do({
-                right: <T>(value: T) => {
-                  expectChai(value)
-                    .to.be.an('object')
-                    .which.is.deep.equal(value);
+                right: <T> (value: T) => {
+                  expect(value).toBeObject;
+                  expect(value).toBe(value);
+
                 },
-                left: (error: AppError) => assertChai
-                  .fail(null, null, 'Left side was not expected.' + '\n' + error.code + '\n' + error.message)
+                left: (error: AppError) => fail('Left side was not expected.' + '\n' + error.code + '\n' + error.message)
               });
             });
         });
@@ -88,13 +85,10 @@ describe(`service`, () => {
           sdkTransaction.commitOrRollback
             .apply(null, [transaction])
             .apply(null, [Either.left(error)])
-            .then(<T>(dataOrError: Either<AppError, T>) => {
+            .then(<T> (dataOrError: Either<AppError, T>) => {
               dataOrError.do({
-                right: () => assertChai
-                  .fail(null, null, 'Error \'AppError\' was expected.'),
-                left: (_error: AppError) =>
-                  expect(transaction.rollback)
-                    .toHaveBeenCalledWith()
+                right: () => fail('Error \'AppError\' was expected.'),
+                left: (_error: AppError) => expect(transaction.rollback).toHaveBeenCalledWith()
               });
             });
         });
@@ -103,13 +97,10 @@ describe(`service`, () => {
           sdkTransaction.commitOrRollback
             .apply(null, [transaction])
             .apply(null, [Either.left(error)])
-            .then(<T>(dataOrError: Either<AppError, T>) => {
+            .then(<T> (dataOrError: Either<AppError, T>) => {
               dataOrError.do({
-                right: () => assertChai
-                  .fail(null, null, 'Error \'AppError\' was expected.'),
-                left: (error: AppError) =>
-                  expectChai(error)
-                    .to.be.instanceOf(AppError)
+                right: () => fail('Error \'AppError\' was expected.'),
+                left: (error: AppError) => expect(error).toBeInstanceOf(AppError)
               });
             });
         });
@@ -120,12 +111,10 @@ describe(`service`, () => {
           sdkTransaction.rollback
             .apply(null, [transaction])
             .apply(null, [error])
-            .then(<T>(dataOrError: Either<AppError, T>) => {
+            .then(<T> (dataOrError: Either<AppError, T>) => {
               dataOrError.do({
-                right: () => assertChai
-                  .fail(null, null, 'Error \'AppError\' was expected.'),
-                left: (_error: AppError) => expect(transaction.rollback)
-                  .toHaveBeenCalledWith()
+                right: () => fail('Error \'AppError\' was expected.'),
+                left: (_error: AppError) => expect(transaction.rollback).toHaveBeenCalledWith()
               });
             });
         });
@@ -133,12 +122,10 @@ describe(`service`, () => {
           sdkTransaction.rollback
             .apply(null, [transaction])
             .apply(null, [error])
-            .then(<T>(dataOrError: Either<AppError, T>) => {
+            .then(<T> (dataOrError: Either<AppError, T>) => {
               dataOrError.do({
-                right: () => assertChai
-                  .fail(null, null, 'Error \'AppError\' was expected.'),
-                left: (error: AppError) => expectChai(error)
-                  .to.be.instanceOf(AppError)
+                right: () => fail('Error \'AppError\' was expected.'),
+                left: (error: AppError) => expect(error).toBeInstanceOf(AppError)
               });
             });
         });

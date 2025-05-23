@@ -3,14 +3,14 @@ import caseOf from 'utils/monad/either/caseOf/caseOf';
 import { AppError } from 'common/error';
 import { NotAuthorized } from 'common/httpErrors';
 import { Fcn } from 'common/types';
-import { NextFunction, Response } from 'express';
+import { NextFunction, RequestHandler, Response } from 'express';
 import { Either, Maybe } from 'tsmonad';
 import { AppRequest } from 'web/serverModules/types';
 import { Logger } from 'winston';
 import { Handler, ContextCreator } from '../../registerRoutes.types';
 
 export default (logger: Logger) =>
-  <CTX, RB> (handler: Handler<CTX>, contextCreator: ContextCreator<CTX>, sendResponse: Fcn<[Response<RB>], Fcn<[RB], Response<RB>>>) =>
+  <CTX, RB> (handler: Handler<CTX>, contextCreator: ContextCreator<CTX>, sendResponse: Fcn<[Response<RB>], Fcn<[RB], Response<RB>>>): RequestHandler =>
     (req: AppRequest, res: Response<RB>, next: NextFunction): Promise<void> =>
       Promise.resolve(contextCreator(req))
         .then((context: CTX): Promise<void> =>
@@ -28,4 +28,5 @@ export default (logger: Logger) =>
               right: () => next(),
               left: next
             }))
-            .catch(next));
+            .catch(next)
+        );

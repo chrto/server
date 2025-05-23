@@ -1,4 +1,3 @@
-import { expect as expectChai } from 'chai';
 import { Fcn } from 'common/types';
 import { ISSOConfig } from 'web/server/configuration/loader/sso/ssoConfig.types';
 
@@ -25,16 +24,12 @@ describe(`service`, () => {
     });
 
     it(`Should return 'PluginSdkService'`, () => {
-      expectChai(pluginSdkService)
-        .to.be.an('object');
-      expectChai(pluginSdkService)
-        .to.haveOwnProperty('sdkStartStop');
-      expectChai(pluginSdkService)
-        .to.haveOwnProperty('sdkTransaction');
-      expectChai(pluginSdkService)
-        .to.haveOwnProperty('authenticationService');
-      expectChai(pluginSdkService)
-        .to.haveOwnProperty('userService');
+      expect(pluginSdkService).toBeObject
+
+      expect(pluginSdkService).toHaveProperty('sdkStartStop')
+      expect(pluginSdkService).toHaveProperty('sdkTransaction')
+      expect(pluginSdkService).toHaveProperty('authenticationService')
+      expect(pluginSdkService).toHaveProperty('userService')
     });
   });
 });
