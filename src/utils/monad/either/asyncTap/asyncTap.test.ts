@@ -1,6 +1,6 @@
 import asyncTap from './asyncTap';
 import { expect as expectChai } from 'chai';
-import { AppError } from 'common/error/error';
+import { AppError } from 'common/error';
 import { Either } from 'tsmonad';
 import { Fcn } from 'common/types';
 
